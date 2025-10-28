@@ -4,7 +4,7 @@
 
 
 local EleriumV2_UI = loadstring(game:HttpGet(
-    "https://github.com/vyxonq/EleriumV2-UI/releases/download/V2/main.lua"))()
+    "https://raw.githubusercontent.com/Kyypie69/Library.UI/refs/heads/main/KYY.luau"))()
 
 local c2 = a.new({
     MainColor = Color3.fromRGB(138, 43, 226),
