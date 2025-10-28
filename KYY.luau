@@ -160,7 +160,7 @@ end; function a.new(s)
     s = s or {}
     for ab, ac in pairs(l) do if s[ab] == nil then s[ab] = ac end end; x()
     local _ = Instance.new("ScreenGui")
-    _.Name = "EleriumV2"
+    _.Name = "EleriumV2 x KYY"
     _.ResetOnSpawn = false; _.Parent = r(s)
     Z:Initialize(_)
     c.InputBegan:Connect(function(ad, ae) if not ae and ad.KeyCode == s.ToggleKey then _.Enabled = not _.Enabled end end)
