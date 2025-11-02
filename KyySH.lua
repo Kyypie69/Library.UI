@@ -246,7 +246,6 @@ do
     local targetRebirth = 1
     local initialRebirths = player.leaderstats.Rebirths.Value
 
-    RB:AddInput("TargetRebirth", {
     RB:AddToggle("AutoRebirthTarget", {
     Title = "Auto Rebirth [Target]",
     Default = false,
