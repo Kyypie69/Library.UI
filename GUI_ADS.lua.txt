@@ -9,12 +9,12 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-local DISCORD_ICON_ASSET_ID = "rbxassetid://8248378219" -- replace with your decal id
-local discordLink = "https://discord.gg/RB5Ct2R2SR" -- put your actual invite here
+local DISCORD_ICON_ASSET_ID = "rbxassetid://82211564460784" -- replace with your decal id
+local discordLink = "https://discord.gg/wJh39RVj" -- put your actual invite here
 
 -- ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "VeinyxGui"
+screenGui.Name = "KyypieGui"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = playerGui
 screenGui.DisplayOrder = 100
@@ -46,7 +46,7 @@ title.Name = "Title"
 title.Size = UDim2.new(1, 0, 0.6, 0) -- <-- matches pasted.txt DiscordLabel size
 title.Position = UDim2.new(0, 0, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "Veinyx Scripts"
+title.Text = "KYYPIE HUB"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 22
