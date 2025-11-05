@@ -12,7 +12,7 @@ local Window = library:CreateWindow({
     Title = "Kyy PAID",
     SubTitle = "ChatGPT user",
     TabWidth = 160,
-    Size = UDim2.fromOffset(610,830),
+    Size = UDim2.fromOffset(300,430),
     Acrylic = true,               -- blur background
     Theme = "SpeedHubX"
 })
