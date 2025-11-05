@@ -39,7 +39,7 @@ local Themes = {
 	},
 	SpeedHubX = {
 		Name = "SpeedHubX",
-		Accent = Color3.fromRGB(0, 120, 255),
+		Accent = Color3.fromRGB(0, 0, 255),
 
 		AcrylicMain = Color3.fromRGB(20, 20, 30),
 		AcrylicBorder = Color3.fromRGB(40, 40, 60), 
@@ -139,7 +139,7 @@ local function CloseOpen()
 	Close_ImageButton.BorderColor3 = Color3.fromRGB(255, 0, 0)
 	Close_ImageButton.Position = UDim2.new(0.1021, 0, 0.0743, 0)
 	Close_ImageButton.Size = UDim2.new(0, 59, 0, 49)
-	Close_ImageButton.Image = "rbxassetid://129069615357738"
+	Close_ImageButton.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=83964438158443"
 	Close_ImageButton.Visible = false
 
 	UICorner.Name = "MainCorner"
@@ -656,7 +656,7 @@ local Creator = {
 		TextLabel = {
 			BackgroundColor3 = Color3.new(1, 1, 1),
 			BorderColor3 = Color3.new(0, 0, 0),
-			Font = Enum.Font.SourceSans,
+			Font = Enum.Font.Bangers,
 			Text = "",
 			TextColor3 = Color3.new(0, 0, 0),
 			BackgroundTransparency = 1,
@@ -675,7 +675,7 @@ local Creator = {
 			BackgroundColor3 = Color3.new(1, 1, 1),
 			BorderColor3 = Color3.new(0, 0, 0),
 			ClearTextOnFocus = false,
-			Font = Enum.Font.SourceSans,
+			Font = Enum.Font.Bangers,
 			Text = "",
 			TextColor3 = Color3.new(0, 0, 0),
 			TextSize = 14,
