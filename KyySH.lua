@@ -9,9 +9,9 @@ local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kyypi
 --  2.  Create the main window (same name, same feel)
 -- ========================================================================================
 local Window = library:CreateWindow({
-    Title = "Kyy PAID",
-    SubTitle = "ChatGPT user",
-    TabWidth = 160,
+    Title = "Kyy Pie",
+    SubTitle = "ChatGPT lang sakalam",
+    TabWidth = 250,
     Size = UDim2.fromOffset(300,430),
     Acrylic = true,               -- blur background
     Theme = "SpeedHubX"
@@ -25,22 +25,31 @@ local function _spawn(fn) task.spawn(function() pcall(fn) end) end
 -- ========================================================================================
 
 --------------------------------------------------------------------  AutoFarm  ----------
-local AutoFarm = Window:AddTab({Title="Farm OP", Icon="sword"})
+local AutoFarm = Window:AddTab({Title="Farm Packs", Icon="sword"})
 
 --------------------------------------------------------------------  OP Strength  -------
-AutoFarm:AddToggle("OP_STRENGTH",{Title="OP STRENGTH",Default=false,Callback=function(v)
+AutoFarm:AddToggle("Fast Strength",{
+        Title="Fast Strength",
+        Default=false,
+        Callback=function(v)
     getgenv()._AutoRepFarmEnabled = v
     warn("[Auto Rep Farm] Estado cambiado a:", v and "ON" or "OFF")
 end})
 
 --------------------------------------------------------------------  Eat Egg  -----------
-AutoFarm:AddToggle("EAT_EGG_30",{Title="Eat Egg (30 Min)",Default=false,Callback=function(v)
+AutoFarm:AddToggle("EAT_EGG_30",{
+        Title="Eat Egg (30 Min)",
+        Default=false,
+        Callback=function(v)
     autoEatEnabled = v
     print(state and "[AutoEgg] Activado." or "[AutoEgg] Desactivado.")
 end})
 
 --------------------------------------------------------------------  Anti-Lag  ----------
-AutoFarm:AddToggle("ANTI_LAG",{Title="Anti Lag",Default=false,Callback=function(State)
+AutoFarm:AddToggle("ANTI_LAG",{
+        Title="Anti Lag",
+        Default=false,
+        Callback=function(State)
     local lighting = game:GetService("Lighting")
     if State then
         for _, gui in pairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
@@ -65,7 +74,10 @@ AutoFarm:AddToggle("ANTI_LAG",{Title="Anti Lag",Default=false,Callback=function(
 end})
 
 --------------------------------------------------------------------  Anti-AFK  ----------
-AutoFarm:AddToggle("ANTI_AF",{Title="Anti AFK",Default=false,Callback=function(state)
+AutoFarm:AddToggle("Anti Afk",{
+        Title="Anti AFK",
+        Default=false,
+        Callback=function(state)
     if state then
         _spawn(function()
             local vu = game:GetService('VirtualUser')
@@ -79,7 +91,10 @@ AutoFarm:AddToggle("ANTI_AF",{Title="Anti AFK",Default=false,Callback=function(s
 end})
 
 --------------------------------------------------------------------  Hide Frames  -------
-AutoFarm:AddToggle("HIDE_FRAMES",{Title="Hide All Frames",Default=false,Callback=function(bool)
+AutoFarm:AddToggle("Hide Frames",{
+        Title="Hide All Frames",
+        Default=false,
+        Callback=function(bool)
     local rSto = game:GetService("ReplicatedStorage")
     for _, obj in pairs(rSto:GetChildren()) do
         if obj.Name:match("Frame$") then obj.Visible = not bool end
@@ -87,7 +102,8 @@ AutoFarm:AddToggle("HIDE_FRAMES",{Title="Hide All Frames",Default=false,Callback
 end})
 
 --------------------------------------------------------------------  Auto Spin  ---------
-AutoFarm:AddButton({Title="Auto Spin",Callback=function()
+AutoFarm:AddButton({Title="Auto Spin",
+        Callback=function()
     _spawn(function()
         while task.wait(0.1) do
             game:GetService("ReplicatedStorage").rEvents.openFortuneWheelRemote:InvokeServer(
@@ -99,7 +115,8 @@ AutoFarm:AddButton({Title="Auto Spin",Callback=function()
 end})
 
 --------------------------------------------------------------------  Equip Swift  -------
-AutoFarm:AddButton({Title="Equip Swift Samurai",Callback=function()
+AutoFarm:AddButton({Title="Equip Swift Samurai",
+        Callback=function()
     print("Equipando 8 Swift Samurai")
     local LocalPlayer = game:GetService("Players").LocalPlayer
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -131,7 +148,8 @@ AutoFarm:AddButton({Title="Equip Swift Samurai",Callback=function()
 end})
 
 --------------------------------------------------------------------  Jungle Squat  -----
-AutoFarm:AddButton({Title="Jungle Squat",Callback=function()
+AutoFarm:AddButton({Title="Jungle Squat",
+        Callback=function()
     local char = game.Players.LocalPlayer.Character
     if char and char:FindFirstChild("HumanoidRootPart") then
         char:SetPrimaryPartCFrame(CFrame.new(-8374.25586, 34.5933418, 2932.44995))
@@ -147,7 +165,8 @@ AutoFarm:AddButton({Title="Jungle Squat",Callback=function()
 end})
 
 --------------------------------------------------------------------  Jungle Lift  ------
-AutoFarm:AddButton({Title="Jungle Lift",Callback=function()
+AutoFarm:AddButton({Title="Jungle Lift",
+        Callback=function()
     local player = game.Players.LocalPlayer
     local char = player.Character or player.CharacterAdded:Wait()
     local hrp = char:WaitForChild("HumanoidRootPart")
@@ -177,7 +196,10 @@ RebirthFolder:AddToggle("FAST_REBIRTH",{Title="Fast Rebirths",Default=false,Call
 end})
 
 --------------------------------------------------------------------  Lock Position  -----
-RebirthFolder:AddToggle("LOCK_POS",{Title="Lock Position",Default=false,Callback=function(Value)
+RebirthFolder:AddToggle("LOCK_POS",{
+        Title="Lock Position",
+        Default=false,
+        Callback=function(Value)
     if Value then
         local currentPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
         getgenv().posLock = game:GetService("RunService").Heartbeat:Connect(function()
@@ -259,7 +281,7 @@ local estadisticas = Window:AddTab({Title="Stats Players",Icon="users"})
 
 --------------------------------------------------------------------  Credits  ----------
 local Credits = Window:AddTab({Title="Credits",Icon="heart"})
-Credits:AddParagraph({Title="Made by ⚡SailynnxShi⚡",Content="Sai ❤️ Arvelyn\n🔥H3LL_KYY🔥\nYOSHIROSHIBOLxBer\nSenXd\nK13 Clan On Top\nH3LL Clan On Top\nTANG INA NYO MGA BASURANG BINGOT 300💲’² LANG TONG SCRIPT"})
+Credits:AddParagraph({Title="Made by ChatGPT KYY"})
 
 -- ========================================================================================
 --  4.  Start the background loops exactly like UILib did
@@ -267,4 +289,4 @@ Credits:AddParagraph({Title="Made by ⚡SailynnxShi⚡",Content="Sai ❤️ Arve
 -- (nothing removed – all while-loops, heartbeats, etc. are started internally by the
 --  toggles above, exactly the same as in UILib.txt)
 
-Fluent:Notify({Title="Shi PAID",Content="SpeedHubX edition loaded – every feature is here!",Duration=5})
+library:Notify({Title="KYY POGI",Content="Markyy ChatGPT user is here!",Duration=5})
