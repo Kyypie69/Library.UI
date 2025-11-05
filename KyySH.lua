@@ -3,7 +3,7 @@
 -- ========================================================================================
 --  1.  Load the SpeedHubX library
 -- ========================================================================================
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Main/main/Library/GUI.lua"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kyypie69/Library.UI/refs/heads/main/Speedhub.UI.lua"))()
 
 -- ========================================================================================
 --  2.  Create the main window (same name, same feel)
