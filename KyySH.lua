@@ -8,9 +8,9 @@ local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kyypi
 -- ========================================================================================
 --  2.  Create the main window (same name, same feel)
 -- ========================================================================================
-local Window = Fluent:CreateWindow({
-    Title = "Shi PAID",
-    SubTitle = "SpeedHubX edition",
+local Window = library:CreateWindow({
+    Title = "Kyy PAID",
+    SubTitle = "ChatGPT user",
     TabWidth = 160,
     Size = UDim2.fromOffset(610,830),
     Acrylic = true,               -- blur background
