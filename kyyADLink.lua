@@ -13,7 +13,7 @@ local DISCORD_ICON_ASSET_ID = "rbxassetid://17335979336" -- replace with your de
 local discordLink = "https://discord.gg/wJh39RVj" -- put your actual invite here
 -- ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "VeinyxGui"
+screenGui.Name = "Kyypie69"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = playerGui
 screenGui.DisplayOrder = 100
