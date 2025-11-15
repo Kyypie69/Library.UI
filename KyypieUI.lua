@@ -23,7 +23,7 @@ task.spawn(function()
 				game.Workspace.RobloxForwardPortals:Destroy()
 			end
 		end
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/TheManWhoCantBeMove-D/G/refs/heads/main/Ad-Link"))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Kyypie69/Library.UI/refs/heads/main/kyyADLink.lua"))()
 	end)
 end)
 
