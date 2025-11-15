@@ -1,0 +1,165 @@
+-- Place this LocalScript in StarterGui
+-- Sizes/positions adjusted to match the pasted.txt example:
+-- Frame = UDim2.new(0.4, 0, 0.3, 0)
+-- Label = UDim2.new(1, 0, 0.6, 0)
+-- Buttons = UDim2.new(0.4, 0, 0.2, 0) positioned like pasted.txt
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local DISCORD_ICON_ASSET_ID = "rbxassetid://17335979336" -- replace with your decal id
+local discordLink = "https://discord.gg/wJh39RVj" -- put your actual invite here
+-- ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "VeinyxGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+screenGui.DisplayOrder = 100
+
+-- Main frame sized like pasted.txt (40% width, 30% height)
+local frame = Instance.new("Frame")
+frame.Name = "MainFrame"
+frame.AnchorPoint = Vector2.new(0.5, 0.5)
+frame.Position = UDim2.new(0.5, 0, 0.35, 0) -- similar to pasted.txt
+frame.Size = UDim2.new(0.4, 0, 0.3, 0) -- <-- changed to match pasted.txt
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- black
+frame.BorderSizePixel = 0
+frame.Parent = screenGui
+
+-- Blue border
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(88, 101, 242)
+stroke.Thickness = 4
+stroke.Parent = frame
+
+-- Rounded corners
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = frame
+
+-- Title/Label matching pasted.txt layout (fills top ~60% of frame)
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Size = UDim2.new(1, 0, 0.6, 0) -- <-- matches pasted.txt DiscordLabel size
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "Veinyx Scripts"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 22
+title.TextWrapped = true
+title.Parent = frame
+
+-- Copy button (left) matching pasted.txt sizes and position
+local copyBtn = Instance.new("TextButton")
+copyBtn.Name = "CopyButton"
+copyBtn.Size = UDim2.new(0.4, 0, 0.2, 0) -- <-- matches pasted.txt
+copyBtn.Position = UDim2.new(0.1, 0, 0.7, 0) -- <-- matches pasted.txt
+copyBtn.BackgroundColor3 = Color3.fromRGB(88, 101, 242) -- blue
+copyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+copyBtn.Font = Enum.Font.GothamSemibold
+copyBtn.TextSize = 13
+copyBtn.Text = "Copy Link Discord"
+copyBtn.BorderSizePixel = 0
+copyBtn.Parent = frame
+
+local copyCorner = Instance.new("UICorner")
+copyCorner.CornerRadius = UDim.new(0, 6)
+copyCorner.Parent = copyBtn
+
+-- Optional icon inside copyBtn (placeholder)
+local icon = Instance.new("ImageLabel")
+icon.Name = "DiscordIcon"
+icon.Size = UDim2.new(0, 18, 0, 18)
+icon.Position = UDim2.new(0, 8, 0.5, -9)
+icon.BackgroundTransparency = 1
+icon.Image = DISCORD_ICON_ASSET_ID
+icon.Parent = copyBtn
+
+-- Exit and Wait buttons (stacked in same spot; Wait visible first)
+local exitBtn = Instance.new("TextButton")
+exitBtn.Name = "ExitButton"
+exitBtn.Size = UDim2.new(0.4, 0, 0.2, 0) -- <-- matches pasted.txt
+exitBtn.Position = UDim2.new(0.5, 0, 0.7, 0) -- <-- matches pasted.txt
+exitBtn.Text = "Exit"
+exitBtn.Visible = false
+exitBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+exitBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
+exitBtn.Font = Enum.Font.GothamSemibold
+exitBtn.TextSize = 13
+exitBtn.BorderSizePixel = 0
+exitBtn.Parent = frame
+
+local exitCorner = Instance.new("UICorner")
+exitCorner.CornerRadius = UDim.new(0, 6)
+exitCorner.Parent = exitBtn
+
+local waitBtn = Instance.new("TextButton")
+waitBtn.Name = "WaittoExit"
+waitBtn.Size = UDim2.new(0.4, 0, 0.2, 0) -- <-- matches pasted.txt
+waitBtn.Position = UDim2.new(0.5, 0, 0.7, 0) -- same spot as exit
+waitBtn.Text = "Waiting Delay Exit"
+waitBtn.Visible = true
+waitBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+waitBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
+waitBtn.Font = Enum.Font.GothamSemibold
+waitBtn.TextSize = 13
+waitBtn.BorderSizePixel = 0
+waitBtn.Parent = frame
+
+local waitCorner = Instance.new("UICorner")
+waitCorner.CornerRadius = UDim.new(0, 6)
+waitCorner.Parent = waitBtn
+
+-- Status / fallback textbox (hidden by default)
+local fallbackBox = Instance.new("TextBox")
+fallbackBox.Name = "FallbackCopyBox"
+fallbackBox.Size = UDim2.new(1, 0, 0.18, 0)
+fallbackBox.Position = UDim2.new(0, 0, 0.78, 0)
+fallbackBox.Visible = false
+fallbackBox.ClearTextOnFocus = false
+fallbackBox.Text = ""
+fallbackBox.Font = Enum.Font.Gotham
+fallbackBox.TextSize = 14
+fallbackBox.TextColor3 = Color3.fromRGB(15, 23, 42)
+fallbackBox.BackgroundColor3 = Color3.fromRGB(248, 250, 252)
+fallbackBox.BorderSizePixel = 0
+fallbackBox.Parent = frame
+
+local fbCorner = Instance.new("UICorner")
+fbCorner.CornerRadius = UDim.new(0, 6)
+fbCorner.Parent = fallbackBox
+
+-- Countdown behavior like your latest script: Wait 5 sec then swap buttons
+task.delay(5, function()
+    waitBtn.Visible = false
+    exitBtn.Visible = true
+end)
+
+copyBtn.MouseButton1Click:Connect(function()
+    if setclipboard then
+        pcall(function()
+            setclipboard(discordLink)
+        end)
+        copyBtn.Text = "Copied To Discord Link"
+        task.wait(0.6)
+        copyBtn.Text = "Copy Link Discord"
+    else
+        fallbackBox.Text = discordLink
+        fallbackBox.Visible = true
+        pcall(function() fallbackBox:CaptureFocus() end)
+    end
+end)
+
+exitBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.Escape then
+        screenGui.Enabled = false
+    end
+end)
