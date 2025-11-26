@@ -9,7 +9,7 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-local DISCORD_ICON_ASSET_ID = "rbxassetid://135885092641827" -- replace with your decal id
+local DISCORD_ICON_ASSET_ID = "rbxassetid://115425612976846" -- replace with your decal id
 local discordLink = "https://discord.gg/u5tNN8tZcY" -- put your actual invite here
 -- ScreenGui
 local screenGui = Instance.new("ScreenGui")
