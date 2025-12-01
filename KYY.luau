@@ -7,11 +7,10 @@ local d = game:GetService("RunService")
 local e = game:GetService("Players")
 local f = game:GetService("CoreGui")
 local g = e.LocalPlayer; local h = g:GetMouse()
-local i = { Primary = Color3.fromRGB(138, 43, 226), Secondary = Color3.fromRGB(75, 0, 130), Accent = Color3.fromRGB(255,
-    105, 180), Success = Color3.fromRGB(72, 187, 120), Minimize = Color3.fromRGB(138, 43, 226), Warning = Color3.fromRGB(
+local i = { Primary = Color3.fromRGB(25, 25, 112), Secondary = Color3.fromRGB(75, 0, 130), Accent = Color3.fromRGB(135, 206, 235), Success = Color3.fromRGB(72, 187, 120), Minimize = Color3.fromRGB(138, 43, 226), Warning = Color3.fromRGB(
 245, 158, 11), Error = Color3.fromRGB(239, 68, 68), Background = Color3.fromRGB(15, 23, 42), Surface = Color3.fromRGB(30,
-    41, 59), Glass = Color3.fromRGB(51, 65, 85), Text = Color3.fromRGB(248, 250, 252), TextMuted = Color3.fromRGB(148,
-    163, 184), Border = Color3.fromRGB(71, 85, 105) }
+    41, 59), Glass = Color3.fromRGB(0, 104, 139), Text = Color3.fromRGB(255, 255, 255), TextMuted = Color3.fromRGB(148,
+    163, 184), Border = Color3.fromRGB(10, 10, 10) }
 local j = { ChevronRight = "rbxassetid://10709759895", ChevronDown = "rbxassetid://10709767827", X =
 "rbxassetid://10747384394", Check = "rbxassetid://10709790644", Settings = "rbxassetid://10734950309", User =
 "rbxassetid://10747373176", Home = "rbxassetid://10723407389", Search = "rbxassetid://7733921320", Bell =
