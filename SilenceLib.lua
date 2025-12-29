@@ -142,7 +142,22 @@ Toggle.Position = UDim2.new(0, 5, 0, -2)
 Toggle.Rotation = 90
 Toggle.Size = UDim2.new(0, 20, 0, 20)
 Toggle.ZIndex = 2
-Toggle.Image = "http://www.roblox.com/asset?id=115425612976846"
+
+-- keep the color-sync loop from changing our icon
+spawn(function()
+	while true do
+		Bar.BackgroundColor3 = options.main_color
+		Base.BackgroundColor3 = options.main_color
+		Base.ImageColor3   = options.main_color
+		Top.ImageColor3    = options.main_color
+		SplitFrame.BackgroundColor3 = options.main_color
+		-- DO NOT touch Toggle.Image here
+		RS.Heartbeat:Wait()
+	end
+end)
+
+-- set the minimize icon once, after the loop starts
+Toggle.Image = "rbxassetid://115425612976846"
 
 Base.Name = "Base"
 Base.Parent = Bar
