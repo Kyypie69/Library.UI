@@ -14,7 +14,7 @@ end
 
 _G.SafeLock = false
 
-local DesyncedLibrary = {}
+local KyyfiiiLibrary = {}
 
 local Library = Instance.new("ScreenGui")
 
@@ -26,7 +26,7 @@ local activeNotifications = {}
 local notificationSpacing = 10
 local notificationHeight = 90
 
-function DesyncedLibrary:createNotification(descriptionText)
+function KyyfiiiLibrary:createNotification(descriptionText)
     local Notification_1 = Instance.new("Frame")
     local Background_2 = Instance.new("ImageLabel")
     local UICorner_21 = Instance.new("UICorner")
@@ -73,7 +73,7 @@ function DesyncedLibrary:createNotification(descriptionText)
     Title_2.Size = UDim2.new(1, 0, 0, 30)
     Title_2.Font = Enum.Font.Jura
     Title_2.RichText = true
-    Title_2.Text = "<b>Desynced  |</b>  Notification"
+    Title_2.Text = "<b>Kyyfiii  |</b>  Notification"
     Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
     Title_2.TextSize = 15
     Title_2.TextXAlignment = Enum.TextXAlignment.Left
@@ -135,7 +135,7 @@ function DesyncedLibrary:createNotification(descriptionText)
     )
 end
 
-function DesyncedLibrary:CreateWindow(Title, Description)
+function KyyfiiiLibrary:CreateWindow(Title, Description)
     local uiOpen = true
 
     local Main_1 = Instance.new("Frame")
@@ -760,7 +760,7 @@ function DesyncedLibrary:CreateWindow(Title, Description)
             ButtonTitle_1.MouseButton1Click:Connect(
                 function()
                     if _G.SafeLock then
-                        DesyncedLibrary:createNotification("Safe Lock on! Disable to use features.")
+                        KyyfiiiLibrary:createNotification("Safe Lock on! Disable to use features.")
                         return
                     end
 
@@ -875,10 +875,10 @@ function DesyncedLibrary:CreateWindow(Title, Description)
                             )
                             offTween:Play()
                             offTween2:Play()
-                            DesyncedLibrary:createNotification("Safe Lock disabled! All inputs unlocked.")
+                            KyyfiiiLibrary:createNotification("Safe Lock disabled! All inputs unlocked.")
                             return
                         else
-                            DesyncedLibrary:createNotification("Safe Lock on! Disable to use features.")
+                            KyyfiiiLibrary:createNotification("Safe Lock on! Disable to use features.")
                             return
                         end
                     else
@@ -898,7 +898,7 @@ function DesyncedLibrary:CreateWindow(Title, Description)
                             )
                             onTween:Play()
                             onTween2:Play()
-                            DesyncedLibrary:createNotification("Safe Lock enabled! All inputs locked.")
+                            KyyfiiiLibrary:createNotification("Safe Lock enabled! All inputs locked.")
                             return
                         end
                     end
@@ -1021,7 +1021,7 @@ function DesyncedLibrary:CreateWindow(Title, Description)
                 function()
                     if _G.SafeLock then
                         TextBox_1.TextEditable = false
-                        DesyncedLibrary:createNotification("Safe Lock on! Disable to use features.")
+                        KyyfiiiLibrary:createNotification("Safe Lock on! Disable to use features.")
                         return
                     end
 
@@ -1182,7 +1182,7 @@ function DesyncedLibrary:CreateWindow(Title, Description)
 
             local function ToggleDropdown()
                 if _G.SafeLock then
-                    DesyncedLibrary:createNotification("Safe Lock on! Disable to use features.")
+                    KyyfiiiLibrary:createNotification("Safe Lock on! Disable to use features.")
                     return
                 end
 
@@ -1236,7 +1236,7 @@ function DesyncedLibrary:CreateWindow(Title, Description)
                 button.MouseButton1Click:Connect(
                     function()
                         if _G.SafeLock then
-                            DesyncedLibrary:createNotification("Safe Lock on! Disable to use features.")
+                            KyyfiiiLibrary:createNotification("Safe Lock on! Disable to use features.")
                             return
                         end
 
@@ -1251,4 +1251,4 @@ function DesyncedLibrary:CreateWindow(Title, Description)
     end
     return Tabs
 end
-return DesyncedLibrary
+return KyyfiiiLibrary
