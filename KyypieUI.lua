@@ -35,7 +35,7 @@ local Themes = {
         "Amber", "Aqua", "Azure", "Blurple", "Brown", "Burgundy", "Coral", "Crimson", "Cyan", "DarkBlue",
         "DarkGreen", "DarkOrange", "DarkPurple", "DarkRed", "Gold", "Gray", "HotPink", "Indigo", "Jade", "Lavender",
         "LightBlue", "LightGreen", "Magenta", "Maroon", "Mint", "Navy", "Olive", "Peach", "Plum", "Rose",
-        "Ruby", "Sapphire", "Scarlet", "Silver", "SkyBlue", "Slate", "Tan", "Turquoise", "Violet", "White"
+        "Ruby", "Sapphire", "Scarlet", "Silver", "SkyBlue", "Slate", "Tan", "Turquoise", "Violet", "White", "Combat"
     },
     
     -- Theme 1: LurnaiHub
@@ -2483,6 +2483,53 @@ White = {
     Hover = Color3.fromRGB(135, 135, 135),
     HoverChange = 0.08,
  },
+
+	Combat = {
+    Name = "Combat",
+    Accent = Color3.fromRGB(255, 0, 0), -- Bright red
+    AcrylicMain = Color3.fromRGB(20, 0, 0),
+    AcrylicBorder = Color3.fromRGB(60, 0, 0),
+    AcrylicGradient = ColorSequence.new(Color3.fromRGB(40, 0, 0), Color3.fromRGB(10, 0, 0)),
+    AcrylicNoise = 0.8,
+
+    TitleBarLine = Color3.fromRGB(120, 0, 0),
+    Tab = Color3.fromRGB(200, 0, 0),
+
+    Element = Color3.fromRGB(200, 0, 0),
+    ElementBorder = Color3.fromRGB(80, 0, 0),
+    InElementBorder = Color3.fromRGB(120, 0, 0),
+    ElementTransparency = 0.75,
+
+    ToggleSlider = Color3.fromRGB(255, 0, 0),
+    ToggleToggled = Color3.fromRGB(255, 255, 255),
+
+    SliderRail = Color3.fromRGB(190, 50, 50),
+
+    DropdownFrame = Color3.fromRGB(45, 0, 0),
+    DropdownHolder = Color3.fromRGB(75, 0, 0),
+    DropdownBorder = Color3.fromRGB(200, 0, 0),
+    DropdownOption = Color3.fromRGB(255, 0, 0),
+
+    Keybind = Color3.fromRGB(190, 0, 0),
+
+    Input = Color3.fromRGB(200, 100, 100),
+    InputFocused = Color3.fromRGB(0, 0, 0),
+    InputIndicator = Color3.fromRGB(255, 0, 0),
+
+    Dialog = Color3.fromRGB(45, 0, 0),
+    DialogHolder = Color3.fromRGB(70, 0, 0),
+    DialogHolderLine = Color3.fromRGB(200, 0, 0),
+    DialogButton = Color3.fromRGB(45, 0, 0),
+    DialogButtonBorder = Color3.fromRGB(255, 0, 0),
+    DialogBorder = Color3.fromRGB(110, 0, 0),
+    DialogInput = Color3.fromRGB(55, 0, 0),
+    DialogInputLine = Color3.fromRGB(255, 0, 0),
+
+    Text = Color3.fromRGB(255, 255, 255),
+    SubText = Color3.fromRGB(225, 170, 170),
+    Hover = Color3.fromRGB(255, 50, 50),
+    HoverChange = 0.08,
+},
 }
 
 local Library = {
