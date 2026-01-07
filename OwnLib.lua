@@ -6,8 +6,8 @@ local e = game:GetService("Players")
 local f = game:GetService("CoreGui")
 local g = e.LocalPlayer; local h = g:GetMouse()
 local i = { 
-    Primary = Color3.fromRGB(255, 0, 255), -- Magenta
-    Secondary = Color3.fromRGB(0, 255, 255), -- Cyan
+    Primary = Color3.fromRGB(255, 0, 255), -- Magenta (will be rainbow)
+    Secondary = Color3.fromRGB(0, 255, 255), -- Cyan (will be rainbow)
     Accent = Color3.fromRGB(255, 255, 0), -- Yellow
     Success = Color3.fromRGB(0, 255, 0), -- Green
     Minimize = Color3.fromRGB(255, 165, 0), -- Orange
@@ -69,7 +69,9 @@ local l = {
     BlurEnabled = true, 
     SoundEnabled = true,
     RainbowEnabled = true, -- Enable rainbow effects
-    BlinkSpeed = 0.5 -- Blinking speed
+    BlinkSpeed = 0.5, -- Blinking speed
+    PrimaryBlinkSpeed = 1.0, -- Primary color blink speed
+    SecondaryBlinkSpeed = 0.8 -- Secondary color blink speed
 }
 local m = {}
 local function n(o, p, q)
@@ -102,7 +104,7 @@ end; local function x()
     end
 end; 
 
--- Fixed rainbow color generator with proper blinking
+-- Enhanced rainbow color generator with different speeds for primary/secondary
 local function getRainbowColor(time, speed, blinkSpeed)
     speed = speed or 1
     blinkSpeed = blinkSpeed or 0.5
@@ -240,10 +242,12 @@ end; function a.new(s)
         }
     }
     
-    -- Fixed rainbow animation system with proper blinking
+    -- Enhanced rainbow animation system with different speeds for primary/secondary
     local rainbowConnection = nil
     local rainbowObjects = {}
     local blinkObjects = {}
+    local primaryObjects = {} -- Track primary color objects
+    local secondaryObjects = {} -- Track secondary color objects
     local startTime = tick()
     
     local function startRainbowAnimation()
@@ -251,11 +255,55 @@ end; function a.new(s)
         startTime = tick()
         rainbowConnection = d.RenderStepped:Connect(function()
             local currentTime = tick() - startTime
-            local rainbowColor = getRainbowColor(currentTime, 0.8, l.BlinkSpeed) -- Faster rainbow
             
-            -- Update rainbow objects with blinking
+            -- Primary rainbow color with faster blinking
+            local primaryColor = getRainbowColor(currentTime, 0.8, l.PrimaryBlinkSpeed)
+            
+            -- Secondary rainbow color with different speed
+            local secondaryColor = getRainbowColor(currentTime + 120, 0.6, l.SecondaryBlinkSpeed) -- Offset phase
+            
+            -- Update primary color objects
+            for obj, properties in pairs(primaryObjects) do
+                if obj.Parent then
+                    for prop, _ in pairs(properties) do
+                        if prop == "BackgroundColor3" then
+                            obj.BackgroundColor3 = primaryColor
+                        elseif prop == "TextColor3" then
+                            obj.TextColor3 = primaryColor
+                        elseif prop == "ImageColor3" then
+                            obj.ImageColor3 = primaryColor
+                        elseif prop == "BorderColor3" then
+                            obj.BorderColor3 = primaryColor
+                        end
+                    end
+                else
+                    primaryObjects[obj] = nil
+                end
+            end
+            
+            -- Update secondary color objects
+            for obj, properties in pairs(secondaryObjects) do
+                if obj.Parent then
+                    for prop, _ in pairs(properties) do
+                        if prop == "BackgroundColor3" then
+                            obj.BackgroundColor3 = secondaryColor
+                        elseif prop == "TextColor3" then
+                            obj.TextColor3 = secondaryColor
+                        elseif prop == "ImageColor3" then
+                            obj.ImageColor3 = secondaryColor
+                        elseif prop == "BorderColor3" then
+                            obj.BorderColor3 = secondaryColor
+                        end
+                    end
+                else
+                    secondaryObjects[obj] = nil
+                end
+            end
+            
+            -- Update general rainbow objects
             for obj, properties in pairs(rainbowObjects) do
                 if obj.Parent then
+                    local rainbowColor = getRainbowColor(currentTime, 0.5, l.BlinkSpeed)
                     for prop, _ in pairs(properties) do
                         if prop == "BackgroundColor3" then
                             obj.BackgroundColor3 = rainbowColor
@@ -292,6 +340,16 @@ end; function a.new(s)
                 end
             end
         end)
+    end
+    
+    local function registerPrimaryObject(obj, properties)
+        primaryObjects[obj] = properties
+        startRainbowAnimation()
+    end
+    
+    local function registerSecondaryObject(obj, properties)
+        secondaryObjects[obj] = properties
+        startRainbowAnimation()
     end
     
     local function registerRainbowObject(obj, properties)
@@ -373,6 +431,10 @@ end; function a.new(s)
         a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = Color3.new(1, 1, 1); -- White text
         a6.TextSize = 18; a6.TextXAlignment = Enum.TextXAlignment.Left; a6.Font = Enum.Font.GothamBold; a6.Parent = am
         
+        -- Register title bar for primary rainbow effect
+        registerPrimaryObject(am, {BackgroundColor3 = true})
+        registerPrimaryObject(an, {BackgroundColor3 = true})
+        
         -- Add rainbow blinking title
         local titleGlow = Instance.new("TextLabel")
         titleGlow.Size = UDim2.new(1, -100, 1, 0)
@@ -399,6 +461,10 @@ end; function a.new(s)
         aA.Parent = az; local aB; local aC = m.CreateIcon(az, "Minus", UDim2.new(0, 16, 0, 16), UDim2.new(0.5, -8, 0.5,
             -8))
         m.AddHoverEffect(az, { BackgroundTransparency = 0.1 }, { BackgroundTransparency = 0.3 })
+        
+        -- Register minimize button for secondary rainbow
+        registerSecondaryObject(az, {BackgroundColor3 = true})
+        
         local a8 = Instance.new("TextButton")
         a8.Name = "Close"
         a8.Size = UDim2.new(0, 30, 0, 30)
@@ -408,6 +474,10 @@ end; function a.new(s)
         aD.CornerRadius = UDim.new(0, 8)
         aD.Parent = a8; local a9 = m.CreateIcon(a8, "X", UDim2.new(0, 16, 0, 16), UDim2.new(0.5, -8, 0.5, -8))
         a9.ImageColor3 = Color3.new(1, 1, 1); m.AddHoverEffect(a8, { BackgroundTransparency = 0.1 }, { BackgroundTransparency = 0.3 })
+        
+        -- Register close button for secondary rainbow
+        registerSecondaryObject(a8, {BackgroundColor3 = true})
+        
         local aE = false; local aF = aw.Size; az.MouseButton1Click:Connect(function()
             m.CreateRipple(az, h.X, h.Y)
             aE = not aE; if aE then
