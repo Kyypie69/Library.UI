@@ -540,15 +540,5 @@ end; function a.new(s)
     end; return af
 end; 
 
--- Change the background of the main window
-local function changeBackground(window, assetId)
-    local bg = Instance.new("ImageLabel")
-    bg.Name = "Background"
-    bg.Size = UDim2.new(1, 0, 1, 0)
-    bg.BackgroundTransparency = 1
-    bg.Image = "rbxassetid://115425612976846" .. assetId
-    bg.ScaleType = Enum.ScaleType.Slice
-    bg.SliceCenter = Rect.new(10, 10, 10, 10)
-    bg.ZIndex = 0
-    bg.Parent = window
-end
+
+return a
