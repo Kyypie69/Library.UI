@@ -58,7 +58,8 @@ local k = {
     Spring = TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), 
     Bounce = TweenInfo.new(0.4, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), 
     SlideIn = TweenInfo.new(0.8, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-    Rainbow = TweenInfo.new(0.7, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut) -- Smooth rainbow tween
+    Rainbow = TweenInfo.new(0.7, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), -- Smooth rainbow tween
+    Blink = TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut) -- Blinking tween
 }
 local l = { 
     MainColor = i.Primary, 
@@ -67,7 +68,8 @@ local l = {
     CanResize = true, 
     BlurEnabled = true, 
     SoundEnabled = true,
-    RainbowEnabled = true -- Enable rainbow effects
+    RainbowEnabled = true, -- Enable rainbow effects
+    BlinkSpeed = 0.5 -- Blinking speed
 }
 local m = {}
 local function n(o, p, q)
@@ -100,11 +102,13 @@ end; local function x()
     end
 end; 
 
--- Rainbow color generator function
-local function getRainbowColor(time, speed)
+-- Enhanced rainbow color generator with blinking
+local function getRainbowColor(time, speed, blinkSpeed)
     speed = speed or 1
+    blinkSpeed = blinkSpeed or 0.5
     local hue = (time * speed) % 360
-    return Color3.fromHSV(hue / 360, 0.8, 1)
+    local blink = math.sin(time * blinkSpeed * 10) * 0.3 + 0.7 -- Blinking effect
+    return Color3.fromHSV(hue / 360, 0.8, blink)
 end
 
 function m.Tween(C, D, E, F)
@@ -178,11 +182,11 @@ end; function Z:CreateNotification(a1, a2, a3, a4)
     local a6 = Instance.new("TextLabel")
     a6.Size = UDim2.new(1, -90, 0, 25)
     a6.Position = UDim2.new(0, 50, 0, 10)
-    a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = i.Text; a6.TextSize = 16; a6.TextXAlignment = Enum
+    a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = Color3.new(1, 1, 1); a6.TextSize = 16; a6.TextXAlignment = Enum
     .TextXAlignment.Left; a6.Font = Enum.Font.GothamMedium; a6.Parent = a5; local a7 = Instance.new("TextLabel")
     a7.Size = UDim2.new(1, -90, 0, 20)
     a7.Position = UDim2.new(0, 50, 0, 35)
-    a7.BackgroundTransparency = 1; a7.Text = a2; a7.TextColor3 = i.TextMuted; a7.TextSize = 14; a7.TextXAlignment = Enum
+    a7.BackgroundTransparency = 1; a7.Text = a2; a7.TextColor3 = Color3.new(0.8, 0.8, 0.8); a7.TextSize = 14; a7.TextXAlignment = Enum
     .TextXAlignment.Left; a7.Font = Enum.Font.Gotham; a7.TextWrapped = true; a7.Parent = a5; local a8 = Instance.new(
     "TextButton")
     a8.Size = UDim2.new(0, 20, 0, 20)
@@ -236,18 +240,20 @@ end; function a.new(s)
         }
     }
     
-    -- Rainbow animation system
+    -- Enhanced rainbow animation system with blinking
     local rainbowConnection = nil
     local rainbowObjects = {}
+    local blinkObjects = {}
+    local startTime = tick()
     
     local function startRainbowAnimation()
         if rainbowConnection then return end
-        local startTime = tick()
+        startTime = tick()
         rainbowConnection = d.RenderStepped:Connect(function()
             local currentTime = tick() - startTime
-            local rainbowColor = getRainbowColor(currentTime, 0.5)
+            local rainbowColor = getRainbowColor(currentTime, 0.5, l.BlinkSpeed)
             
-            -- Update all registered rainbow objects
+            -- Update rainbow objects with blinking
             for obj, properties in pairs(rainbowObjects) do
                 if obj.Parent then
                     for prop, _ in pairs(properties) do
@@ -265,11 +271,34 @@ end; function a.new(s)
                     rainbowObjects[obj] = nil
                 end
             end
+            
+            -- Update blink objects
+            for obj, properties in pairs(blinkObjects) do
+                if obj.Parent then
+                    local blinkAlpha = math.sin(currentTime * 5) * 0.5 + 0.5
+                    for prop, _ in pairs(properties) do
+                        if prop == "BackgroundTransparency" then
+                            obj.BackgroundTransparency = blinkAlpha * 0.5 + 0.3
+                        elseif prop == "TextTransparency" then
+                            obj.TextTransparency = blinkAlpha * 0.3 + 0.1
+                        elseif prop == "ImageTransparency" then
+                            obj.ImageTransparency = blinkAlpha * 0.3 + 0.1
+                        end
+                    end
+                else
+                    blinkObjects[obj] = nil
+                end
+            end
         end)
     end
     
     local function registerRainbowObject(obj, properties)
         rainbowObjects[obj] = properties
+        startRainbowAnimation()
+    end
+    
+    local function registerBlinkObject(obj, properties)
+        blinkObjects[obj] = properties
         startRainbowAnimation()
     end
     
@@ -310,9 +339,9 @@ end; function a.new(s)
         -- Add rainbow glow effect
         local glowFrame = Instance.new("Frame")
         glowFrame.Name = "RainbowGlow"
-        glowFrame.Size = UDim2.new(1, 4, 1, 4)
-        glowFrame.Position = UDim2.new(0, -2, 0, -2)
-        glowFrame.BackgroundTransparency = 0.8
+        glowFrame.Size = UDim2.new(1, 6, 1, 6)
+        glowFrame.Position = UDim2.new(0, -3, 0, -3)
+        glowFrame.BackgroundTransparency = 0.7
         glowFrame.BorderSizePixel = 0
         glowFrame.ZIndex = -1
         glowFrame.Parent = aw
@@ -322,6 +351,7 @@ end; function a.new(s)
         glowCorner.Parent = glowFrame
         
         registerRainbowObject(glowFrame, {BackgroundColor3 = true})
+        registerBlinkObject(glowFrame, {BackgroundTransparency = true})
         
         local am = Instance.new("Frame")
         am.Name = "TitleBar"
@@ -341,7 +371,7 @@ end; function a.new(s)
         a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = Color3.new(1, 1, 1); -- White text
         a6.TextSize = 18; a6.TextXAlignment = Enum.TextXAlignment.Left; a6.Font = Enum.Font.GothamBold; a6.Parent = am
         
-        -- Add white highlight to title
+        -- Add white highlight to title with blinking
         local titleHighlight = Instance.new("TextLabel")
         titleHighlight.Size = UDim2.new(1, -100, 1, 0)
         titleHighlight.Position = UDim2.new(0, 20, 0, 0)
@@ -355,6 +385,7 @@ end; function a.new(s)
         titleHighlight.Parent = am
         
         registerRainbowObject(titleHighlight, {TextColor3 = true})
+        registerBlinkObject(titleHighlight, {TextTransparency = true})
         
         local az = Instance.new("TextButton")
         az.Name = "Minimize"
@@ -482,7 +513,7 @@ end; function a.new(s)
                 b1.TextSize = 16; b1.TextXAlignment = Enum.TextXAlignment.Left; b1.Font = Enum
                 .Font.Gotham; b1.Parent = aY.Content; table.insert(self.Elements, b1)
                 
-                -- Add white highlight
+                -- Add rainbow blinking highlight
                 local highlight = Instance.new("TextLabel")
                 highlight.Size = UDim2.new(1, 0, 0, 25)
                 highlight.Position = UDim2.new(0, 0, 0, 0)
@@ -496,6 +527,7 @@ end; function a.new(s)
                 highlight.Parent = aY.Content
                 
                 registerRainbowObject(highlight, {TextColor3 = true})
+                registerBlinkObject(highlight, {TextTransparency = true})
                 
                 return b1
             end; function a_:AddButton(b0, F)
@@ -510,12 +542,15 @@ end; function a.new(s)
                 b2.CornerRadius = UDim.new(0, 8)
                 b2.Parent = S; m.AddHoverEffect(S, { BackgroundTransparency = 0.1 }, { BackgroundTransparency = 0.2 })
                 
-                -- Add white border
+                -- Add rainbow blinking border
                 local border = Instance.new("UIStroke")
                 border.Color = Color3.new(1, 1, 1)
-                border.Thickness = 1
+                border.Thickness = 2
                 border.Transparency = 0.5
                 border.Parent = S
+                
+                registerRainbowObject(border, {BorderColor3 = true})
+                registerBlinkObject(border, {Transparency = true})
                 
                 S.MouseButton1Click:Connect(function()
                     m.CreateRipple(S, h.X, h.Y)
