@@ -5,8 +5,15 @@ local d = game:GetService("RunService")
 local e = game:GetService("Players")
 local f = game:GetService("CoreGui")
 local g = e.LocalPlayer; local h = g:GetMouse()
+local RS = game:GetService("RunService")
+local hue = 0
+RS.Heartbeat:Connect(function(dt)
+    hue = (hue + dt * 0.3) % 1          -- 0-1 rainbow cycle speed
+    Primary = Color3.fromHSV(hue, 1, 1) -- full-saturation rainbow
+end)
+
 local i = { 
-    Primary = Color3.fromRGB(255, 0, 255), -- Magenta
+    Primary = Color3.new(1,1,1),   -- placeholder; will be overwritten immediately
     Secondary = Color3.fromRGB(0, 255, 255), -- Cyan
     Accent = Color3.fromRGB(255, 255, 0), -- Yellow
     Success = Color3.fromRGB(0, 255, 0), -- Green
