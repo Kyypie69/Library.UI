@@ -546,14 +546,9 @@ local function changeBackground(window, assetId)
     bg.Name = "Background"
     bg.Size = UDim2.new(1, 0, 1, 0)
     bg.BackgroundTransparency = 1
-    bg.Image = "rbxassetid://" .. assetId
+    bg.Image = "rbxassetid://115425612976846" .. assetId
     bg.ScaleType = Enum.ScaleType.Slice
     bg.SliceCenter = Rect.new(10, 10, 10, 10)
     bg.ZIndex = 0
     bg.Parent = window
 end
-
--- Example usage
-local ui = a.new()
-local window = ui:CreateWindow("My Window")
-changeBackground(window.Window, "115425612976846")
