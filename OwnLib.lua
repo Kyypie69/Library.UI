@@ -5,15 +5,8 @@ local d = game:GetService("RunService")
 local e = game:GetService("Players")
 local f = game:GetService("CoreGui")
 local g = e.LocalPlayer; local h = g:GetMouse()
-local RS = game:GetService("RunService")
-local hue = 0
-RS.Heartbeat:Connect(function(dt)
-    hue = (hue + dt * 0.3) % 1          -- 0-1 rainbow cycle speed
-    Primary = Color3.fromHSV(hue, 1, 1) -- full-saturation rainbow
-end)
-
 local i = { 
-    Primary = Color3.new(1,1,1),   -- placeholder; will be overwritten immediately
+    Primary = Color3.fromRGB(255, 0, 255), -- Magenta
     Secondary = Color3.fromRGB(0, 255, 255), -- Cyan
     Accent = Color3.fromRGB(255, 255, 0), -- Yellow
     Success = Color3.fromRGB(0, 255, 0), -- Green
@@ -109,13 +102,13 @@ end; local function x()
     end
 end; 
 
--- Enhanced rainbow color generator with blinking
+-- Fixed rainbow color generator with proper blinking
 local function getRainbowColor(time, speed, blinkSpeed)
     speed = speed or 1
     blinkSpeed = blinkSpeed or 0.5
-    local hue = (time * speed) % 360
-    local blink = math.sin(time * blinkSpeed * 10) * 0.3 + 0.7 -- Blinking effect
-    return Color3.fromHSV(hue / 360, 0.8, blink)
+    local hue = (time * speed * 50) % 360 -- Faster color change
+    local blink = math.sin(time * blinkSpeed * 8) * 0.4 + 0.6 -- Stronger blinking
+    return Color3.fromHSV(hue / 360, 1, blink) -- Full saturation
 end
 
 function m.Tween(C, D, E, F)
@@ -247,7 +240,7 @@ end; function a.new(s)
         }
     }
     
-    -- Enhanced rainbow animation system with blinking
+    -- Fixed rainbow animation system with proper blinking
     local rainbowConnection = nil
     local rainbowObjects = {}
     local blinkObjects = {}
@@ -258,7 +251,7 @@ end; function a.new(s)
         startTime = tick()
         rainbowConnection = d.RenderStepped:Connect(function()
             local currentTime = tick() - startTime
-            local rainbowColor = getRainbowColor(currentTime, 0.5, l.BlinkSpeed)
+            local rainbowColor = getRainbowColor(currentTime, 0.8, l.BlinkSpeed) -- Faster rainbow
             
             -- Update rainbow objects with blinking
             for obj, properties in pairs(rainbowObjects) do
@@ -282,14 +275,16 @@ end; function a.new(s)
             -- Update blink objects
             for obj, properties in pairs(blinkObjects) do
                 if obj.Parent then
-                    local blinkAlpha = math.sin(currentTime * 5) * 0.5 + 0.5
+                    local blinkAlpha = math.sin(currentTime * 6) * 0.5 + 0.5 -- Faster blinking
                     for prop, _ in pairs(properties) do
                         if prop == "BackgroundTransparency" then
-                            obj.BackgroundTransparency = blinkAlpha * 0.5 + 0.3
+                            obj.BackgroundTransparency = blinkAlpha * 0.3 + 0.4
                         elseif prop == "TextTransparency" then
-                            obj.TextTransparency = blinkAlpha * 0.3 + 0.1
+                            obj.TextTransparency = blinkAlpha * 0.2 + 0.1
                         elseif prop == "ImageTransparency" then
-                            obj.ImageTransparency = blinkAlpha * 0.3 + 0.1
+                            obj.ImageTransparency = blinkAlpha * 0.2 + 0.1
+                        elseif prop == "Transparency" then
+                            obj.Transparency = blinkAlpha * 0.4 + 0.3
                         end
                     end
                 else
@@ -343,12 +338,12 @@ end; function a.new(s)
         .CreateGlassEffect(aw, 0.3)
         m.CreateShadow(aw, 8, 4)
         
-        -- Add rainbow glow effect
+        -- Add rainbow glow effect with blinking
         local glowFrame = Instance.new("Frame")
         glowFrame.Name = "RainbowGlow"
-        glowFrame.Size = UDim2.new(1, 6, 1, 6)
-        glowFrame.Position = UDim2.new(0, -3, 0, -3)
-        glowFrame.BackgroundTransparency = 0.7
+        glowFrame.Size = UDim2.new(1, 8, 1, 8)
+        glowFrame.Position = UDim2.new(0, -4, 0, -4)
+        glowFrame.BackgroundTransparency = 0.6
         glowFrame.BorderSizePixel = 0
         glowFrame.ZIndex = -1
         glowFrame.Parent = aw
@@ -378,21 +373,21 @@ end; function a.new(s)
         a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = Color3.new(1, 1, 1); -- White text
         a6.TextSize = 18; a6.TextXAlignment = Enum.TextXAlignment.Left; a6.Font = Enum.Font.GothamBold; a6.Parent = am
         
-        -- Add white highlight to title with blinking
-        local titleHighlight = Instance.new("TextLabel")
-        titleHighlight.Size = UDim2.new(1, -100, 1, 0)
-        titleHighlight.Position = UDim2.new(0, 20, 0, 0)
-        titleHighlight.BackgroundTransparency = 1
-        titleHighlight.Text = a1
-        titleHighlight.TextColor3 = Color3.new(1, 1, 1)
-        titleHighlight.TextSize = 18
-        titleHighlight.TextXAlignment = Enum.TextXAlignment.Left
-        titleHighlight.Font = Enum.Font.GothamBold
-        titleHighlight.ZIndex = a6.ZIndex - 1
-        titleHighlight.Parent = am
+        -- Add rainbow blinking title
+        local titleGlow = Instance.new("TextLabel")
+        titleGlow.Size = UDim2.new(1, -100, 1, 0)
+        titleGlow.Position = UDim2.new(0, 20, 0, 0)
+        titleGlow.BackgroundTransparency = 1
+        titleGlow.Text = a1
+        titleGlow.TextColor3 = Color3.new(1, 1, 1)
+        titleGlow.TextSize = 18
+        titleGlow.TextXAlignment = Enum.TextXAlignment.Left
+        titleGlow.Font = Enum.Font.GothamBold
+        titleGlow.ZIndex = a6.ZIndex - 1
+        titleGlow.Parent = am
         
-        registerRainbowObject(titleHighlight, {TextColor3 = true})
-        registerBlinkObject(titleHighlight, {TextTransparency = true})
+        registerRainbowObject(titleGlow, {TextColor3 = true})
+        registerBlinkObject(titleGlow, {TextTransparency = true})
         
         local az = Instance.new("TextButton")
         az.Name = "Minimize"
