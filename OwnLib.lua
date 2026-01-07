@@ -5,53 +5,25 @@ local d = game:GetService("RunService")
 local e = game:GetService("Players")
 local f = game:GetService("CoreGui")
 local g = e.LocalPlayer; local h = g:GetMouse()
-local i = { 
-    Primary = Color3.fromRGB(123, 104, 238), -- Purple color similar to Muscle Legends
-    Secondary = Color3.fromRGB(75, 0, 130), -- Darker purple
-    Accent = Color3.fromRGB(135, 206, 235), -- Light blue accent
-    Success = Color3.fromRGB(72, 187, 120), -- Green for success
-    Minimize = Color3.fromRGB(138, 43, 226), -- Minimize button color
-    Warning = Color3.fromRGB(245, 158, 11), -- Orange for warnings
-    Error = Color3.fromRGB(239, 68, 68), -- Red for errors
-    Background = Color3.fromRGB(15, 23, 42), -- Dark background
-    Surface = Color3.fromRGB(30, 41, 59), -- Surface color
-    Glass = Color3.fromRGB(0, 104, 139), -- Glass effect color
-    Text = Color3.fromRGB(255, 255, 255), -- White text
-    TextMuted = Color3.fromRGB(148, 163, 184), -- Lighter text for muted elements
-    Border = Color3.fromRGB(10, 10, 10) -- Border color
-}
-local j = { 
-    ChevronRight = "rbxassetid://10709759895",
-    ChevronDown = "rbxassetid://10709767827",
-    X = "rbxassetid://10747384394",
-    Check = "rbxassetid://10709790644",
-    Settings = "rbxassetid://10734950309",
-    User = "rbxassetid://10747373176",
-    Home = "rbxassetid://10723407389",
-    Search = "rbxassetid://7733921320",
-    Bell = "rbxassetid://10709775704",
-    Heart = "rbxassetid://10723406885",
-    Star = "rbxassetid://10734966248",
-    Plus = "rbxassetid://10734924532",
-    Minus = "rbxassetid://10734896206",
-    Edit = "rbxassetid://10734883598",
-    Trash = "rbxassetid://10747362393",
-    Eye = "rbxassetid://10723346959",
-    EyeOff = "rbxassetid://10723346871",
-    Lock = "rbxassetid://10723434711",
-    Unlock = "rbxassetid://10747366027",
-    Download = "rbxassetid://10723344270",
-    Upload = "rbxassetid://10747366434",
-    RefreshCw = "rbxassetid://10734933056",
-    Copy = "rbxassetid://10709812159",
-    ExternalLink = "rbxassetid://10723346684",
-    Info = "rbxassetid://10723415903",
-    AlertCircle = "rbxassetid://10709752996",
-    CheckCircle = "rbxassetid://10709790387",
-    XCircle = "rbxassetid://10747383819",
-    Minimize = "http://www.roblox.com/asset?id=115425612976846" -- Update with the correct image URL
-}
-local k = { Fast = TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), Normal = TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), Slow = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), Spring = TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), Bounce = TweenInfo.new(0.4, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), SlideIn = TweenInfo.new(0.8, Enum.EasingStyle.Quart, Enum.EasingDirection.Out) }
+local i = { Primary = Color3.fromRGB(25, 25, 112), Secondary = Color3.fromRGB(75, 0, 130), Accent = Color3.fromRGB(135, 206, 235), Success = Color3.fromRGB(72, 187, 120), Minimize = Color3.fromRGB(138, 43, 226), Warning = Color3.fromRGB(
+245, 158, 11), Error = Color3.fromRGB(239, 68, 68), Background = Color3.fromRGB(15, 23, 42), Surface = Color3.fromRGB(30,
+    41, 59), Glass = Color3.fromRGB(0, 104, 139), Text = Color3.fromRGB(255, 255, 255), TextMuted = Color3.fromRGB(148,
+    163, 184), Border = Color3.fromRGB(10, 10, 10) }
+local j = { ChevronRight = "rbxassetid://10709759895", ChevronDown = "rbxassetid://10709767827", X =
+"rbxassetid://10747384394", Check = "rbxassetid://10709790644", Settings = "rbxassetid://10734950309", User =
+"rbxassetid://10747373176", Home = "rbxassetid://10723407389", Search = "rbxassetid://7733921320", Bell =
+"rbxassetid://10709775704", Heart = "rbxassetid://10723406885", Star = "rbxassetid://10734966248", Plus =
+"rbxassetid://10734924532", Minus = "rbxassetid://10734896206", Edit = "rbxassetid://10734883598", Trash =
+"rbxassetid://10747362393", Eye = "rbxassetid://10723346959", EyeOff = "rbxassetid://10723346871", Lock =
+"rbxassetid://10723434711", Unlock = "rbxassetid://10747366027", Download = "rbxassetid://10723344270", Upload =
+"rbxassetid://10747366434", RefreshCw = "rbxassetid://10734933056", Copy = "rbxassetid://10709812159", ExternalLink =
+"rbxassetid://10723346684", Info = "rbxassetid://10723415903", AlertCircle = "rbxassetid://10709752996", CheckCircle =
+"rbxassetid://10709790387", XCircle = "rbxassetid://10747383819" }
+local k = { Fast = TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), Normal = TweenInfo.new(0.3,
+    Enum.EasingStyle.Quart, Enum.EasingDirection.Out), Slow = TweenInfo.new(0.5, Enum.EasingStyle.Quart,
+    Enum.EasingDirection.Out), Spring = TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), Bounce =
+TweenInfo.new(0.4, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), SlideIn = TweenInfo.new(0.8,
+    Enum.EasingStyle.Quart, Enum.EasingDirection.Out) }
 local l = { MainColor = i.Primary, MinSize = Vector2.new(420, 300), ToggleKey = Enum.KeyCode.RightShift, CanResize = true, BlurEnabled = true, SoundEnabled = true }
 local m = {}
 local function n(o, p, q)
@@ -190,7 +162,7 @@ end; function a.new(s)
     Z:Initialize(_)
     c.InputBegan:Connect(function(ad, ae) if not ae and ad.KeyCode == s.ToggleKey then _.Enabled = not _.Enabled end end)
     local af = { ScreenGui = _, Config = s, Windows = {}, NotificationSystem = Z }
-    function af:Notify(a1, a2, a3, a4) return self.NotificationSystem:CreateNotification(a1, a2, a3, a4) end; local ag = { Default = { Primary = i.Primary, Minimize = i.Minimize, Accent = i.Accent, Background = i.Background, Surface = i.Surface, Glass = i.Glass, Text = i.Text, TextMuted = i.TextMuted, Border = i.Border, Error = i.Error, Success = i.Success, Warning = i.Warning }, Dark = { Primary = Color3.fromRGB(98, 0, 238), Minimize = Color3.fromRGB(98, 0, 238), Accent = Color3.fromRGB(255, 105, 180), Background = Color3.fromRGB(10, 12, 16), Surface = Color3.fromRGB(20, 24, 30), Glass = Color3.fromRGB(14, 18, 24), Text = Color3.fromRGB(235, 235, 240), TextMuted = Color3.fromRGB(140, 150, 170), Border = Color3.fromRGB(40, 45, 55), Error = Color3.fromRGB(239, 68, 68), Success = Color3.fromRGB(72, 187, 120), Warning = Color3.fromRGB(245, 158, 11) }, Light = { Primary = Color3.fromRGB(99, 102, 241), Minimize = Color3.fromRGB(99, 102, 241), Accent = Color3.fromRGB(236, 72, 153), Background = Color3.fromRGB(250, 250, 253), Surface = Color3.fromRGB(255, 255, 255), Glass = Color3.fromRGB(245, 245, 250), Text = Color3.fromRGB(17, 24, 39), TextMuted = Color3.fromRGB(107, 114, 128), Border = Color3.fromRGB(228, 232, 240), Error = Color3.fromRGB(220, 38, 38), Success = Color3.fromRGB(16, 185, 129), Warning = Color3.fromRGB(245, 158, 11) }, Purple = { Primary = Color3.fromRGB(138, 43, 226), Minimize = Color3.fromRGB(138, 43, 226), Accent = Color3.fromRGB(255, 105, 180), Background = Color3.fromRGB(18, 6, 44), Surface = Color3.fromRGB(32, 14, 56), Glass = Color3.fromRGB(26, 8, 46), Text = Color3.fromRGB(248, 250, 252), TextMuted = Color3.fromRGB(168, 162, 190), Border = Color3.fromRGB(94, 65, 140) }, Blue = { Primary = Color3.fromRGB(59, 130, 246), Minimize = Color3.fromRGB(59, 130, 246), Accent = Color3.fromRGB(99, 102, 241), Background = Color3.fromRGB(8, 14, 22), Surface = Color3.fromRGB(16, 24, 34), Glass = Color3.fromRGB(12, 20, 30), Text = Color3.fromRGB(248, 250, 252), TextMuted = Color3.fromRGB(148, 163, 184), Border = Color3.fromRGB(40, 50, 65) }, Sunset = { Primary = Color3.fromRGB(249, 115, 22), Minimize = Color3.fromRGB(249, 115, 22), Accent = Color3.fromRGB(236, 72, 153), Background = Color3.fromRGB(25, 18, 35), Surface = Color3.fromRGB(40, 25, 45), Glass = Color3.fromRGB(34, 22, 38), Text = Color3.fromRGB(250, 245, 240), TextMuted = Color3.fromRGB(170, 150, 140), Border = Color3.fromRGB(80, 60, 70) }, Forest = { Primary = Color3.fromRGB(16, 185, 129), Minimize = Color3.fromRGB(16, 185, 129), Accent = Color3.fromRGB(59, 130, 246), Background = Color3.fromRGB(8, 20, 14), Surface = Color3.fromRGB(14, 30, 20), Glass = Color3.fromRGB(12, 26, 18), Text = Color3.fromRGB(240, 250, 240), TextMuted = Color3.fromRGB(150, 170, 150), Border = Color3.fromRGB(30, 50, 35) }, Monochrome = { Primary = Color3.fromRGB(120, 120, 120), Minimize = Color3.fromRGB(120, 120, 120), Accent = Color3.fromRGB(160, 160, 160), Background = Color3.fromRGB(18, 18, 18), Surface = Color3.fromRGB(30, 30, 30), Glass = Color3.fromRGB(24, 24, 24), Text = Color3.fromRGB(230, 230, 230), TextMuted = Color3.fromRGB(150, 150, 150), Border = Color3.fromRGB(50, 50, 50) }, Ocean = { Primary = Color3.fromRGB(20, 184, 166), Minimize = Color3.fromRGB(20, 184, 166), Accent = Color3.fromRGB(59, 130, 246), Background = Color3.fromRGB(6, 22, 29), Surface = Color3.fromRGB(12, 30, 36), Glass = Color3.fromRGB(10, 26, 32), Text = Color3.fromRGB(240, 250, 250), TextMuted = Color3.fromRGB(140, 160, 160), Border = Color3.fromRGB(28, 46, 50) }, Solarized = { Primary = Color3.fromRGB(38, 139, 210), Minimize = Color3.fromRGB(38, 139, 210), Accent = Color3.fromRGB(211, 54, 130), Background = Color3.fromRGB(0, 43, 54), Surface = Color3.fromRGB(7, 54, 66), Glass = Color3.fromRGB(10, 60, 70), Text = Color3.fromRGB(253, 246, 227), TextMuted = Color3.fromRGB(147, 161, 161), Border = Color3.fromRGB(88, 110, 117) } }
+    function af:Notify(a1, a2, a3, a4) return self.NotificationSystem:CreateNotification(a1, a2, a3, a4) end; local ag = { Default = { Primary = i.Primary, Minimize = i.Minimize, Accent = i.Accent, Background = i.Background, Surface = i.Surface, Glass = i.Glass, Text = i.Text, TextMuted = i.TextMuted, Border = i.Border, Error = i.Error, Success = i.Success, Warning = i.Warning }, Dark = { Primary = Color3.fromRGB(98, 0, 238), Minimize = Color3.fromRGB(98, 0, 238), Accent = Color3.fromRGB(255, 105, 180), Background = Color3.fromRGB(10, 12, 16), Surface = Color3.fromRGB(20, 24, 30), Glass = Color3.fromRGB(14, 18, 24), Text = Color3.fromRGB(235, 245, 250), TextMuted = Color3.fromRGB(140, 150, 170), Border = Color3.fromRGB(40, 45, 55), Error = Color3.fromRGB(239, 68, 68), Success = Color3.fromRGB(72, 187, 120), Warning = Color3.fromRGB(245, 158, 11) }, Light = { Primary = Color3.fromRGB(99, 102, 241), Minimize = Color3.fromRGB(99, 102, 241), Accent = Color3.fromRGB(236, 72, 153), Background = Color3.fromRGB(250, 250, 253), Surface = Color3.fromRGB(255, 255, 255), Glass = Color3.fromRGB(245, 245, 250), Text = Color3.fromRGB(17, 24, 39), TextMuted = Color3.fromRGB(107, 114, 128), Border = Color3.fromRGB(228, 232, 240), Error = Color3.fromRGB(220, 38, 38), Success = Color3.fromRGB(16, 185, 129), Warning = Color3.fromRGB(245, 158, 11) }, Purple = { Primary = Color3.fromRGB(138, 43, 226), Minimize = Color3.fromRGB(138, 43, 226), Accent = Color3.fromRGB(255, 105, 180), Background = Color3.fromRGB(18, 6, 44), Surface = Color3.fromRGB(32, 14, 56), Glass = Color3.fromRGB(26, 8, 46), Text = Color3.fromRGB(248, 250, 252), TextMuted = Color3.fromRGB(168, 162, 190), Border = Color3.fromRGB(94, 65, 140) }, Blue = { Primary = Color3.fromRGB(59, 130, 246), Minimize = Color3.fromRGB(59, 130, 246), Accent = Color3.fromRGB(99, 102, 241), Background = Color3.fromRGB(8, 14, 22), Surface = Color3.fromRGB(16, 24, 34), Glass = Color3.fromRGB(12, 20, 30), Text = Color3.fromRGB(248, 250, 252), TextMuted = Color3.fromRGB(148, 163, 184), Border = Color3.fromRGB(40, 50, 65) }, Sunset = { Primary = Color3.fromRGB(249, 115, 22), Minimize = Color3.fromRGB(249, 115, 22), Accent = Color3.fromRGB(236, 72, 153), Background = Color3.fromRGB(25, 18, 35), Surface = Color3.fromRGB(40, 25, 45), Glass = Color3.fromRGB(34, 22, 38), Text = Color3.fromRGB(250, 245, 240), TextMuted = Color3.fromRGB(170, 150, 140), Border = Color3.fromRGB(80, 60, 70) }, Forest = { Primary = Color3.fromRGB(16, 185, 129), Minimize = Color3.fromRGB(16, 185, 129), Accent = Color3.fromRGB(59, 130, 246), Background = Color3.fromRGB(8, 20, 14), Surface = Color3.fromRGB(14, 30, 20), Glass = Color3.fromRGB(12, 26, 18), Text = Color3.fromRGB(240, 250, 240), TextMuted = Color3.fromRGB(150, 170, 150), Border = Color3.fromRGB(30, 50, 35) }, Monochrome = { Primary = Color3.fromRGB(120, 120, 120), Minimize = Color3.fromRGB(120, 120, 120), Accent = Color3.fromRGB(160, 160, 160), Background = Color3.fromRGB(18, 18, 18), Surface = Color3.fromRGB(30, 30, 30), Glass = Color3.fromRGB(24, 24, 24), Text = Color3.fromRGB(230, 230, 230), TextMuted = Color3.fromRGB(150, 150, 150), Border = Color3.fromRGB(50, 50, 50) }, Ocean = { Primary = Color3.fromRGB(20, 184, 166), Minimize = Color3.fromRGB(20, 184, 166), Accent = Color3.fromRGB(59, 130, 246), Background = Color3.fromRGB(6, 22, 29), Surface = Color3.fromRGB(12, 30, 36), Glass = Color3.fromRGB(10, 26, 32), Text = Color3.fromRGB(240, 250, 250), TextMuted = Color3.fromRGB(140, 160, 160), Border = Color3.fromRGB(28, 46, 50) }, Solarized = { Primary = Color3.fromRGB(38, 139, 210), Minimize = Color3.fromRGB(38, 139, 210), Accent = Color3.fromRGB(211, 54, 130), Background = Color3.fromRGB(0, 43, 54), Surface = Color3.fromRGB(7, 54, 66), Glass = Color3.fromRGB(10, 60, 70), Text = Color3.fromRGB(253, 246, 227), TextMuted = Color3.fromRGB(147, 161, 161), Border = Color3.fromRGB(88, 110, 117) } }
     function af:SetTheme(ah)
         local ai = ag[ah]
         if not ai then return end; for ab, ac in pairs(ai) do i[ab] = ac end; self.Config.MainColor = ai.Primary or
@@ -309,7 +281,7 @@ end; function a.new(s)
         local aO = Instance.new("Frame")
         aO.Name = "TabContent"
         aO.Size = UDim2.new(1, 0, 1, -45)
-        aO.BackgroundTransparency = 1; aO.LayoutOrder = 2; aO.Parent = aB; local aP = { Window = aw, Content = aO, Tabs = {}, ActiveTab = nil, IsMinimized = function() return
+        aO.BackgroundTransparency = 1; aO.Parent = aB; local aP = { Window = aw, Content = aO, Tabs = {}, ActiveTab = nil, IsMinimized = function() return
             aE end }
         function aP:CreateTab(aQ, I)
             aQ = aQ or "New Tab"
@@ -568,4 +540,20 @@ end; function a.new(s)
     end; return af
 end; 
 
-return a
+-- Change the background of the main window
+local function changeBackground(window, assetId)
+    local bg = Instance.new("ImageLabel")
+    bg.Name = "Background"
+    bg.Size = UDim2.new(1, 0, 1, 0)
+    bg.BackgroundTransparency = 1
+    bg.Image = "rbxassetid://" .. assetId
+    bg.ScaleType = Enum.ScaleType.Slice
+    bg.SliceCenter = Rect.new(10, 10, 10, 10)
+    bg.ZIndex = 0
+    bg.Parent = window
+end
+
+-- Example usage
+local ui = a.new()
+local window = ui:CreateWindow("My Window")
+changeBackground(window.Window, "115425612976846")
