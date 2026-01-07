@@ -6,19 +6,20 @@ local e = game:GetService("Players")
 local f = game:GetService("CoreGui")
 local g = e.LocalPlayer; local h = g:GetMouse()
 local i = { 
-    Primary = Color3.fromRGB(255, 140, 0), -- Muscle Orange
-    Secondary = Color3.fromRGB(220, 20, 60), -- Power Red
-    Accent = Color3.fromRGB(255, 215, 0), -- Gold
-    Success = Color3.fromRGB(50, 205, 50), -- Strong Green
-    Minimize = Color3.fromRGB(255, 165, 0), -- Bright Orange
-    Warning = Color3.fromRGB(255, 165, 0), -- Orange Warning
-    Error = Color3.fromRGB(220, 20, 60), -- Red Error
-    Background = Color3.fromRGB(25, 25, 25), -- Dark Gray
-    Surface = Color3.fromRGB(45, 45, 45), -- Lighter Gray
-    Glass = Color3.fromRGB(40, 40, 40), -- Glass Effect
-    Text = Color3.fromRGB(255, 255, 255), -- White Text
-    TextMuted = Color3.fromRGB(200, 200, 200), -- Muted White
-    Border = Color3.fromRGB(255, 140, 0) -- Orange Border
+    Primary = Color3.fromRGB(255, 0, 255), -- Magenta
+    Secondary = Color3.fromRGB(0, 255, 255), -- Cyan
+    Accent = Color3.fromRGB(255, 255, 0), -- Yellow
+    Success = Color3.fromRGB(0, 255, 0), -- Green
+    Minimize = Color3.fromRGB(255, 165, 0), -- Orange
+    Warning = Color3.fromRGB(255, 140, 0), -- Orange
+    Error = Color3.fromRGB(255, 0, 0), -- Red
+    Background = Color3.fromRGB(10, 10, 10), -- Near black
+    Surface = Color3.fromRGB(20, 20, 20), -- Dark surface
+    Glass = Color3.fromRGB(15, 15, 15), -- Dark glass
+    Text = Color3.fromRGB(30, 30, 30), -- Dark text
+    TextMuted = Color3.fromRGB(60, 60, 60), -- Muted dark text
+    Border = Color3.fromRGB(255, 255, 255), -- White border for contrast
+    Rainbow = true -- Rainbow effect flag
 }
 local j = { 
     ChevronRight = "rbxassetid://10709759895", 
@@ -48,13 +49,7 @@ local j = {
     Info = "rbxassetid://10723415903", 
     AlertCircle = "rbxassetid://10709752996", 
     CheckCircle = "rbxassetid://10709790387", 
-    XCircle = "rbxassetid://10747383819",
-    -- Muscle Legends specific icons
-    Dumbbell = "rbxassetid://11542612345", -- Muscle icon
-    Strength = "rbxassetid://11542612346", -- Strength symbol
-    Power = "rbxassetid://11542612347", -- Power icon
-    Flex = "rbxassetid://11542612348", -- Flexing arm
-    Gym = "rbxassetid://11542612349" -- Gym equipment
+    XCircle = "rbxassetid://10747383819"
 }
 local k = { 
     Fast = TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), 
@@ -63,16 +58,16 @@ local k = {
     Spring = TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), 
     Bounce = TweenInfo.new(0.4, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), 
     SlideIn = TweenInfo.new(0.8, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-    Muscle = TweenInfo.new(0.3, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out) -- Muscle-themed tween
+    Rainbow = TweenInfo.new(0.7, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut) -- Smooth rainbow tween
 }
 local l = { 
     MainColor = i.Primary, 
-    MinSize = Vector2.new(450, 350), -- Slightly larger for muscle legends feel
+    MinSize = Vector2.new(420, 300), 
     ToggleKey = Enum.KeyCode.RightShift, 
     CanResize = true, 
     BlurEnabled = true, 
     SoundEnabled = true,
-    Theme = "Muscle Legends" -- Custom theme identifier
+    RainbowEnabled = true -- Enable rainbow effects
 }
 local m = {}
 local function n(o, p, q)
@@ -100,10 +95,19 @@ end; local function x()
         local v, w = pcall(gethui)
         if v and w then table.insert(y, w) end
     end; for z, A in ipairs(y) do
-        local B = A:FindFirstChild("EleriumV2")
+        local B = A:FindFirstChild("RainbowV2")
         if B then B:Destroy() end
     end
-end; function m.Tween(C, D, E, F)
+end; 
+
+-- Rainbow color generator function
+local function getRainbowColor(time, speed)
+    speed = speed or 1
+    local hue = (time * speed) % 360
+    return Color3.fromHSV(hue / 360, 0.8, 1)
+end
+
+function m.Tween(C, D, E, F)
     local G = b:Create(C, D, E)
     if F then G.Completed:Connect(F) end; G:Play()
     return G
@@ -112,7 +116,8 @@ end; function m.CreateIcon(H, I, J, K)
     K = K or UDim2.new(0, 0, 0, 0)
     local L = Instance.new("ImageLabel")
     L.Size = J; L.Position = K; L.BackgroundTransparency = 1; L.Image = j[I] or ""
-    L.ImageColor3 = i.Text; L.ScaleType = Enum.ScaleType.Fit; L.Parent = H; return L
+    L.ImageColor3 = Color3.new(1, 1, 1); -- White icons for contrast
+    L.ScaleType = Enum.ScaleType.Fit; L.Parent = H; return L
 end; function m.CreateGlassEffect(H, M)
     M = M or 0.15; local N = Instance.new("Frame")
     N.Name = "GlassEffect"
@@ -121,25 +126,26 @@ end; function m.CreateGlassEffect(H, M)
     .new("UICorner")
     O.CornerRadius = UDim.new(0, 12)
     O.Parent = N; local P = Instance.new("UIStroke")
-    P.Color = i.Border; P.Thickness = 1; P.Transparency = 0.5; P.Parent = N; return N
+    P.Color = i.Border; P.Thickness = 2; P.Transparency = 0.3; P.Parent = N; return N
 end; function m.CreateShadow(H, J, Q)
-    J = J or 6; Q = Q or 2; local R = Instance.new("ImageLabel")
+    J = J or 8; Q = Q or 3; local R = Instance.new("ImageLabel")
     R.Name = "DropShadow"
     R.Size = UDim2.new(1, J * 2, 1, J * 2)
     R.Position = UDim2.new(0, -J + Q, 0, -J + Q)
     R.BackgroundTransparency = 1; R.Image = ""
     R.ImageColor3 = Color3.new(0, 0, 0)
-    R.ImageTransparency = 0.7; R.ScaleType = Enum.ScaleType.Slice; R.SliceCenter = Rect.new(10, 10, 10, 10)
+    R.ImageTransparency = 0.6; R.ScaleType = Enum.ScaleType.Slice; R.SliceCenter = Rect.new(10, 10, 10, 10)
     R.ZIndex = H.ZIndex - 1; R.Parent = H.Parent; return R
 end; function m.CreateRipple(S, T, U) spawn(function()
         S.ClipsDescendants = true; local V = Instance.new("Frame")
         V.Size = UDim2.new(0, 0, 0, 0)
-        V.BackgroundColor3 = i.Text; V.BackgroundTransparency = 0.8; V.BorderSizePixel = 0; V.Parent = S; local O =
+        V.BackgroundColor3 = Color3.new(1, 1, 1); -- White ripple
+        V.BackgroundTransparency = 0.8; V.BorderSizePixel = 0; V.Parent = S; local O =
         Instance.new("UICorner")
         O.CornerRadius = UDim.new(1, 0)
         O.Parent = V; local J = math.max(S.AbsoluteSize.X, S.AbsoluteSize.Y) * 2; V.Position = UDim2.new(0,
             T - S.AbsolutePosition.X, 0, U - S.AbsolutePosition.Y)
-        m.Tween(V, k.Muscle, -- Use muscle-themed tween
+        m.Tween(V, k.Rainbow,
             { Size = UDim2.new(0, J, 0, J), Position = UDim2.new(0, T - S.AbsolutePosition.X - J / 2, 0,
                 U - S.AbsolutePosition.Y - J / 2), BackgroundTransparency = 1 }, function() V:Destroy() end)
     end) end; function m.AddHoverEffect(W, X, Y)
@@ -151,15 +157,15 @@ Z.Notifications = {}
 Z.Container = nil; function Z:Initialize(_)
     self.Container = Instance.new("Frame")
     self.Container.Name = "NotificationContainer"
-    self.Container.Size = UDim2.new(0, 320, 1, 0) -- Slightly wider
-    self.Container.Position = UDim2.new(1, -340, 0, 20)
+    self.Container.Size = UDim2.new(0, 300, 1, 0)
+    self.Container.Position = UDim2.new(1, -320, 0, 20)
     self.Container.BackgroundTransparency = 1; self.Container.Parent = _; local a0 = Instance.new("UIListLayout")
-    a0.SortOrder = Enum.SortOrder.LayoutOrder; a0.Padding = UDim.new(0, 12) -- Slightly more spacing
+    a0.SortOrder = Enum.SortOrder.LayoutOrder; a0.Padding = UDim.new(0, 10)
     a0.Parent = self.Container
 end; function Z:CreateNotification(a1, a2, a3, a4)
     a3 = a3 or "Info"
     a4 = a4 or 5; local a5 = Instance.new("Frame")
-    a5.Size = UDim2.new(1, 0, 0, 85) -- Slightly taller
+    a5.Size = UDim2.new(1, 0, 0, 80)
     a5.BackgroundColor3 = i.Surface; a5.BackgroundTransparency = 0.1; a5.BorderSizePixel = 0; a5.Parent = self.Container; local O =
     Instance.new("UICorner")
     O.CornerRadius = UDim.new(0, 12)
@@ -168,8 +174,8 @@ end; function Z:CreateNotification(a1, a2, a3, a4)
         i.Warning elseif a3 == "Error" then P.Color = i.Error else P.Color = i.Primary end; local I = "Info"
     if a3 == "Success" then I = "CheckCircle" elseif a3 == "Warning" then I = "AlertCircle" elseif a3 == "Error" then I =
         "XCircle" end; local L = m.CreateIcon(a5, I, UDim2.new(0, 24, 0, 24), UDim2.new(0, 15, 0, 15))
-    L.ImageColor3 = P.Color; local a6 = Instance.new("TextLabel")
-    a6.Name = "Title"
+    L.ImageColor3 = Color3.new(1, 1, 1); -- White icon
+    local a6 = Instance.new("TextLabel")
     a6.Size = UDim2.new(1, -90, 0, 25)
     a6.Position = UDim2.new(0, 50, 0, 10)
     a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = i.Text; a6.TextSize = 16; a6.TextXAlignment = Enum
@@ -183,9 +189,9 @@ end; function Z:CreateNotification(a1, a2, a3, a4)
     a8.Position = UDim2.new(1, -30, 0, 10)
     a8.BackgroundTransparency = 1; a8.Text = ""
     a8.Parent = a5; local a9 = m.CreateIcon(a8, "X", UDim2.new(0, 16, 0, 16), UDim2.new(0, 2, 0, 2))
-    a9.ImageColor3 = i.TextMuted; a6.TextTransparency = 1; a7.TextTransparency = 1; L.ImageTransparency = 1; a9.ImageTransparency = 1; a5.Position =
+    a9.ImageColor3 = Color3.new(1, 1, 1); a6.TextTransparency = 1; a7.TextTransparency = 1; L.ImageTransparency = 1; a9.ImageTransparency = 1; a5.Position =
     UDim2.new(1, 50, 0, 0)
-    a5.BackgroundTransparency = 1; m.Tween(a5, k.Muscle, { Position = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 0.1 })
+    a5.BackgroundTransparency = 1; m.Tween(a5, k.Spring, { Position = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 0.1 })
     m.Tween(a6, k.Fast, { TextTransparency = 0 })
     m.Tween(a7, k.Fast, { TextTransparency = 0 })
     m.Tween(L, k.Fast, { ImageTransparency = 0 })
@@ -207,56 +213,66 @@ end; function a.new(s)
     s = s or {}
     for ab, ac in pairs(l) do if s[ab] == nil then s[ab] = ac end end; x()
     local _ = Instance.new("ScreenGui")
-    _.Name = "MuscleLegendsV2"
+    _.Name = "RainbowV2"
     _.ResetOnSpawn = false; _.Parent = r(s)
     Z:Initialize(_)
     c.InputBegan:Connect(function(ad, ae) if not ae and ad.KeyCode == s.ToggleKey then _.Enabled = not _.Enabled end end)
     local af = { ScreenGui = _, Config = s, Windows = {}, NotificationSystem = Z }
     function af:Notify(a1, a2, a3, a4) return self.NotificationSystem:CreateNotification(a1, a2, a3, a4) end; local ag = { 
         Default = { Primary = i.Primary, Minimize = i.Minimize, Accent = i.Accent, Background = i.Background, Surface = i.Surface, Glass = i.Glass, Text = i.Text, TextMuted = i.TextMuted, Border = i.Border, Error = i.Error, Success = i.Success, Warning = i.Warning }, 
-        Muscle = { -- Custom Muscle Legends theme
-            Primary = Color3.fromRGB(255, 140, 0), -- Muscle Orange
-            Minimize = Color3.fromRGB(255, 165, 0), -- Bright Orange
+        Rainbow = { -- Custom Rainbow theme
+            Primary = Color3.fromRGB(255, 0, 255), -- Magenta
+            Minimize = Color3.fromRGB(255, 165, 0), -- Orange
             Accent = Color3.fromRGB(255, 215, 0), -- Gold
-            Background = Color3.fromRGB(25, 25, 25), -- Dark Gray
-            Surface = Color3.fromRGB(45, 45, 45), -- Lighter Gray
-            Glass = Color3.fromRGB(40, 40, 40), -- Glass Effect
-            Text = Color3.fromRGB(255, 255, 255), -- White Text
-            TextMuted = Color3.fromRGB(200, 200, 200), -- Muted White
-            Border = Color3.fromRGB(255, 140, 0), -- Orange Border
-            Error = Color3.fromRGB(220, 20, 60), -- Red Error
-            Success = Color3.fromRGB(50, 205, 50), -- Strong Green
-            Warning = Color3.fromRGB(255, 165, 0) -- Orange Warning
-        }, 
-        Power = { -- Power theme
-            Primary = Color3.fromRGB(220, 20, 60), -- Power Red
-            Minimize = Color3.fromRGB(255, 69, 0), -- Red Orange
-            Accent = Color3.fromRGB(255, 215, 0), -- Gold
-            Background = Color3.fromRGB(30, 15, 15), -- Dark Reddish
-            Surface = Color3.fromRGB(50, 25, 25), -- Lighter Reddish
-            Glass = Color3.fromRGB(45, 20, 20), -- Glass Red
-            Text = Color3.fromRGB(255, 255, 255), -- White Text
-            TextMuted = Color3.fromRGB(200, 180, 180), -- Muted Red White
-            Border = Color3.fromRGB(220, 20, 60), -- Red Border
-            Error = Color3.fromRGB(139, 0, 0), -- Dark Red
-            Success = Color3.fromRGB(50, 205, 50), -- Strong Green
-            Warning = Color3.fromRGB(255, 140, 0) -- Orange Warning
-        }, 
-        Gym = { -- Gym theme
-            Primary = Color3.fromRGB(139, 69, 19), -- Brown
-            Minimize = Color3.fromRGB(160, 82, 45), -- Tan
-            Accent = Color3.fromRGB(218, 165, 32), -- Golden Rod
-            Background = Color3.fromRGB(20, 20, 15), -- Dark Brown
-            Surface = Color3.fromRGB(35, 35, 25), -- Lighter Brown
-            Glass = Color3.fromRGB(30, 30, 20), -- Glass Brown
-            Text = Color3.fromRGB(255, 248, 220), -- Cream Text
-            TextMuted = Color3.fromRGB(200, 190, 170), -- Muted Cream
-            Border = Color3.fromRGB(139, 69, 19), -- Brown Border
-            Error = Color3.fromRGB(178, 34, 34), -- Fire Brick
-            Success = Color3.fromRGB(34, 139, 34), -- Forest Green
-            Warning = Color3.fromRGB(255, 140, 0) -- Orange Warning
+            Background = Color3.fromRGB(10, 10, 10), -- Near black
+            Surface = Color3.fromRGB(20, 20, 20), -- Dark surface
+            Glass = Color3.fromRGB(15, 15, 15), -- Dark glass
+            Text = Color3.fromRGB(30, 30, 30), -- Dark text
+            TextMuted = Color3.fromRGB(60, 60, 60), -- Muted dark text
+            Border = Color3.fromRGB(255, 255, 255), -- White border
+            Error = Color3.fromRGB(255, 0, 0), -- Red
+            Success = Color3.fromRGB(0, 255, 0), -- Green
+            Warning = Color3.fromRGB(255, 165, 0) -- Orange
         }
     }
+    
+    -- Rainbow animation system
+    local rainbowConnection = nil
+    local rainbowObjects = {}
+    
+    local function startRainbowAnimation()
+        if rainbowConnection then return end
+        local startTime = tick()
+        rainbowConnection = d.RenderStepped:Connect(function()
+            local currentTime = tick() - startTime
+            local rainbowColor = getRainbowColor(currentTime, 0.5)
+            
+            -- Update all registered rainbow objects
+            for obj, properties in pairs(rainbowObjects) do
+                if obj.Parent then
+                    for prop, _ in pairs(properties) do
+                        if prop == "BackgroundColor3" then
+                            obj.BackgroundColor3 = rainbowColor
+                        elseif prop == "TextColor3" then
+                            obj.TextColor3 = rainbowColor
+                        elseif prop == "ImageColor3" then
+                            obj.ImageColor3 = rainbowColor
+                        elseif prop == "BorderColor3" then
+                            obj.BorderColor3 = rainbowColor
+                        end
+                    end
+                else
+                    rainbowObjects[obj] = nil
+                end
+            end
+        end)
+    end
+    
+    local function registerRainbowObject(obj, properties)
+        rainbowObjects[obj] = properties
+        startRainbowAnimation()
+    end
+    
     function af:SetTheme(ah)
         local ai = ag[ah]
         if not ai then return end; for ab, ac in pairs(ai) do i[ab] = ac end; self.Config.MainColor = ai.Primary or
@@ -269,30 +285,47 @@ end; function a.new(s)
                     if an then an.BackgroundColor3 = i.Primary end; local ao = am:FindFirstChild("Minimize")
                     if ao then ao.BackgroundColor3 = i.Minimize end; local ap = am:FindFirstChild("Close")
                     if ap then ap.BackgroundColor3 = i.Error end; local aq = am:FindFirstChild("Title")
-                    if aq then aq.TextColor3 = i.Text end
+                    if aq then aq.TextColor3 = Color3.new(1, 1, 1) end -- White text for contrast
                 end; for z, ar in ipairs(ak:GetDescendants()) do if ar:IsA("TextButton") and ar.Name:match("^Tab_%d+") then
                         ar.BackgroundColor3 = i.Surface; for z, as in ipairs(ar:GetChildren()) do if as:IsA("TextLabel") then as.TextColor3 =
-                                i.TextMuted elseif as:IsA("ImageLabel") then as.ImageColor3 = i.TextMuted end end
+                                Color3.new(1, 1, 1) elseif as:IsA("ImageLabel") then as.ImageColor3 = Color3.new(1, 1, 1) end end
                     elseif ar:IsA("Frame") and ar.Name ~= "TitleBar" and ar.Name ~= "GlassEffect" then ar.BackgroundColor3 =
                         i.Surface end end
             end end; if self.NotificationSystem and self.NotificationSystem.Container then for z, at in ipairs(self.NotificationSystem.Container:GetChildren()) do if at:IsA("Frame") then
                     at.BackgroundColor3 = i.Surface; for z, al in ipairs(at:GetDescendants()) do
-                        if al:IsA("TextLabel") then al.TextColor3 = al.Name == "Title" and i.Text or i.TextMuted end; if al:IsA("ImageLabel") then al.ImageColor3 =
-                            i.Text end
+                        if al:IsA("TextLabel") then al.TextColor3 = al.Name == "Title" and Color3.new(1, 1, 1) or Color3.new(0.8, 0.8, 0.8) end; if al:IsA("ImageLabel") then al.ImageColor3 =
+                            Color3.new(1, 1, 1) end
                     end
                 end end end
     end; function af:CreateWindow(a1, au)
-        a1 = a1 or "Muscle Legends Hub"
+        a1 = a1 or "Rainbow Hub"
         au = au or {}
         local av = #self.Windows + 1; local aw = Instance.new("Frame")
-        aw.Name = "MuscleWindow_" .. av; aw.Size = UDim2.new(0, s.MinSize.X, 0, s.MinSize.Y)
+        aw.Name = "RainbowWindow_" .. av; aw.Size = UDim2.new(0, s.MinSize.X, 0, s.MinSize.Y)
         aw.Position = UDim2.new(0, 50 + (av - 1) * 30, 0, 50 + (av - 1) * 30)
         aw.BackgroundTransparency = 1; aw.BorderSizePixel = 0; aw.Active = true; aw.Parent = _; local ax = m
         .CreateGlassEffect(aw, 0.3)
-        m.CreateShadow(aw, 10, 5) -- Larger shadow for more impact
+        m.CreateShadow(aw, 8, 4)
+        
+        -- Add rainbow glow effect
+        local glowFrame = Instance.new("Frame")
+        glowFrame.Name = "RainbowGlow"
+        glowFrame.Size = UDim2.new(1, 4, 1, 4)
+        glowFrame.Position = UDim2.new(0, -2, 0, -2)
+        glowFrame.BackgroundTransparency = 0.8
+        glowFrame.BorderSizePixel = 0
+        glowFrame.ZIndex = -1
+        glowFrame.Parent = aw
+        
+        local glowCorner = Instance.new("UICorner")
+        glowCorner.CornerRadius = UDim.new(0, 14)
+        glowCorner.Parent = glowFrame
+        
+        registerRainbowObject(glowFrame, {BackgroundColor3 = true})
+        
         local am = Instance.new("Frame")
         am.Name = "TitleBar"
-        am.Size = UDim2.new(1, 0, 0, 55) -- Slightly taller
+        am.Size = UDim2.new(1, 0, 0, 50)
         am.BackgroundColor3 = i.Primary; am.BackgroundTransparency = 0.2; am.BorderSizePixel = 0; am.Parent = aw; local ay =
         Instance.new("UICorner")
         ay.CornerRadius = UDim.new(0, 12)
@@ -305,33 +338,51 @@ end; function a.new(s)
         a6.Name = "Title"
         a6.Size = UDim2.new(1, -100, 1, 0)
         a6.Position = UDim2.new(0, 20, 0, 0)
-        a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = i.Text; a6.TextSize = 20; a6.TextXAlignment = Enum
-        .TextXAlignment.Left; a6.Font = Enum.Font.GothamBold; a6.Parent = am; local az = Instance.new("TextButton")
+        a6.BackgroundTransparency = 1; a6.Text = a1; a6.TextColor3 = Color3.new(1, 1, 1); -- White text
+        a6.TextSize = 18; a6.TextXAlignment = Enum.TextXAlignment.Left; a6.Font = Enum.Font.GothamBold; a6.Parent = am
+        
+        -- Add white highlight to title
+        local titleHighlight = Instance.new("TextLabel")
+        titleHighlight.Size = UDim2.new(1, -100, 1, 0)
+        titleHighlight.Position = UDim2.new(0, 20, 0, 0)
+        titleHighlight.BackgroundTransparency = 1
+        titleHighlight.Text = a1
+        titleHighlight.TextColor3 = Color3.new(1, 1, 1)
+        titleHighlight.TextSize = 18
+        titleHighlight.TextXAlignment = Enum.TextXAlignment.Left
+        titleHighlight.Font = Enum.Font.GothamBold
+        titleHighlight.ZIndex = a6.ZIndex - 1
+        titleHighlight.Parent = am
+        
+        registerRainbowObject(titleHighlight, {TextColor3 = true})
+        
+        local az = Instance.new("TextButton")
         az.Name = "Minimize"
-        az.Size = UDim2.new(0, 32, 0, 32) -- Slightly larger
-        az.Position = UDim2.new(1, -80, 0, 10)
+        az.Size = UDim2.new(0, 30, 0, 30)
+        az.Position = UDim2.new(1, -75, 0, 10)
         az.BackgroundColor3 = i.Minimize; az.BackgroundTransparency = 0.3; az.BorderSizePixel = 0; az.Text = ""
         az.Parent = am; local aA = Instance.new("UICorner")
         aA.CornerRadius = UDim.new(0, 8)
-        aA.Parent = az; local aB; local aC = m.CreateIcon(az, "Gym", UDim2.new(0, 16, 0, 16), UDim2.new(0.5, -8, 0.5, -8))
+        aA.Parent = az; local aB; local aC = m.CreateIcon(az, "Minus", UDim2.new(0, 16, 0, 16), UDim2.new(0.5, -8, 0.5,
+            -8))
         m.AddHoverEffect(az, { BackgroundTransparency = 0.1 }, { BackgroundTransparency = 0.3 })
         local a8 = Instance.new("TextButton")
         a8.Name = "Close"
-        a8.Size = UDim2.new(0, 32, 0, 32) -- Slightly larger
-        a8.Position = UDim2.new(1, -42, 0, 10)
+        a8.Size = UDim2.new(0, 30, 0, 30)
+        a8.Position = UDim2.new(1, -40, 0, 10)
         a8.BackgroundColor3 = i.Error; a8.BackgroundTransparency = 0.3; a8.BorderSizePixel = 0; a8.Text = ""
         a8.Parent = am; local aD = Instance.new("UICorner")
         aD.CornerRadius = UDim.new(0, 8)
         aD.Parent = a8; local a9 = m.CreateIcon(a8, "X", UDim2.new(0, 16, 0, 16), UDim2.new(0.5, -8, 0.5, -8))
-        a9.ImageColor3 = i.Text; m.AddHoverEffect(a8, { BackgroundTransparency = 0.1 }, { BackgroundTransparency = 0.3 })
+        a9.ImageColor3 = Color3.new(1, 1, 1); m.AddHoverEffect(a8, { BackgroundTransparency = 0.1 }, { BackgroundTransparency = 0.3 })
         local aE = false; local aF = aw.Size; az.MouseButton1Click:Connect(function()
             m.CreateRipple(az, h.X, h.Y)
             aE = not aE; if aE then
-                aF = aF or aw.Size; if aB then aB.Visible = false end; m.Tween(aw, k.Muscle, -- Muscle-themed tween
-                    { Size = UDim2.new(0, s.MinSize.X, 0, 55) })
+                aF = aF or aw.Size; if aB then aB.Visible = false end; m.Tween(aw, k.Spring,
+                    { Size = UDim2.new(0, s.MinSize.X, 0, 50) })
                 if aC then m.Tween(aC, k.Fast, { Rotation = 180 }) end
             else
-                m.Tween(aw, k.Muscle, { Size = aF }) -- Muscle-themed tween
+                m.Tween(aw, k.Spring, { Size = aF })
                 if aB then aB.Visible = true end; if aC then m.Tween(aC, k.Fast, { Rotation = 0 }) end
             end
         end)
@@ -342,6 +393,10 @@ end; function a.new(s)
                 function()
                     pcall(function() for aG, aj in ipairs(af.Windows) do if aj and aj.Window then pcall(function() m
                                         .DestroyGlassEffect(aj.Window) end) end end end)
+                    if rainbowConnection then
+                        rainbowConnection:Disconnect()
+                        rainbowConnection = nil
+                    end
                     if af and af.ScreenGui then pcall(function() af.ScreenGui:Destroy() end) end; af.Windows = {}
                 end)
         end)
@@ -355,47 +410,47 @@ end; function a.new(s)
         c.InputEnded:Connect(function(ad) if ad.UserInputType == Enum.UserInputType.MouseButton1 or ad.UserInputType == Enum.UserInputType.Touch then aH = false end end)
         aB = Instance.new("Frame")
         aB.Name = "Content"
-        aB.Size = UDim2.new(1, -20, 1, -75)
-        aB.Position = UDim2.new(0, 10, 0, 65)
+        aB.Size = UDim2.new(1, -20, 1, -70)
+        aB.Position = UDim2.new(0, 10, 0, 60)
         aB.BackgroundTransparency = 1; aB.ClipsDescendants = true; aB.Parent = aw; local aL = Instance.new(
         "UIListLayout")
-        aL.SortOrder = Enum.SortOrder.LayoutOrder; aL.Padding = UDim.new(0, 12) -- More spacing
+        aL.SortOrder = Enum.SortOrder.LayoutOrder; aL.Padding = UDim.new(0, 10)
         aL.Parent = aB; local aM = Instance.new("ScrollingFrame")
         aM.Name = "TabContainer"
-        aM.Size = UDim2.new(1, 0, 0, 40) -- Slightly taller
+        aM.Size = UDim2.new(1, 0, 0, 35)
         aM.BackgroundTransparency = 1; aM.LayoutOrder = 1; aM.Parent = aB; aM.CanvasSize = UDim2.new(0, 0, 0, 0)
         aM.ScrollBarThickness = 6; aM.HorizontalScrollBarInset = Enum.ScrollBarInset.Always; aM.ScrollBarImageColor3 = i
         .Border; aM.ClipsDescendants = true; aM.ScrollingDirection = Enum.ScrollingDirection.X; local aN = Instance.new(
         "UIListLayout")
         aN.FillDirection = Enum.FillDirection.Horizontal; aN.SortOrder = Enum.SortOrder.LayoutOrder; aN.Padding = UDim
-        .new(0, 6) -- More spacing
+        .new(0, 5)
         aN.Parent = aM; aN:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() aM.CanvasSize = UDim2.new(
             0, aN.AbsoluteContentSize.X + 8, 0, 0) end)
         local aO = Instance.new("Frame")
         aO.Name = "TabContent"
-        aO.Size = UDim2.new(1, 0, 1, -50)
+        aO.Size = UDim2.new(1, 0, 1, -45)
         aO.BackgroundTransparency = 1; aO.LayoutOrder = 2; aO.Parent = aB; local aP = { Window = aw, Content = aO, Tabs = {}, ActiveTab = nil, IsMinimized = function() return
             aE end }
         function aP:CreateTab(aQ, I)
             aQ = aQ or "New Tab"
             local aR = #self.Tabs + 1; local aS = Instance.new("TextButton")
-            aS.Name = "Tab_" .. aR; aS.Size = UDim2.new(0, 130, 1, 0) -- Slightly wider
+            aS.Name = "Tab_" .. aR; aS.Size = UDim2.new(0, 120, 1, 0)
             aS.BackgroundColor3 = i.Surface; aS.BackgroundTransparency = 0.3; aS.BorderSizePixel = 0; aS.Text = ""
             aS.LayoutOrder = aR; aS.Parent = aM; local aT = Instance.new("UICorner")
             aT.CornerRadius = UDim.new(0, 8)
             aT.Parent = aS; local aU = Instance.new("TextLabel")
             aU.Size = UDim2.new(1, -30, 1, 0)
             aU.Position = UDim2.new(0, I and 25 or 10, 0, 0)
-            aU.BackgroundTransparency = 1; aU.Text = aQ; aU.TextColor3 = i.TextMuted; aU.TextSize = 14; aU.TextXAlignment =
-            Enum.TextXAlignment.Left; aU.Font = Enum.Font.Gotham; aU.Parent = aS; local aV = nil; if I then
+            aU.BackgroundTransparency = 1; aU.Text = aQ; aU.TextColor3 = Color3.new(1, 1, 1); -- White text
+            aU.TextSize = 14; aU.TextXAlignment = Enum.TextXAlignment.Left; aU.Font = Enum.Font.Gotham; aU.Parent = aS; local aV = nil; if I then
                 aV = m.CreateIcon(aS, I, UDim2.new(0, 16, 0, 16), UDim2.new(0, 5, 0.5, -8))
-                aV.ImageColor3 = i.TextMuted
+                aV.ImageColor3 = Color3.new(1, 1, 1) -- White icon
             end; local aW = Instance.new("ScrollingFrame")
             aW.Name = "TabContent_" .. aR; aW.Size = UDim2.new(1, 0, 1, 0)
             aW.BackgroundTransparency = 1; aW.BorderSizePixel = 0; aW.ScrollBarThickness = 4; aW.ScrollBarImageColor3 = i
             .Border; aW.CanvasSize = UDim2.new(0, 0, 0, 0)
             aW.Visible = false; aW.Parent = aO; local aX = Instance.new("UIListLayout")
-            aX.SortOrder = Enum.SortOrder.LayoutOrder; aX.Padding = UDim.new(0, 10) -- More spacing
+            aX.SortOrder = Enum.SortOrder.LayoutOrder; aX.Padding = UDim.new(0, 8)
             aX.Parent = aW; aX:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() aW.CanvasSize = UDim2
                 .new(0, 0, 0, aX.AbsoluteContentSize.Y + 10) end)
             local aY = { Button = aS, Content = aW, Label = aU, Icon = aV, Active = false, Index = aR }
@@ -409,13 +464,13 @@ end; function a.new(s)
         end; function aP:SelectTab(aZ)
             if not self.Tabs[aZ] then return end; for aG, aY in ipairs(self.Tabs) do if aG == aZ then
                     aY.Active = true; aY.Content.Visible = true; m.Tween(aY.Button, k.Fast, { BackgroundTransparency = 0.1 })
-                    m.Tween(aY.Label, k.Fast, { TextColor3 = i.Text })
-                    if aY.Icon then m.Tween(aY.Icon, k.Fast, { ImageColor3 = i.Text }) end
+                    m.Tween(aY.Label, k.Fast, { TextColor3 = Color3.new(1, 1, 1) }) -- White text
+                    if aY.Icon then m.Tween(aY.Icon, k.Fast, { ImageColor3 = Color3.new(1, 1, 1) }) end -- White icon
                 else
                     aY.Active = false; aY.Content.Visible = false; m.Tween(aY.Button, k.Fast,
                         { BackgroundTransparency = 0.3 })
-                    m.Tween(aY.Label, k.Fast, { TextColor3 = i.TextMuted })
-                    if aY.Icon then m.Tween(aY.Icon, k.Fast, { ImageColor3 = i.TextMuted }) end
+                    m.Tween(aY.Label, k.Fast, { TextColor3 = Color3.new(0.8, 0.8, 0.8) }) -- Light gray text
+                    if aY.Icon then m.Tween(aY.Icon, k.Fast, { ImageColor3 = Color3.new(0.8, 0.8, 0.8) }) end -- Light gray icon
                 end end; self.ActiveTab = self.Tabs[aZ]
         end; function aP:CreateTabAPI(aY)
             local a_ = { Tab = aY, Elements = {} }
@@ -423,18 +478,45 @@ end; function a.new(s)
                 local b1 = Instance.new("TextLabel")
                 b1.Size = UDim2.new(1, 0, 0, 25)
                 b1.BackgroundTransparency = 1; b1.Text = b0 or "Label"
-                b1.TextColor3 = i.Text; b1.TextSize = 16; b1.TextXAlignment = Enum.TextXAlignment.Left; b1.Font = Enum
+                b1.TextColor3 = Color3.new(1, 1, 1); -- White text
+                b1.TextSize = 16; b1.TextXAlignment = Enum.TextXAlignment.Left; b1.Font = Enum
                 .Font.Gotham; b1.Parent = aY.Content; table.insert(self.Elements, b1)
+                
+                -- Add white highlight
+                local highlight = Instance.new("TextLabel")
+                highlight.Size = UDim2.new(1, 0, 0, 25)
+                highlight.Position = UDim2.new(0, 0, 0, 0)
+                highlight.BackgroundTransparency = 1
+                highlight.Text = b0 or "Label"
+                highlight.TextColor3 = Color3.new(1, 1, 1)
+                highlight.TextSize = 16
+                highlight.TextXAlignment = Enum.TextXAlignment.Left
+                highlight.Font = Enum.Font.Gotham
+                highlight.ZIndex = b1.ZIndex - 1
+                highlight.Parent = aY.Content
+                
+                registerRainbowObject(highlight, {TextColor3 = true})
+                
                 return b1
             end; function a_:AddButton(b0, F)
                 local S = Instance.new("TextButton")
-                S.Size = UDim2.new(1, 0, 0, 38) -- Slightly taller
-                S.BackgroundColor3 = i.Primary; S.BackgroundTransparency = 0.2; S.BorderSizePixel = 0; S.Text = b0 or
+                S.Size = UDim2.new(1, 0, 0, 35)
+                S.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2); -- Dark background
+                S.BackgroundTransparency = 0.2; S.BorderSizePixel = 0; S.Text = b0 or
                 "Button"
-                S.TextColor3 = i.Text; S.TextSize = 16; S.Font = Enum.Font.GothamBold; S.Parent = aY.Content; local b2 =
+                S.TextColor3 = Color3.new(1, 1, 1); -- White text
+                S.TextSize = 16; S.Font = Enum.Font.GothamBold; S.Parent = aY.Content; local b2 =
                 Instance.new("UICorner")
                 b2.CornerRadius = UDim.new(0, 8)
                 b2.Parent = S; m.AddHoverEffect(S, { BackgroundTransparency = 0.1 }, { BackgroundTransparency = 0.2 })
+                
+                -- Add white border
+                local border = Instance.new("UIStroke")
+                border.Color = Color3.new(1, 1, 1)
+                border.Thickness = 1
+                border.Transparency = 0.5
+                border.Parent = S
+                
                 S.MouseButton1Click:Connect(function()
                     m.CreateRipple(S, h.X, h.Y)
                     if F then F() end
@@ -443,73 +525,84 @@ end; function a.new(s)
                 return S
             end; function a_:AddToggle(b0, b3, F)
                 local b4 = Instance.new("Frame")
-                b4.Size = UDim2.new(1, 0, 0, 38) -- Slightly taller
-                b4.BackgroundColor3 = i.Surface; b4.BackgroundTransparency = 0.3; b4.BorderSizePixel = 0; b4.Parent = aY
+                b4.Size = UDim2.new(1, 0, 0, 35)
+                b4.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2); -- Dark background
+                b4.BackgroundTransparency = 0.3; b4.BorderSizePixel = 0; b4.Parent = aY
                 .Content; local b5 = Instance.new("UICorner")
                 b5.CornerRadius = UDim.new(0, 8)
                 b5.Parent = b4; local b6 = Instance.new("TextLabel")
                 b6.Size = UDim2.new(1, -50, 1, 0)
                 b6.Position = UDim2.new(0, 15, 0, 0)
                 b6.BackgroundTransparency = 1; b6.Text = b0 or "Toggle"
-                b6.TextColor3 = i.Text; b6.TextSize = 16; b6.TextXAlignment = Enum.TextXAlignment.Left; b6.Font = Enum
+                b6.TextColor3 = Color3.new(1, 1, 1); -- White text
+                b6.TextSize = 16; b6.TextXAlignment = Enum.TextXAlignment.Left; b6.Font = Enum
                 .Font.Gotham; b6.Parent = b4; local b7 = Instance.new("TextButton")
                 b7.Size = UDim2.new(0, 30, 0, 18)
                 b7.Position = UDim2.new(1, -40, 0.5, -9)
-                b7.BackgroundColor3 = b3 and i.Primary or i.Border; b7.BackgroundTransparency = 0.2; b7.BorderSizePixel = 0; b7.Text =
+                b7.BackgroundColor3 = b3 and Color3.new(1, 1, 1) or Color3.new(0.3, 0.3, 0.3); -- White or dark
+                b7.BackgroundTransparency = 0.2; b7.BorderSizePixel = 0; b7.Text =
                 ""
                 b7.Parent = b4; local b8 = Instance.new("UICorner")
                 b8.CornerRadius = UDim.new(1, 0)
                 b8.Parent = b7; local b9 = Instance.new("Frame")
                 b9.Size = UDim2.new(0, 14, 0, 14)
                 b9.Position = b3 and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
-                b9.BackgroundColor3 = i.Text; b9.BorderSizePixel = 0; b9.Parent = b7; local ba = Instance.new("UICorner")
+                b9.BackgroundColor3 = Color3.new(1, 1, 1); -- White
+                b9.BorderSizePixel = 0; b9.Parent = b7; local ba = Instance.new("UICorner")
                 ba.CornerRadius = UDim.new(1, 0)
                 ba.Parent = b9; local bb = b3 or false; local function bc(bd)
-                    bb = bd; m.Tween(b7, k.Fast, { BackgroundColor3 = bb and i.Primary or i.Border })
-                    m.Tween(b9, k.Muscle, { Position = bb and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7) })
+                    bb = bd; m.Tween(b7, k.Fast, { BackgroundColor3 = bb and Color3.new(1, 1, 1) or Color3.new(0.3, 0.3, 0.3) })
+                    m.Tween(b9, k.Spring, { Position = bb and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7) })
                     if F then F(bb) end
                 end; b7.MouseButton1Click:Connect(function() bc(not bb) end)
                 table.insert(self.Elements, b4)
                 return { Set = bc, Get = function() return bb end }
             end; function a_:AddSlider(b0, be, bf, b3, F)
                 be = be or 0; bf = bf or 100; b3 = b3 or be; local bg = Instance.new("Frame")
-                bg.Size = UDim2.new(1, 0, 0, 55) -- Slightly taller
-                bg.BackgroundColor3 = i.Surface; bg.BackgroundTransparency = 0.3; bg.BorderSizePixel = 0; bg.Parent = aY
+                bg.Size = UDim2.new(1, 0, 0, 50)
+                bg.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2); -- Dark background
+                bg.BackgroundTransparency = 0.3; bg.BorderSizePixel = 0; bg.Parent = aY
                 .Content; local bh = Instance.new("UICorner")
                 bh.CornerRadius = UDim.new(0, 8)
                 bh.Parent = bg; local bi = Instance.new("TextLabel")
                 bi.Size = UDim2.new(1, -60, 0, 25)
                 bi.Position = UDim2.new(0, 15, 0, 0)
                 bi.BackgroundTransparency = 1; bi.Text = b0 or "Slider"
-                bi.TextColor3 = i.Text; bi.TextSize = 16; bi.TextXAlignment = Enum.TextXAlignment.Left; bi.Font = Enum
+                bi.TextColor3 = Color3.new(1, 1, 1); -- White text
+                bi.TextSize = 16; bi.TextXAlignment = Enum.TextXAlignment.Left; bi.Font = Enum
                 .Font.Gotham; bi.Parent = bg; local bj = Instance.new("TextLabel")
                 bj.Size = UDim2.new(0, 50, 0, 25)
                 bj.Position = UDim2.new(1, -60, 0, 0)
                 bj.BackgroundTransparency = 1; bj.Text = tostring(b3)
-                bj.TextColor3 = i.Primary; bj.TextSize = 14; bj.TextXAlignment = Enum.TextXAlignment.Right; bj.Font =
+                bj.TextColor3 = Color3.new(1, 1, 1); -- White text
+                bj.TextSize = 14; bj.TextXAlignment = Enum.TextXAlignment.Right; bj.Font =
                 Enum.Font.GothamMedium; bj.Parent = bg; local bk = Instance.new("Frame")
-                bk.Size = UDim2.new(1, -30, 0, 6) -- Slightly thicker
-                bk.Position = UDim2.new(0, 15, 1, -18)
-                bk.BackgroundColor3 = i.Border; bk.BorderSizePixel = 0; bk.Parent = bg; local bl = Instance.new(
+                bk.Size = UDim2.new(1, -30, 0, 4)
+                bk.Position = UDim2.new(0, 15, 1, -15)
+                bk.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1); -- Very dark
+                bk.BorderSizePixel = 0; bk.Parent = bg; local bl = Instance.new(
                 "UICorner")
                 bl.CornerRadius = UDim.new(1, 0)
                 bl.Parent = bk; local bm = Instance.new("Frame")
                 bm.Size = UDim2.new((b3 - be) / (bf - be), 0, 1, 0)
-                bm.BackgroundColor3 = i.Primary; bm.BorderSizePixel = 0; bm.Parent = bk; local bn = Instance.new(
+                bm.BackgroundColor3 = Color3.new(1, 1, 1); -- White
+                bm.BorderSizePixel = 0; bm.Parent = bk; local bn = Instance.new(
                 "UICorner")
                 bn.CornerRadius = UDim.new(1, 0)
                 bn.Parent = bm; local bo = Instance.new("Frame")
-                bo.Size = UDim2.new(0, 18, 0, 18) -- Slightly larger
-                bo.Position = UDim2.new((b3 - be) / (bf - be), -9, 0.5, -9)
-                bo.BackgroundColor3 = i.Text; bo.BorderSizePixel = 0; bo.Parent = bk; local ba = Instance.new("UICorner")
+                bo.Size = UDim2.new(0, 16, 0, 16)
+                bo.Position = UDim2.new((b3 - be) / (bf - be), -8, 0.5, -8)
+                bo.BackgroundColor3 = Color3.new(1, 1, 1); -- White
+                bo.BorderSizePixel = 0; bo.Parent = bk; local ba = Instance.new("UICorner")
                 ba.CornerRadius = UDim.new(1, 0)
                 ba.Parent = bo; local bp = Instance.new("UIStroke")
-                bp.Color = i.Primary; bp.Thickness = 2; bp.Parent = bo; local bq = b3; local aH = false; local function br(
+                bp.Color = Color3.new(1, 1, 1); -- White
+                bp.Thickness = 2; bp.Parent = bo; local bq = b3; local aH = false; local function br(
                     bs)
                     bs = n(bs, be, bf)
                     bq = bs; local bt = (bs - be) / (bf - be)
                     m.Tween(bm, k.Fast, { Size = UDim2.new(bt, 0, 1, 0) })
-                    m.Tween(bo, k.Fast, { Position = UDim2.new(bt, -9, 0.5, -9) })
+                    m.Tween(bo, k.Fast, { Position = UDim2.new(bt, -8, 0.5, -8) })
                     bj.Text = tostring(math.floor(bs))
                     if F then F(bs) end
                 end; bk.InputBegan:Connect(function(ad) if ad.UserInputType == Enum.UserInputType.MouseButton1 or ad.UserInputType == Enum.UserInputType.Touch then
@@ -525,8 +618,9 @@ end; function a.new(s)
                 return { Set = br, Get = function() return bq end }
             end; function a_:AddTextBox(b0, bu, F)
                 local bv = Instance.new("Frame")
-                bv.Size = UDim2.new(1, 0, 0, 38) -- Slightly taller
-                bv.BackgroundColor3 = i.Surface; bv.BackgroundTransparency = 0.3; bv.BorderSizePixel = 0; bv.Parent = aY
+                bv.Size = UDim2.new(1, 0, 0, 35)
+                bv.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2); -- Dark background
+                bv.BackgroundTransparency = 0.3; bv.BorderSizePixel = 0; bv.Parent = aY
                 .Content; local bw = Instance.new("UICorner")
                 bw.CornerRadius = UDim.new(0, 8)
                 bw.Parent = bv; local bx = Instance.new("TextBox")
@@ -534,13 +628,16 @@ end; function a.new(s)
                 bx.Position = UDim2.new(0, 10, 0, 0)
                 bx.BackgroundTransparency = 1; bx.Text = b0 or ""
                 bx.PlaceholderText = bu or "Enter text..."
-                bx.TextColor3 = i.Text; bx.PlaceholderColor3 = i.TextMuted; bx.TextSize = 16; bx.TextXAlignment = Enum
-                .TextXAlignment.Left; bx.Font = Enum.Font.Gotham; bx.ClearTextOnFocus = false; bx.Parent = bv; local P =
+                bx.TextColor3 = Color3.new(1, 1, 1); -- White text
+                bx.PlaceholderColor3 = Color3.new(0.6, 0.6, 0.6); -- Muted white
+                bx.TextSize = 16; bx.TextXAlignment = Enum.TextXAlignment.Left; bx.Font = Enum
+                .Font.Gotham; bx.ClearTextOnFocus = false; bx.Parent = bv; local P =
                 Instance.new("UIStroke")
-                P.Color = i.Border; P.Thickness = 1; P.Transparency = 0.5; P.Parent = bv; bx.Focused:Connect(function() m
-                        .Tween(P, k.Fast, { Color = i.Primary, Transparency = 0 }) end)
+                P.Color = Color3.new(1, 1, 1); -- White border
+                P.Thickness = 1; P.Transparency = 0.5; P.Parent = bv; bx.Focused:Connect(function() m
+                        .Tween(P, k.Fast, { Color = Color3.new(1, 1, 1), Transparency = 0 }) end)
                 bx.FocusLost:Connect(function(by)
-                    m.Tween(P, k.Fast, { Color = i.Border, Transparency = 0.5 })
+                    m.Tween(P, k.Fast, { Color = Color3.new(1, 1, 1), Transparency = 0.5 })
                     if by and F then F(bx.Text) end
                 end)
                 table.insert(self.Elements, bv)
@@ -548,8 +645,9 @@ end; function a.new(s)
             end; function a_:AddDropdown(b0, au, F)
                 au = au or {}
                 local bz = Instance.new("Frame")
-                bz.Size = UDim2.new(1, 0, 0, 38) -- Slightly taller
-                bz.BackgroundColor3 = i.Surface; bz.BackgroundTransparency = 0.3; bz.BorderSizePixel = 0; bz.ClipsDescendants = false; bz.Parent =
+                bz.Size = UDim2.new(1, 0, 0, 35)
+                bz.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2); -- Dark background
+                bz.BackgroundTransparency = 0.3; bz.BorderSizePixel = 0; bz.ClipsDescendants = false; bz.Parent =
                 aY.Content; local bA = Instance.new("UICorner")
                 bA.CornerRadius = UDim.new(0, 8)
                 bA.Parent = bz; local bB = Instance.new("TextButton")
@@ -559,16 +657,18 @@ end; function a.new(s)
                 bC.Size = UDim2.new(1, -40, 1, 0)
                 bC.Position = UDim2.new(0, 15, 0, 0)
                 bC.BackgroundTransparency = 1; bC.Text = b0 or "Select option..."
-                bC.TextColor3 = i.Text; bC.TextSize = 16; bC.TextXAlignment = Enum.TextXAlignment.Left; bC.Font = Enum
+                bC.TextColor3 = Color3.new(1, 1, 1); -- White text
+                bC.TextSize = 16; bC.TextXAlignment = Enum.TextXAlignment.Left; bC.Font = Enum
                 .Font.Gotham; bC.Parent = bz; local bD = m.CreateIcon(bz, "ChevronDown", UDim2.new(0, 16, 0, 16),
                     UDim2.new(1, -30, 0.5, -8))
                 local bE = Instance.new("Frame")
                 bE.Name = "DropdownContainer"
-                bE.Size = UDim2.new(0, bz.AbsoluteSize.X, 0, math.min(#au * 38, 150)) -- Slightly taller items
+                bE.Size = UDim2.new(0, bz.AbsoluteSize.X, 0, math.min(#au * 35, 140))
                 bE.BackgroundTransparency = 1; bE.Visible = false; bE.ZIndex = 9999; bE.Parent = _; bE.ClipsDescendants = false; local bF =
                 Instance.new("Frame")
                 bF.Size = UDim2.new(1, 0, 1, 0)
-                bF.BackgroundColor3 = i.Background; bF.BackgroundTransparency = 0.05; bF.BorderSizePixel = 0; bF.Parent =
+                bF.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1); -- Very dark
+                bF.BackgroundTransparency = 0.05; bF.BorderSizePixel = 0; bF.Parent =
                 bE; bF.ZIndex = 10000; local bG = Instance.new("Frame")
                 bG.Size = UDim2.new(1, 8, 1, 8)
                 bG.Position = UDim2.new(0, -4, 0, -4)
@@ -579,27 +679,28 @@ end; function a.new(s)
                 bH.Parent = bG; local bI = Instance.new("ScrollingFrame")
                 bI.Size = UDim2.new(1, 0, 1, 0)
                 bI.BackgroundTransparency = 1; bI.BorderSizePixel = 0; bI.ScrollBarThickness = 4; bI.ScrollBarImageColor3 =
-                i.Border; bI.CanvasSize = UDim2.new(0, 0, 0, #au * 38) -- Slightly taller items
+                i.Border; bI.CanvasSize = UDim2.new(0, 0, 0, #au * 35)
                 bI.ScrollingDirection = Enum.ScrollingDirection.Y; bI.Parent = bF; bI.ZIndex = 10001; local bJ = Instance
                 .new("UIListLayout")
                 bJ.SortOrder = Enum.SortOrder.LayoutOrder; bJ.Parent = bI; local bK = false; local bL = nil; local function bM()
                     local bN = bz.AbsolutePosition; local bO = bz.AbsoluteSize; local bP = bN.X; local bQ = bN.Y + bO.Y +
                     5; bE.Position = UDim2.new(0, bP, 0, bQ)
-                    bE.Size = UDim2.new(0, bz.AbsoluteSize.X, 0, math.min(#au * 38, 150)) -- Slightly taller items
+                    bE.Size = UDim2.new(0, bz.AbsoluteSize.X, 0, math.min(#au * 35, 140))
                 end; d.RenderStepped:Connect(function() if bE.Visible then bM() end end)
                 for aG, bR in ipairs(au) do
                     local bS = Instance.new("TextButton")
-                    bS.Size = UDim2.new(1, 0, 0, 38) -- Slightly taller
-                    bS.BackgroundColor3 = i.Surface; bS.BackgroundTransparency = 0.9; bS.Text = bR; bS.TextColor3 = i
-                    .Text; bS.TextSize = 14; bS.TextXAlignment = Enum.TextXAlignment.Left; bS.Font = Enum.Font.Gotham; bS.LayoutOrder =
+                    bS.Size = UDim2.new(1, 0, 0, 35)
+                    bS.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2); -- Dark background
+                    bS.BackgroundTransparency = 0.9; bS.Text = bR; bS.TextColor3 = Color3.new(1, 1, 1); -- White text
+                    bS.TextSize = 14; bS.TextXAlignment = Enum.TextXAlignment.Left; bS.Font = Enum.Font.Gotham; bS.LayoutOrder =
                     aG; bS.BorderSizePixel = 0; bS.Parent = bI; bS.ZIndex = 10002; local bT = Instance.new("UICorner")
                     bT.CornerRadius = UDim.new(0, 6)
                     bT.Parent = bS; local bU = Instance.new("UIPadding")
                     bU.PaddingLeft = UDim.new(0, 15)
                     bU.PaddingRight = UDim.new(0, 15)
                     bU.Parent = bS; m.AddHoverEffect(bS,
-                        { BackgroundColor3 = i.Primary, BackgroundTransparency = 0.7, TextColor3 = i.Text },
-                        { BackgroundColor3 = i.Surface, BackgroundTransparency = 0.9, TextColor3 = i.Text })
+                        { BackgroundColor3 = Color3.new(1, 1, 1), BackgroundTransparency = 0.7, TextColor3 = Color3.new(0, 0, 0) },
+                        { BackgroundColor3 = Color3.new(0.2, 0.2, 0.2), BackgroundTransparency = 0.9, TextColor3 = Color3.new(1, 1, 1) })
                     bS.MouseButton1Click:Connect(function()
                         bL = bR; bC.Text = bR; bK = false; bE.Visible = false; m.Tween(bD, k.Fast, { Rotation = 0 })
                         if F then F(bR) end
@@ -609,7 +710,7 @@ end; function a.new(s)
                     if bK then
                         bM()
                         bE.Size = UDim2.new(0, bz.AbsoluteSize.X, 0, 0)
-                        m.Tween(bE, k.Muscle, { Size = UDim2.new(0, bz.AbsoluteSize.X, 0, math.min(#au * 38, 150)) }) -- Muscle-themed tween
+                        m.Tween(bE, k.Spring, { Size = UDim2.new(0, bz.AbsoluteSize.X, 0, math.min(#au * 35, 140)) })
                     end
                 end)
                 local function bV() if bK then
