@@ -104,7 +104,7 @@ DarkPink = {
     ColorPickerAccent = Color3.fromRGB(5, 5, 5), -- glowing dark blackhole
     TextField = Color3.fromRGB(175, 175, 175),
     TextFieldAccent = Color3.fromRGB(5, 5, 5),   -- glowing dark blackhole
-}
+},
 	Mocha = {
 		MainFrame = Color3.fromRGB(255,255,255),
 		Minimise = Color3.fromRGB(219, 210, 202),
