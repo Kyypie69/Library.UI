@@ -99,11 +99,11 @@ DarkPink = {
     Toggle = Color3.fromRGB(205, 205, 205),
     ToggleAccent = Color3.fromRGB(255, 105, 180), -- glowing dark blackhole
     Dropdown = Color3.fromRGB(85, 85, 85),
-    DropdownAccent = Color3.fromRGB(0, 0, 0), -- glowing dark blackhole
+    DropdownAccent = Color3.fromRGB(255, 105, 180), -- glowing dark blackhole
     ColorPicker = Color3.fromRGB(85, 85, 85),
     ColorPickerAccent = Color3.fromRGB(0, 0, 0), -- glowing dark blackhole
     TextField = Color3.fromRGB(175, 175, 175),
-    TextFieldAccent = Color3.fromRGB(255, 105, 180), -- glowing dark blackhole
+    TextFieldAccent = Color3.fromRGB(0, 0, 0), -- glowing dark blackhole
 },
 	Mocha = {
 		MainFrame = Color3.fromRGB(255,255,255),
