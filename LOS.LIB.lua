@@ -25,16 +25,16 @@ local activeNotifications = {}
 local notificationSpacing = 10
 local notificationHeight = 90
 
--- // SINGLE BLACK-HOLE THEME PALETTE
+-- // STARRY-NIGHT THEME PALETTE
 local PALETTE = {
-    Background         = Color3.fromRGB(5,5,5),      -- almost pure black
-    Surface            = Color3.fromRGB(12,12,12),   -- deep void
-    Elevated           = Color3.fromRGB(20,20,20),   -- raised cards
-    Accent             = Color3.fromRGB(255,120,10), -- burning orange accent
-    TextPrimary        = Color3.fromRGB(220,220,220),
-    TextSecondary      = Color3.fromRGB(140,140,140),
-    TextDisabled       = Color3.fromRGB(70,70,70),
-    Glow               = Color3.fromRGB(255,150,20)
+    Background         = Color3.fromRGB( 10,  15,  35), -- midnight-blue
+    Surface            = Color3.fromRGB( 20,  25,  50), -- deep-sky
+    Elevated           = Color3.fromRGB( 30,  40,  70), -- lighter sky
+    Accent             = Color3.fromRGB(255, 215, 100), -- star-gold
+    TextPrimary        = Color3.fromRGB(240, 240, 255), -- moon-white
+    TextSecondary      = Color3.fromRGB(180, 190, 220), -- soft starlight
+    TextDisabled       = Color3.fromRGB(100, 110, 140), -- faded cloud
+    Glow               = Color3.fromRGB(255, 230, 150)  -- halo
 }
 
 -- // NOTIFICATION
@@ -75,7 +75,7 @@ function KyyfiiiLibrary:createNotification(desc)
     title.Size = UDim2.new(1,0,0,30)
     title.Font = Enum.Font.Jura
     title.RichText = true
-    title.Text = "<b>BlackHole  |</b>  Notification"
+    title.Text = "<b>StarryNight  |</b>  Notification"
     title.TextColor3 = PALETTE.TextPrimary
     title.TextSize = 15
     title.TextXAlignment = Enum.TextXAlignment.Left
