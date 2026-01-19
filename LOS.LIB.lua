@@ -26,11 +26,6 @@ local activeNotifications = {}
 local notificationSpacing = 10
 local notificationHeight = 90
 
--- HOT PINK THEME COLORS
-local HOT_PINK = Color3.fromRGB(255, 105, 180) -- #FF69B4
-local HOT_PINK_LIGHT = Color3.fromRGB(255, 143, 204)
-local HOT_PINK_DARK = Color3.fromRGB(219, 90, 155)
-
 function KyyfiiiLibrary:createNotification(descriptionText)
     local Notification_1 = Instance.new("Frame")
     local Background_2 = Instance.new("ImageLabel")
@@ -44,7 +39,7 @@ function KyyfiiiLibrary:createNotification(descriptionText)
     Notification_1.Name = "Notification"
     Notification_1.Parent = Library
     Notification_1.AnchorPoint = Vector2.new(1, 1)
-    Notification_1.BackgroundColor3 = HOT_PINK_DARK
+    Notification_1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     Notification_1.BackgroundTransparency = 0.10000000149011612
     Notification_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Notification_1.BorderSizePixel = 0
@@ -79,7 +74,7 @@ function KyyfiiiLibrary:createNotification(descriptionText)
     Title_2.Font = Enum.Font.Jura
     Title_2.RichText = true
     Title_2.Text = "<b>Kyyfiii  |</b>  Notification"
-    Title_2.TextColor3 = HOT_PINK_LIGHT
+    Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
     Title_2.TextSize = 15
     Title_2.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -99,7 +94,7 @@ function KyyfiiiLibrary:createNotification(descriptionText)
     Description_1.LineHeight = 1.0800000429153442
     Description_1.RichText = true
     Description_1.Text = descriptionText
-    Description_1.TextColor3 = HOT_PINK_LIGHT
+    Description_1.TextColor3 = Color3.fromRGB(255, 255, 255)
     Description_1.TextSize = 15
     Description_1.TextWrapped = true
     Description_1.TextXAlignment = Enum.TextXAlignment.Left
@@ -164,7 +159,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     Main_1.Name = "Main"
     Main_1.Parent = Library
     Main_1.AnchorPoint = Vector2.new(0.5, 0.5)
-    Main_1.BackgroundColor3 = HOT_PINK_DARK
+    Main_1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     Main_1.BackgroundTransparency = 0.10000000149011612
     Main_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Main_1.BorderSizePixel = 0
@@ -193,8 +188,8 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
     Topbar_1.Name = "Topbar"
     Topbar_1.Parent = Main_1
-    Topbar_1.BackgroundColor3 = HOT_PINK
-    Topbar_1.BackgroundTransparency = 0.30000001192092896
+    Topbar_1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Topbar_1.BackgroundTransparency = 1
     Topbar_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Topbar_1.BorderSizePixel = 0
     Topbar_1.Position = UDim2.new(5.75803369e-08, 0, 0, 0)
@@ -211,7 +206,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     Title_1.Font = Enum.Font.Jura
     Title_1.RichText = true
     Title_1.Text = "<b>" .. Title .. "  |</b>  " .. Description
-    Title_1.TextColor3 = HOT_PINK_LIGHT
+    Title_1.TextColor3 = Color3.fromRGB(255, 255, 255)
     Title_1.TextSize = 15
     Title_1.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -269,7 +264,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
     User_1.Name = "User"
     User_1.Parent = Main_1
-    User_1.BackgroundColor3 = HOT_PINK
+    User_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
     User_1.BackgroundTransparency = 0.800000011920929
     User_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
     User_1.BorderSizePixel = 0
@@ -301,7 +296,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     UserText_1.Font = Enum.Font.Jura
     UserText_1.RichText = true
     UserText_1.Text = "<b>" .. username .. "</b>"
-    UserText_1.TextColor3 = HOT_PINK_LIGHT
+    UserText_1.TextColor3 = Color3.fromRGB(140, 140, 140)
     UserText_1.TextSize = 14
     UserText_1.TextXAlignment = Enum.TextXAlignment.Left
     UserText_1.ClipsDescendants = true
@@ -404,7 +399,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     UITogglerHolder_1.Name = "UITogglerHolder"
     UITogglerHolder_1.Parent = Library
     UITogglerHolder_1.AnchorPoint = Vector2.new(0.5, 0.5)
-    UITogglerHolder_1.BackgroundColor3 = HOT_PINK
+    UITogglerHolder_1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     UITogglerHolder_1.BackgroundTransparency = 0.10000000149011612
     UITogglerHolder_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
     UITogglerHolder_1.BorderSizePixel = 0
@@ -503,7 +498,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
         TabHolder_1.Name = "TabHolder"
         TabHolder_1.Parent = TabsHolder_1
-        TabHolder_1.BackgroundColor3 = HOT_PINK
+        TabHolder_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         TabHolder_1.BackgroundTransparency = 0.800000011920929
         TabHolder_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
         TabHolder_1.BorderSizePixel = 0
@@ -522,10 +517,10 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
         TabTitle_1.Font = Enum.Font.Jura
         TabTitle_1.RichText = true
         TabTitle_1.Text = "<b>" .. Title .. "</b>"
-        TabTitle_1.TextColor3 = HOT_PINK_LIGHT
+        TabTitle_1.TextColor3 = Color3.fromRGB(140, 140, 140)
         TabTitle_1.TextSize = 14
         TabTitle_1.TextXAlignment = Enum.TextXAlignment.Left
-        TabTitle_1.TextColor3 = HOT_PINK_LIGHT
+        TabTitle_1.TextColor3 = Color3.fromRGB(140, 140, 140)
 
         UIPadding_3.Parent = TabTitle_1
         UIPadding_3.PaddingLeft = UDim.new(0, 36)
@@ -533,14 +528,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
         TabIcon_1.Name = "TabIcon"
         TabIcon_1.Parent = TabHolder_1
         TabIcon_1.AnchorPoint = Vector2.new(0, 0.5)
-        TabIcon_1.BackgroundColor3 = HOT_PINK_LIGHT
+        TabIcon_1.BackgroundColor3 = Color3.fromRGB(140, 140, 140)
         TabIcon_1.BackgroundTransparency = 1
         TabIcon_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
         TabIcon_1.BorderSizePixel = 0
         TabIcon_1.Position = UDim2.new(0, 8, 0.5, 0)
         TabIcon_1.Size = UDim2.new(0, 18, 0, 18)
         TabIcon_1.Image = "rbxassetid://" .. Icon
-        TabIcon_1.ImageColor3 = HOT_PINK_LIGHT
+        TabIcon_1.ImageColor3 = Color3.fromRGB(140, 140, 140)
 
         UIPadding_4.Parent = TabsHolder_1
         UIPadding_4.PaddingBottom = UDim.new(0, 4)
@@ -600,12 +595,12 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             currentIcon = TabIcon_1
             currentTabIndex = 1
 
-            TabTitle_1.TextColor3 = HOT_PINK_LIGHT
-            TabIcon_1.ImageColor3 = HOT_PINK_LIGHT
+            TabTitle_1.TextColor3 = Color3.fromRGB(255, 255, 255)
+            TabIcon_1.ImageColor3 = Color3.fromRGB(255, 255, 255)
         else
             Elements_1.Visible = false
-            TabTitle_1.TextColor3 = HOT_PINK_DARK
-            TabIcon_1.ImageColor3 = HOT_PINK_DARK
+            TabTitle_1.TextColor3 = Color3.fromRGB(180, 180, 180)
+            TabIcon_1.ImageColor3 = Color3.fromRGB(180, 180, 180)
         end
 
         TabTitle_1.MouseButton1Click:Connect(
@@ -624,18 +619,18 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 local newFrame = allTabs[newIndex]
 
                 if currentTab and currentIcon then
-                    TweenService:Create(currentTab, TweenInfo.new(0.2), {TextColor3 = HOT_PINK_DARK}):Play(
+                    TweenService:Create(currentTab, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(180, 180, 180)}):Play(
 
                     )
 
-                    TweenService:Create(currentIcon, TweenInfo.new(0.2), {ImageColor3 = HOT_PINK_DARK}):Play(
+                    TweenService:Create(currentIcon, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(180, 180, 180)}):Play(
 
                     )
                 end
 
-                TweenService:Create(TabTitle_1, TweenInfo.new(0.2), {TextColor3 = HOT_PINK_LIGHT}):Play()
+                TweenService:Create(TabTitle_1, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
 
-                TweenService:Create(TabIcon_1, TweenInfo.new(0.2), {ImageColor3 = HOT_PINK_LIGHT}):Play()
+                TweenService:Create(TabIcon_1, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(255, 255, 255)}):Play()
 
                 newFrame.Position = UDim2.new(direction, 0, 0, 0)
                 newFrame.Visible = true
@@ -668,7 +663,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
             Section_1.Name = "Section"
             Section_1.Parent = Items_1
-            Section_1.BackgroundColor3 = HOT_PINK
+            Section_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             Section_1.BackgroundTransparency = 1
             Section_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             Section_1.BorderSizePixel = 0
@@ -684,7 +679,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             SectionTitle_1.Font = Enum.Font.Jura
             SectionTitle_1.RichText = true
             SectionTitle_1.Text = "<b>" .. Title .. "</b>"
-            SectionTitle_1.TextColor3 = HOT_PINK_LIGHT
+            SectionTitle_1.TextColor3 = Color3.fromRGB(140, 140, 140)
             SectionTitle_1.TextSize = 14
             SectionTitle_1.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -699,7 +694,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
             Label_1.Name = "Label"
             Label_1.Parent = Items_1
-            Label_1.BackgroundColor3 = HOT_PINK
+            Label_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             Label_1.BackgroundTransparency = 0.800000011920929
             Label_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             Label_1.BorderSizePixel = 0
@@ -718,7 +713,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             LabelTitle_1.Font = Enum.Font.Jura
             LabelTitle_1.RichText = true
             LabelTitle_1.Text = "<b>" .. Title .. "</b>"
-            LabelTitle_1.TextColor3 = HOT_PINK_LIGHT
+            LabelTitle_1.TextColor3 = Color3.fromRGB(255, 255, 255)
             LabelTitle_1.TextSize = 14
 
             local dynamicLabel = {}
@@ -736,7 +731,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
             Button_1.Name = "Button"
             Button_1.Parent = Items_1
-            Button_1.BackgroundColor3 = HOT_PINK
+            Button_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             Button_1.BackgroundTransparency = 0.800000011920929
             Button_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             Button_1.BorderSizePixel = 0
@@ -755,7 +750,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             ButtonTitle_1.Font = Enum.Font.Jura
             ButtonTitle_1.RichText = true
             ButtonTitle_1.Text = "<b>" .. Title .. "</b>"
-            ButtonTitle_1.TextColor3 = HOT_PINK_LIGHT
+            ButtonTitle_1.TextColor3 = Color3.fromRGB(140, 140, 140)
             ButtonTitle_1.TextSize = 14
             ButtonTitle_1.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -773,7 +768,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                         TweenService:Create(
                         ButtonTitle_1,
                         TweenInfo.new(0.1),
-                        {TextColor3 = HOT_PINK_LIGHT}
+                        {TextColor3 = Color3.fromRGB(255, 255, 255)}
                     )
                     tween1:Play()
 
@@ -783,7 +778,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                                 TweenService:Create(
                                 ButtonTitle_1,
                                 TweenInfo.new(0.2),
-                                {TextColor3 = HOT_PINK_DARK}
+                                {TextColor3 = Color3.fromRGB(140, 140, 140)}
                             )
                             tween2:Play()
                         end
@@ -810,7 +805,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
             Toggle_1.Name = "Toggle"
             Toggle_1.Parent = Items_1
-            Toggle_1.BackgroundColor3 = HOT_PINK
+            Toggle_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             Toggle_1.BackgroundTransparency = 0.800000011920929
             Toggle_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             Toggle_1.BorderSizePixel = 0
@@ -829,7 +824,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             ToggleTitle_1.Font = Enum.Font.Jura
             ToggleTitle_1.RichText = true
             ToggleTitle_1.Text = "<b>" .. Title .. "</b>"
-            ToggleTitle_1.TextColor3 = HOT_PINK_LIGHT
+            ToggleTitle_1.TextColor3 = Color3.fromRGB(140, 140, 140)
             ToggleTitle_1.TextSize = 14
             ToggleTitle_1.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -876,7 +871,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                                 TweenService:Create(
                                 ToggleTitle_1,
                                 tweenInfo,
-                                {TextColor3 = HOT_PINK_DARK}
+                                {TextColor3 = Color3.fromRGB(140, 140, 140)}
                             )
                             offTween:Play()
                             offTween2:Play()
@@ -893,13 +888,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                                 TweenService:Create(
                                 TogglerHolder_1,
                                 tweenInfo,
-                                {BackgroundColor3 = HOT_PINK_LIGHT}
+                                {BackgroundColor3 = Color3.fromRGB(255, 255, 255)}
                             )
                             local onTween2 =
                                 TweenService:Create(
                                 ToggleTitle_1,
                                 tweenInfo,
-                                {TextColor3 = HOT_PINK_LIGHT}
+                                {TextColor3 = Color3.fromRGB(255, 255, 255)}
                             )
                             onTween:Play()
                             onTween2:Play()
@@ -920,10 +915,10 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                             TweenService:Create(
                             TogglerHolder_1,
                             tweenInfo,
-                            {BackgroundColor3 = HOT_PINK_LIGHT}
+                            {BackgroundColor3 = Color3.fromRGB(255, 255, 255)}
                         )
                         local onTween2 =
-                            TweenService:Create(ToggleTitle_1, tweenInfo, {TextColor3 = HOT_PINK_LIGHT})
+                            TweenService:Create(ToggleTitle_1, tweenInfo, {TextColor3 = Color3.fromRGB(255, 255, 255)})
                         onTween:Play()
                         onTween2:Play()
                         toggled = true
@@ -935,7 +930,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                             {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}
                         )
                         local offTween2 =
-                            TweenService:Create(ToggleTitle_1, tweenInfo, {TextColor3 = HOT_PINK_DARK})
+                            TweenService:Create(ToggleTitle_1, tweenInfo, {TextColor3 = Color3.fromRGB(140, 140, 140)})
                         offTween:Play()
                         offTween2:Play()
                         toggled = false
@@ -959,7 +954,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
             Box_1.Name = "Box"
             Box_1.Parent = Items_1
-            Box_1.BackgroundColor3 = HOT_PINK
+            Box_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             Box_1.BackgroundTransparency = 0.800000011920929
             Box_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             Box_1.BorderSizePixel = 0
@@ -978,7 +973,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             BoxTitle_1.Font = Enum.Font.Jura
             BoxTitle_1.RichText = true
             BoxTitle_1.Text = "<b>" .. Title .. "</b>"
-            BoxTitle_1.TextColor3 = HOT_PINK_LIGHT
+            BoxTitle_1.TextColor3 = Color3.fromRGB(140, 140, 140)
             BoxTitle_1.TextSize = 14
             BoxTitle_1.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -1008,12 +1003,12 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             TextBox_1.Size = UDim2.new(0, 82, 0, 22)
             TextBox_1.ClipsDescendants = true
             TextBox_1.Font = Enum.Font.Jura
-            TextBox_1.PlaceholderColor3 = HOT_PINK_DARK
+            TextBox_1.PlaceholderColor3 = Color3.fromRGB(140, 140, 140)
             TextBox_1.PlaceholderText = "..."
             TextBox_1.Text = ""
             TextBox_1.TextEditable = true
             TextBox_1.ClearTextOnFocus = false
-            TextBox_1.TextColor3 = HOT_PINK_LIGHT
+            TextBox_1.TextColor3 = Color3.fromRGB(140, 140, 140)
             TextBox_1.TextSize = 14
             TextBox_1.TextTruncate = Enum.TextTruncate.AtEnd
             TextBox_1.TextXAlignment = Enum.TextXAlignment.Right
@@ -1035,7 +1030,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                         TweenService:Create(
                         BoxTitle_1,
                         TweenInfo.new(0.1),
-                        {TextColor3 = HOT_PINK_LIGHT}
+                        {TextColor3 = Color3.fromRGB(255, 255, 255)}
                     )
                     tweenIn:Play()
                 end
@@ -1052,7 +1047,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                         TweenService:Create(
                         BoxTitle_1,
                         TweenInfo.new(0.2),
-                        {TextColor3 = HOT_PINK_DARK}
+                        {TextColor3 = Color3.fromRGB(140, 140, 140)}
                     )
                     tweenOut:Play()
                 end
@@ -1081,7 +1076,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Dropdown_1.Name = "Dropdown"
             Dropdown_1.Parent = Items_1
             Dropdown_1.AutomaticSize = Enum.AutomaticSize.Y
-            Dropdown_1.BackgroundColor3 = HOT_PINK
+            Dropdown_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             Dropdown_1.BackgroundTransparency = 0.800000011920929
             Dropdown_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             Dropdown_1.BorderSizePixel = 0
@@ -1093,7 +1088,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             A_Dropdown_1.Name = "A_Dropdown"
             A_Dropdown_1.Parent = Dropdown_1
             A_Dropdown_1.AutomaticSize = Enum.AutomaticSize.Y
-            A_Dropdown_1.BackgroundColor3 = HOT_PINK
+            A_Dropdown_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             A_Dropdown_1.BackgroundTransparency = 1
             A_Dropdown_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             A_Dropdown_1.BorderSizePixel = 0
@@ -1123,7 +1118,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             SelectedText_1.Font = Enum.Font.Jura
             SelectedText_1.RichText = true
             SelectedText_1.Text = "None"
-            SelectedText_1.TextColor3 = HOT_PINK_LIGHT
+            SelectedText_1.TextColor3 = Color3.fromRGB(255, 255, 255)
             SelectedText_1.TextSize = 14
             SelectedText_1.TextTruncate = Enum.TextTruncate.AtEnd
             SelectedText_1.TextXAlignment = Enum.TextXAlignment.Right
@@ -1154,7 +1149,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             DropdownTitle_1.Font = Enum.Font.Jura
             DropdownTitle_1.RichText = true
             DropdownTitle_1.Text = "<b>" .. Title .. "</b>"
-            DropdownTitle_1.TextColor3 = HOT_PINK_LIGHT
+            DropdownTitle_1.TextColor3 = Color3.fromRGB(140, 140, 140)
             DropdownTitle_1.TextSize = 14
             DropdownTitle_1.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -1164,7 +1159,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             B_Dropdown_1.Name = "B_Dropdown"
             B_Dropdown_1.Parent = Dropdown_1
             B_Dropdown_1.AutomaticSize = Enum.AutomaticSize.Y
-            B_Dropdown_1.BackgroundColor3 = HOT_PINK
+            B_Dropdown_1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
             B_Dropdown_1.BackgroundTransparency = 1
             B_Dropdown_1.BorderColor3 = Color3.fromRGB(0, 0, 0)
             B_Dropdown_1.BorderSizePixel = 0
@@ -1199,7 +1194,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 rotationTween:Play()
                 B_Dropdown_1.Visible = isDropdownOpen
 
-                local textColor = isDropdownOpen and HOT_PINK_LIGHT or HOT_PINK_DARK
+                local textColor = isDropdownOpen and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(140, 140, 140)
                 local textTweenInfo = TweenInfo.new(isDropdownOpen and 0.1 or 0.2)
                 local titleTween = TweenService:Create(DropdownTitle_1, textTweenInfo, {TextColor3 = textColor})
                 titleTween:Play()
@@ -1231,7 +1226,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 button.Font = Enum.Font.Jura
                 button.RichText = true
                 button.Text = "<b>" .. optionText .. "</b>"
-                button.TextColor3 = HOT_PINK_LIGHT
+                button.TextColor3 = Color3.fromRGB(180, 180, 180)
                 button.TextSize = 14
                 button.TextXAlignment = Enum.TextXAlignment.Right
 
