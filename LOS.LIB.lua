@@ -25,16 +25,16 @@ local activeNotifications = {}
 local notificationSpacing = 10
 local notificationHeight = 90
 
--- // STARRY-NIGHT THEME PALETTE
+-- // MONOCROME BLACK & WHITE THEME PALETTE
 local PALETTE = {
-    Background         = Color3.fromRGB( 10,  15,  35), -- midnight-blue
-    Surface            = Color3.fromRGB( 20,  25,  50), -- deep-sky
-    Elevated           = Color3.fromRGB( 30,  40,  70), -- lighter sky
-    Accent             = Color3.fromRGB(255, 215, 100), -- star-gold
-    TextPrimary        = Color3.fromRGB(240, 240, 255), -- moon-white
-    TextSecondary      = Color3.fromRGB(180, 190, 220), -- soft starlight
-    TextDisabled       = Color3.fromRGB(100, 110, 140), -- faded cloud
-    Glow               = Color3.fromRGB(255, 230, 150)  -- halo
+    Background         = Color3.fromRGB(  0,   0,   0), -- pure black
+    Surface            = Color3.fromRGB( 25,  25,  25), -- dark gray surface
+    Elevated           = Color3.fromRGB( 45,  45,  45), -- elevated gray
+    Accent             = Color3.fromRGB(255, 255, 255), -- pure white accent
+    TextPrimary        = Color3.fromRGB(255, 255, 255), -- white text
+    TextSecondary      = Color3.fromRGB(180, 180, 180), -- light gray text
+    TextDisabled       = Color3.fromRGB( 80,  80,  80), -- disabled gray
+    Glow               = Color3.fromRGB(200, 200, 200)  -- glow effect
 }
 
 -- // NOTIFICATION
@@ -75,7 +75,7 @@ function KyyfiiiLibrary:createNotification(desc)
     title.Size = UDim2.new(1,0,0,30)
     title.Font = Enum.Font.Jura
     title.RichText = true
-    title.Text = "<b>StarryNight  |</b>  Notification"
+    title.Text = "<b>Monochrome  |</b>  Notification"
     title.TextColor3 = PALETTE.TextPrimary
     title.TextSize = 15
     title.TextXAlignment = Enum.TextXAlignment.Left
