@@ -153,7 +153,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     Background.Parent = Main
     Background.BackgroundTransparency = 1
     Background.Size = UDim2.new(1,0,1,0)
-    Background.Image = "rbxassetid://126110720770200"
+    Background.Image = "rbxassetid://116254090053371"
     Background.ImageTransparency = .55
     Background.ImageColor3 = PALETTE.Accent
     cornerB.Parent = Background
