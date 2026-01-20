@@ -25,16 +25,16 @@ local activeNotifications = {}
 local notificationSpacing = 10
 local notificationHeight = 90
 
--- // MONOCROME BLACK & WHITE THEME PALETTE
+-- // BLACK, WHITE, NAVY BLUE & DEEP PURPLE THEME PALETTE
 local PALETTE = {
     Background         = Color3.fromRGB(  0,   0,   0), -- pure black
-    Surface            = Color3.fromRGB( 25,  25,  25), -- dark gray surface
-    Elevated           = Color3.fromRGB( 45,  45,  45), -- elevated gray
-    Accent             = Color3.fromRGB(255, 255, 255), -- pure white accent
+    Surface            = Color3.fromRGB( 20,  20,  40), -- navy blue
+    Elevated           = Color3.fromRGB( 35,  15,  35), -- deep purple
+    Accent             = Color3.fromRGB(255, 255, 255), -- white accent
     TextPrimary        = Color3.fromRGB(255, 255, 255), -- white text
-    TextSecondary      = Color3.fromRGB(180, 180, 180), -- light gray text
-    TextDisabled       = Color3.fromRGB( 80,  80,  80), -- disabled gray
-    Glow               = Color3.fromRGB(200, 200, 200)  -- glow effect
+    TextSecondary      = Color3.fromRGB(180, 180, 200), -- light blue-gray
+    TextDisabled       = Color3.fromRGB( 60,  60,  60), -- dark gray
+    Glow               = Color3.fromRGB(255, 255, 255)  -- white glow
 }
 
 -- // NOTIFICATION
@@ -75,7 +75,7 @@ function KyyfiiiLibrary:createNotification(desc)
     title.Size = UDim2.new(1,0,0,30)
     title.Font = Enum.Font.Jura
     title.RichText = true
-    title.Text = "<b>Monochrome  |</b>  Notification"
+    title.Text = "<b>NavyPurple  |</b>  Notification"
     title.TextColor3 = PALETTE.TextPrimary
     title.TextSize = 15
     title.TextXAlignment = Enum.TextXAlignment.Left
@@ -153,7 +153,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     Background.Parent = Main
     Background.BackgroundTransparency = 1
     Background.Size = UDim2.new(1,0,1,0)
-    Background.Image = "rbxassetid://116254090053371"
+    Background.Image = "rbxassetid://126110720770200"
     Background.ImageTransparency = .55
     Background.ImageColor3 = PALETTE.Accent
     cornerB.Parent = Background
