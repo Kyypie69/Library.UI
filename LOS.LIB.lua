@@ -60,7 +60,7 @@ function KyyfiiiLibrary:createNotification(desc)
     bg.Parent = Notification
     bg.BackgroundTransparency = 1
     bg.Size = UDim2.new(1,0,1,0)
-    bg.Image = "rbxassetid://115425612976846"
+    bg.Image = "rbxassetid://126110720770200"
     bg.ImageTransparency = .5
     bg.ImageColor3 = PALETTE.Accent
 
