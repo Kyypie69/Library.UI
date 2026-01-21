@@ -26,24 +26,16 @@ local notificationSpacing = 10
 local notificationHeight = 90
 
 -- // BLACK, WHITE, NAVY BLUE & DEEP PURPLE THEME PALETTE
--- // TEXT CHANGED TO DEEP BLACK WITH GRAY GLOW BORDER
 local PALETTE = {
     Background         = Color3.fromRGB(  0,   0,   0), -- pure black
     Surface            = Color3.fromRGB( 20,  20,  40), -- navy blue
     Elevated           = Color3.fromRGB( 35,  15,  35), -- deep purple
     Accent             = Color3.fromRGB(255, 255, 255), -- white accent
-    TextPrimary        = Color3.fromRGB(  0,   0,   0), -- DEEP BLACK
-    TextSecondary      = Color3.fromRGB(  0,   0,   0), -- DEEP BLACK
-    TextDisabled       = Color3.fromRGB( 20,  20,  20), -- very dark gray (near black)
-    Glow               = Color3.fromRGB(150, 150, 150), -- GRAY GLOW for borders
-    GlowIntensity      = 0.6 -- Stroke transparency for glow effect
+    TextPrimary        = Color3.fromRGB(255, 255, 255), -- white text
+    TextSecondary      = Color3.fromRGB(180, 180, 200), -- light blue-gray
+    TextDisabled       = Color3.fromRGB( 60,  60,  60), -- dark gray
+    Glow               = Color3.fromRGB(255, 255, 255)  -- white glow
 }
-
--- Helper function to apply glow effect to text
-local function applyTextGlow(textElement)
-    textElement.TextStrokeColor3 = PALETTE.Glow
-    textElement.TextStrokeTransparency = PALETTE.GlowIntensity
-end
 
 -- // NOTIFICATION
 function KyyfiiiLibrary:createNotification(desc)
@@ -87,7 +79,6 @@ function KyyfiiiLibrary:createNotification(desc)
     title.TextColor3 = PALETTE.TextPrimary
     title.TextSize = 15
     title.TextXAlignment = Enum.TextXAlignment.Left
-    applyTextGlow(title) -- Apply gray glow
     Instance.new("UIPadding", title).PaddingLeft = UDim.new(0,10)
 
     descLbl.Name = "Description"
@@ -103,7 +94,6 @@ function KyyfiiiLibrary:createNotification(desc)
     descLbl.TextWrapped = true
     descLbl.TextXAlignment = Enum.TextXAlignment.Left
     descLbl.TextYAlignment = Enum.TextYAlignment.Top
-    applyTextGlow(descLbl) -- Apply gray glow
     local pad = Instance.new("UIPadding", descLbl)
     pad.PaddingLeft = UDim.new(0,10)
     pad.PaddingRight = UDim.new(0,10)
@@ -188,7 +178,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     TitleLbl.TextColor3 = PALETTE.TextPrimary
     TitleLbl.TextSize = 15
     TitleLbl.TextXAlignment = Enum.TextXAlignment.Left
-    applyTextGlow(TitleLbl) -- Apply gray glow
     Instance.new("UIPadding", TitleLbl).PaddingLeft = UDim.new(0,10)
 
     Tabs.Name = "Tabs"
@@ -249,7 +238,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     UserText.TextXAlignment = Enum.TextXAlignment.Left
     UserText.ClipsDescendants = true
     UserText.TextTruncate = Enum.TextTruncate.AtEnd
-    applyTextGlow(UserText) -- Apply gray glow
     Instance.new("UIPadding", UserText).PaddingLeft = UDim.new(0,36)
 
     -- // DRAG
@@ -379,7 +367,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
         TabBtn.TextColor3 = PALETTE.TextSecondary
         TabBtn.TextSize = 14
         TabBtn.TextXAlignment = Enum.TextXAlignment.Left
-        applyTextGlow(TabBtn) -- Apply gray glow
         Instance.new("UIPadding", TabBtn).PaddingLeft = UDim.new(0,36)
 
         TabIco.Name = "TabIcon"
@@ -471,8 +458,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             SectionTitle.TextColor3 = PALETTE.TextSecondary
             SectionTitle.TextSize = 14
             SectionTitle.TextXAlignment = Enum.TextXAlignment.Left
-            applyTextGlow(SectionTitle) -- Apply gray glow
             Instance.new("UIPadding", SectionTitle).PaddingLeft = UDim.new(0,2)
+            
+            -- Return object with UpdateText method
+            return {
+                UpdateText = function(self, newText)
+                    SectionTitle.Text = "<b>"..newText.."</b>"
+                end
+            }
         end
 
         function Elements:CreateLabel(Title)
@@ -495,8 +488,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             LabelTitle.Text = "<b>"..Title.."</b>"
             LabelTitle.TextColor3 = PALETTE.TextPrimary
             LabelTitle.TextSize = 14
-            applyTextGlow(LabelTitle) -- Apply gray glow
-            return {SetText = function(t) LabelTitle.Text = "<b>"..t.."</b>" end}
+            
+            -- Return object with UpdateText method (replaced SetText)
+            return {
+                UpdateText = function(self, newText)
+                    LabelTitle.Text = "<b>"..newText.."</b>"
+                end
+            }
         end
 
         function Elements:CreateButton(Title, Callback)
@@ -520,7 +518,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Btn.TextColor3 = PALETTE.TextSecondary
             Btn.TextSize = 14
             Btn.TextXAlignment = Enum.TextXAlignment.Left
-            applyTextGlow(Btn) -- Apply gray glow
             Instance.new("UIPadding", Btn).PaddingLeft = UDim.new(0,16)
 
             Btn.MouseButton1Click:Connect(function()
@@ -535,6 +532,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 end)
                 Callback()
             end)
+            
+            -- Return object with UpdateText method
+            return {
+                UpdateText = function(self, newText)
+                    Btn.Text = "<b>"..newText.."</b>"
+                end
+            }
         end
 
         function Elements:CreateToggle(Title, Callback)
@@ -567,7 +571,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             ToggleTitle.TextColor3 = PALETTE.TextSecondary
             ToggleTitle.TextSize = 14
             ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
-            applyTextGlow(ToggleTitle) -- Apply gray glow
             Instance.new("UIPadding", ToggleTitle).PaddingLeft = UDim.new(0,16)
 
             TogglerHolder.Name = "TogglerHolder"
@@ -625,6 +628,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 pcall(Callback, toggled)
                 debounce = false
             end)
+            
+            -- Return object with UpdateText method
+            return {
+                UpdateText = function(self, newText)
+                    ToggleTitle.Text = "<b>"..newText.."</b>"
+                end
+            }
         end
 
         function Elements:CreateBox(Title, Callback)
@@ -653,7 +663,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             BoxTitle.TextColor3 = PALETTE.TextSecondary
             BoxTitle.TextSize = 14
             BoxTitle.TextXAlignment = Enum.TextXAlignment.Left
-            applyTextGlow(BoxTitle) -- Apply gray glow
             Instance.new("UIPadding", BoxTitle).PaddingLeft = UDim.new(0,16)
 
             TextBoxHolder.Name = "TextBoxHolder"
@@ -681,7 +690,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             TextBox.TextSize = 14
             TextBox.TextTruncate = Enum.TextTruncate.AtEnd
             TextBox.TextXAlignment = Enum.TextXAlignment.Right
-            applyTextGlow(TextBox) -- Apply gray glow
             local pad = Instance.new("UIPadding", TextBox)
             pad.PaddingLeft = UDim.new(0,8)
             pad.PaddingRight = UDim.new(0,8)
@@ -700,6 +708,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 Callback(TextBox.Text)
                 TweenService:Create(BoxTitle, TweenInfo.new(.2), {TextColor3 = PALETTE.TextSecondary}):Play()
             end)
+            
+            -- Return object with UpdateText method for the BoxTitle
+            return {
+                UpdateText = function(self, newText)
+                    BoxTitle.Text = "<b>"..newText.."</b>"
+                end
+            }
         end
 
         function Elements:CreateDropdown(Title, Options, Callback)
@@ -750,7 +765,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             SelectedText.TextSize = 14
             SelectedText.TextTruncate = Enum.TextTruncate.AtEnd
             SelectedText.TextXAlignment = Enum.TextXAlignment.Right
-            applyTextGlow(SelectedText) -- Apply gray glow
             Instance.new("UIPadding", SelectedText).PaddingRight = UDim.new(0,2)
 
             DropdownToggler.Name = "DropdownToggler"
@@ -774,7 +788,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             DropdownTitle.TextColor3 = PALETTE.TextSecondary
             DropdownTitle.TextSize = 14
             DropdownTitle.TextXAlignment = Enum.TextXAlignment.Left
-            applyTextGlow(DropdownTitle) -- Apply gray glow
             Instance.new("UIPadding", DropdownTitle).PaddingLeft = UDim.new(0,16)
 
             B_Dropdown.Name = "B_Dropdown"
@@ -827,7 +840,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 optBtn.TextColor3 = PALETTE.TextSecondary
                 optBtn.TextSize = 14
                 optBtn.TextXAlignment = Enum.TextXAlignment.Right
-                applyTextGlow(optBtn) -- Apply gray glow
                 Instance.new("UIPadding", optBtn).PaddingRight = UDim.new(0,14)
 
                 optBtn.MouseButton1Click:Connect(function()
@@ -840,6 +852,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     Toggle()
                 end)
             end
+            
+            -- Return object with UpdateText method for the DropdownTitle
+            return {
+                UpdateText = function(self, newText)
+                    DropdownTitle.Text = "<b>"..newText.."</b>"
+                end
+            }
         end
 
         return Elements
