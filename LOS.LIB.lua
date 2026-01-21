@@ -3,10 +3,12 @@ local UserInputService = game:GetService("UserInputService")
 local runService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
+local player = game.Players.LocalPlayer
 local SoundService = game:GetService("SoundService")
 local HttpService = game:GetService("HttpService")
 local MarketplaceService = game:GetService("MarketplaceService")
 local username = player.Name
+
 
 if game.CoreGui:FindFirstChild("Library") then
     game.CoreGui:FindFirstChild("Library"):Destroy()
