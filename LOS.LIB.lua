@@ -312,7 +312,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     toggleLogo.Position = UDim2.new(.5,0,.5,0)
     toggleLogo.Size = UDim2.new(0,30,0,30)
     toggleLogo.ZIndex = 2
-    toggleLogo.Image = "rbxassetid://136966526591317"
+    toggleLogo.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     toggleLogo.ImageColor3 = PALETTE.TextPrimary
 
     toggleBtn.MouseButton1Click:Connect(function()
