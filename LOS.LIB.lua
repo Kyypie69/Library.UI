@@ -62,7 +62,7 @@ function KyyfiiiLibrary:createNotification(desc)
     bg.Parent = Notification
     bg.BackgroundTransparency = 1
     bg.Size = UDim2.new(1,0,1,0)
-    bg.Image = "rbxassetid://126110720770200"
+    bg.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     bg.ImageTransparency = .5
     bg.ImageColor3 = PALETTE.Accent
 
@@ -225,7 +225,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     UserIcon.BackgroundTransparency = 1
     UserIcon.Position = UDim2.new(0,8,.5,0)
     UserIcon.Size = UDim2.new(0,18,0,18)
-    UserIcon.Image = "rbxassetid://73054449943371"
+    UserIcon.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     UserIcon.ImageColor3 = PALETTE.TextPrimary
 
     UserText.Name = "UserText"
