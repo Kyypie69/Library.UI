@@ -155,7 +155,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     Background.Parent = Main
     Background.BackgroundTransparency = 1
     Background.Size = UDim2.new(1,0,1,0)
-    Background.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=126406956523768 "
+    Background.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491 "
     Background.ImageTransparency = .55
     Background.ImageColor3 = PALETTE.Accent
     cornerB.Parent = Background
