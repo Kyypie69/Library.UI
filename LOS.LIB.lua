@@ -26,14 +26,15 @@ local notificationSpacing = 10
 local notificationHeight = 90
 
 -- // BLACK, WHITE, NAVY BLUE & DEEP PURPLE THEME PALETTE
+-- // TEXT COLORS CHANGED TO DEEP BLACK
 local PALETTE = {
     Background         = Color3.fromRGB(  0,   0,   0), -- pure black
     Surface            = Color3.fromRGB( 20,  20,  40), -- navy blue
     Elevated           = Color3.fromRGB( 35,  15,  35), -- deep purple
     Accent             = Color3.fromRGB(255, 255, 255), -- white accent
-    TextPrimary        = Color3.fromRGB(255, 255, 255), -- white text
-    TextSecondary      = Color3.fromRGB(180, 180, 200), -- light blue-gray
-    TextDisabled       = Color3.fromRGB( 60,  60,  60), -- dark gray
+    TextPrimary        = Color3.fromRGB(  0,   0,   0), -- DEEP BLACK
+    TextSecondary      = Color3.fromRGB(  0,   0,   0), -- DEEP BLACK
+    TextDisabled       = Color3.fromRGB( 20,  20,  20), -- very dark gray (near black)
     Glow               = Color3.fromRGB(255, 255, 255)  -- white glow
 }
 
@@ -153,7 +154,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     Background.Parent = Main
     Background.BackgroundTransparency = 1
     Background.Size = UDim2.new(1,0,1,0)
-    Background.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=126406956523768"
+    Background.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=126406956523768 "
     Background.ImageTransparency = .55
     Background.ImageColor3 = PALETTE.Accent
     cornerB.Parent = Background
