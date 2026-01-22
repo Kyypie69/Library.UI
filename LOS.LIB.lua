@@ -301,7 +301,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     toggleBtn.BackgroundTransparency = 1
     toggleBtn.Size = UDim2.new(0,36,0,36)
     toggleBtn.ZIndex = 2
-    toggleBtn.Image = "rbxassetid://131129943627373"
+    toggleBtn.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     toggleBtn.ImageTransparency = .45
     toggleBtn.ImageColor3 = PALETTE.Accent
 
