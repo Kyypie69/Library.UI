@@ -8066,6 +8066,67 @@ function Library:Notify(Config)
 	return NotificationModule:New(Config)
 end
 
+-- Rainbow Pulse System for Combat Theme
+local RainbowPulse = {
+    HueValue = Instance.new("NumberValue"),
+    Active = false
+}
+RainbowPulse.HueValue.Value = 0
+
+local function UpdateCombatRainbow()
+    if Library.Theme ~= "Combat" then 
+        RainbowPulse.Active = false
+        return 
+    end
+    
+    RainbowPulse.Active = true
+    local hue = RainbowPulse.HueValue.Value
+    local color = Color3.fromHSV(hue, 1, 1) -- Full saturation and brightness for glow effect
+    
+    -- Update Combat theme accent colors dynamically
+    Themes.Combat.Accent = color
+    Themes.Combat.Tab = color
+    Themes.Combat.Element = color
+    Themes.Combat.ToggleSlider = color
+    Themes.Combat.DropdownBorder = color
+    Themes.Combat.DropdownOption = color
+    Themes.Combat.Keybind = color
+    Themes.Combat.InputIndicator = color
+    Themes.Combat.DialogHolderLine = color
+    Themes.Combat.DialogButtonBorder = color
+    Themes.Combat.DialogInputLine = color
+    Themes.Combat.Hover = color
+    Themes.Combat.TitleBarLine = color
+    
+    -- Apply to all registered UI elements
+    Creator.UpdateTheme()
+end
+
+-- Connect to value changes
+RainbowPulse.HueValue:GetPropertyChangedSignal("Value"):Connect(UpdateCombatRainbow)
+
+-- Create infinite tween that cycles through rainbow every 3 seconds
+local rainbowTweenInfo = TweenInfo.new(
+    3, -- 3 seconds per full cycle
+    Enum.EasingStyle.Linear, 
+    Enum.EasingDirection.In, 
+    -1, -- Infinite loops
+    false, 
+    0
+)
+
+local rainbowTween = TweenService:Create(RainbowPulse.HueValue, rainbowTweenInfo, {Value = 1})
+rainbowTween:Play()
+
+-- Also trigger update when theme changes to Combat
+local oldSetTheme = Library.SetTheme
+function Library:SetTheme(themeName)
+    oldSetTheme(self, themeName)
+    if themeName == "Combat" then
+        UpdateCombatRainbow()
+    end
+end
+
 if getgenv then
 	getgenv().Fluent = Library
 else
