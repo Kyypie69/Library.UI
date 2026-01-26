@@ -8107,10 +8107,10 @@ RainbowPulse.HueValue:GetPropertyChangedSignal("Value"):Connect(UpdateCombatRain
 
 -- Create infinite tween that cycles through rainbow every 3 seconds
 local rainbowTweenInfo = TweenInfo.new(
-    7, -- 3 seconds per full cycle
+    15, -- 3 seconds per full cycle
     Enum.EasingStyle.Linear, 
     Enum.EasingDirection.In, 
-    -1, -- Infinite loops
+    -3, -- Infinite loops
     false, 
     0
 )
