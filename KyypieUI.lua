@@ -2486,48 +2486,48 @@ White = {
 
 	Combat = {
     Name = "Combat",
-    Accent = Color3.fromRGB(255, 0, 0), -- Bright red
-    AcrylicMain = Color3.fromRGB(20, 0, 0),
-    AcrylicBorder = Color3.fromRGB(60, 0, 0),
-    AcrylicGradient = ColorSequence.new(Color3.fromRGB(40, 0, 0), Color3.fromRGB(10, 0, 0)),
-    AcrylicNoise = 0.8,
-
-    TitleBarLine = Color3.fromRGB(120, 0, 0),
-    Tab = Color3.fromRGB(200, 0, 0),
-
-    Element = Color3.fromRGB(200, 0, 0),
-    ElementBorder = Color3.fromRGB(80, 0, 0),
-    InElementBorder = Color3.fromRGB(120, 0, 0),
-    ElementTransparency = 0.75,
-
-    ToggleSlider = Color3.fromRGB(255, 0, 0),
+    Accent = Color3.fromRGB(255, 0, 0),
+    AcrylicMain = Color3.fromRGB(15, 15, 15), -- Dark transparent base
+    AcrylicBorder = Color3.fromRGB(255, 0, 0), -- Rainbow (animated)
+    AcrylicGradient = ColorSequence.new(Color3.fromRGB(25, 25, 25), Color3.fromRGB(10, 10, 10)),
+    AcrylicNoise = 0.3, -- More transparent noise
+    
+    TitleBarLine = Color3.fromRGB(255, 0, 0), -- Rainbow
+    Tab = Color3.fromRGB(255, 0, 0), -- Rainbow
+    
+    Element = Color3.fromRGB(255, 0, 0), -- Rainbow
+    ElementBorder = Color3.fromRGB(255, 0, 0), -- Rainbow glowing border
+    InElementBorder = Color3.fromRGB(255, 0, 0), -- Rainbow inner border
+    ElementTransparency = 0.65, -- Glowing transparent (0.65 = 35% visible)
+    
+    ToggleSlider = Color3.fromRGB(255, 0, 0), -- Rainbow
     ToggleToggled = Color3.fromRGB(255, 255, 255),
-
-    SliderRail = Color3.fromRGB(190, 50, 50),
-
-    DropdownFrame = Color3.fromRGB(45, 0, 0),
-    DropdownHolder = Color3.fromRGB(75, 0, 0),
-    DropdownBorder = Color3.fromRGB(200, 0, 0),
-    DropdownOption = Color3.fromRGB(255, 0, 0),
-
-    Keybind = Color3.fromRGB(190, 0, 0),
-
-    Input = Color3.fromRGB(200, 100, 100),
+    
+    SliderRail = Color3.fromRGB(80, 80, 80), -- Neutral transparent
+    
+    DropdownFrame = Color3.fromRGB(12, 12, 12), -- Transparent dark
+    DropdownHolder = Color3.fromRGB(18, 18, 18), -- Transparent dark
+    DropdownBorder = Color3.fromRGB(255, 0, 0), -- Rainbow
+    DropdownOption = Color3.fromRGB(255, 0, 0), -- Rainbow
+    
+    Keybind = Color3.fromRGB(255, 0, 0), -- Rainbow
+    
+    Input = Color3.fromRGB(180, 180, 180),
     InputFocused = Color3.fromRGB(0, 0, 0),
-    InputIndicator = Color3.fromRGB(255, 0, 0),
-
-    Dialog = Color3.fromRGB(45, 0, 0),
-    DialogHolder = Color3.fromRGB(70, 0, 0),
-    DialogHolderLine = Color3.fromRGB(200, 0, 0),
-    DialogButton = Color3.fromRGB(45, 0, 0),
-    DialogButtonBorder = Color3.fromRGB(255, 0, 0),
-    DialogBorder = Color3.fromRGB(110, 0, 0),
-    DialogInput = Color3.fromRGB(55, 0, 0),
-    DialogInputLine = Color3.fromRGB(255, 0, 0),
-
+    InputIndicator = Color3.fromRGB(255, 0, 0), -- Rainbow
+    
+    Dialog = Color3.fromRGB(12, 12, 12), -- Transparent
+    DialogHolder = Color3.fromRGB(18, 18, 18), -- Transparent
+    DialogHolderLine = Color3.fromRGB(255, 0, 0), -- Rainbow
+    DialogButton = Color3.fromRGB(12, 12, 12), -- Transparent
+    DialogButtonBorder = Color3.fromRGB(255, 0, 0), -- Rainbow glow
+    DialogBorder = Color3.fromRGB(255, 0, 0), -- Rainbow outer border
+    DialogInput = Color3.fromRGB(18, 18, 18),
+    DialogInputLine = Color3.fromRGB(255, 0, 0), -- Rainbow
+    
     Text = Color3.fromRGB(255, 255, 255),
-    SubText = Color3.fromRGB(225, 170, 170),
-    Hover = Color3.fromRGB(255, 50, 50),
+    SubText = Color3.fromRGB(200, 200, 200),
+    Hover = Color3.fromRGB(255, 100, 100), -- Light rainbow
     HoverChange = 0.08,
 },
 }
@@ -8107,7 +8107,7 @@ RainbowPulse.HueValue:GetPropertyChangedSignal("Value"):Connect(UpdateCombatRain
 
 -- Create infinite tween that cycles through rainbow every 3 seconds
 local rainbowTweenInfo = TweenInfo.new(
-    3, -- 3 seconds per full cycle
+    7, -- 3 seconds per full cycle
     Enum.EasingStyle.Linear, 
     Enum.EasingDirection.In, 
     -1, -- Infinite loops
@@ -8131,6 +8131,62 @@ if getgenv then
 	getgenv().Fluent = Library
 else
 	Fluent = Library
+end
+
+-- Rainbow Glowing Border System for Combat Theme
+local CombatRainbowSystem = {
+    HueValue = Instance.new("NumberValue"),
+    RainbowColor = Color3.fromRGB(255, 0, 0)
+}
+
+CombatRainbowSystem.HueValue.Value = 0
+
+local function UpdateCombatRainbow()
+    if Library.Theme ~= "Combat" then return end
+    
+    local hue = CombatRainbowSystem.HueValue.Value
+    local color = Color3.fromHSV(hue, 1, 1) -- Full saturation for neon glow
+    
+    -- Update all border & accent colors to create rainbow glow effect
+    Themes.Combat.AcrylicBorder = color
+    Themes.Combat.TitleBarLine = color
+    Themes.Combat.Tab = color
+    Themes.Combat.ElementBorder = color
+    Themes.Combat.InElementBorder = color
+    Themes.Combat.DropdownBorder = color
+    Themes.Combat.DropdownOption = color
+    Themes.Combat.Keybind = color
+    Themes.Combat.InputIndicator = color
+    Themes.Combat.DialogHolderLine = color
+    Themes.Combat.DialogButtonBorder = color
+    Themes.Combat.DialogBorder = color
+    Themes.Combat.DialogInputLine = color
+    Themes.Combat.Accent = color
+    Themes.Combat.Element = color
+    Themes.Combat.ToggleSlider = color
+    Themes.Combat.Hover = Color3.fromHSV(hue, 0.8, 1) -- Slightly lighter for hover
+    
+    -- Apply changes to UI
+    Creator.UpdateTheme()
+end
+
+CombatRainbowSystem.HueValue:GetPropertyChangedSignal("Value"):Connect(UpdateCombatRainbow)
+
+-- Smooth rainbow cycle every 3 seconds
+local rainbowTween = TweenService:Create(
+    CombatRainbowSystem.HueValue, 
+    TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1, false, 0),
+    {Value = 1}
+)
+rainbowTween:Play()
+
+-- Hook into theme changes
+local oldSetTheme = Library.SetTheme
+function Library:SetTheme(themeName)
+    oldSetTheme(self, themeName)
+    if themeName == "Combat" then
+        UpdateCombatRainbow()
+    end
 end
 
 return Library, SaveManager, InterfaceManager
