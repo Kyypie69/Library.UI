@@ -400,7 +400,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
         Items.ScrollingDirection = Enum.ScrollingDirection.Y
 
         UIList.Parent = Items
-        UIList.Padding = UDim.new(0,6)
+        UIList.Padding = UDim.new(0,4) -- Reduced spacing between elements
         UIList.SortOrder = Enum.SortOrder.LayoutOrder
         Instance.new("UIPadding", Items).PaddingTop = UDim.new(0,4)
 
@@ -447,16 +447,16 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
         -- // ELEMENTS
         local Elements = {}
 
-        -- // STATUS BOX - Professional status display with icon, progress bar, and animated effects
+        -- // STATUS BOX - Compact 46px height
         function Elements:CreateStatusBox(config)
             config = config or {}
             local title = config.Title or "Status"
             local initialValue = config.Value or "0"
             local maxValue = config.MaxValue or 100
-            local showProgress = config.ShowProgress ~= false -- default true
+            local showProgress = config.ShowProgress ~= false
             local statusColor = config.Color or PALETTE.Accent
-            local icon = config.Icon -- optional rbxassetid
-            local unit = config.Unit or "" -- %, HP, XP, etc.
+            local icon = config.Icon
+            local unit = config.Unit or ""
             
             local StatusBox = Instance.new("Frame")
             local corner = Instance.new("UICorner")
@@ -467,18 +467,17 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             local valueLbl = Instance.new("TextLabel")
             local progressBg = Instance.new("Frame")
             local progressBar = Instance.new("Frame")
-            local shine = Instance.new("Frame")
             
-            -- Main Container
+            -- Compact height: 46px
             StatusBox.Name = "StatusBox"
             StatusBox.Parent = Items
             StatusBox.BackgroundColor3 = PALETTE.Surface
             StatusBox.BackgroundTransparency = 0.3
             StatusBox.BorderSizePixel = 0
-            StatusBox.Size = UDim2.new(0,336,0,60)
+            StatusBox.Size = UDim2.new(0,336,0,46)
             StatusBox.ClipsDescendants = true
             
-            corner.CornerRadius = UDim.new(0,8)
+            corner.CornerRadius = UDim.new(0,6)
             corner.Parent = StatusBox
             
             -- Border Glow
@@ -487,81 +486,70 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             stroke.Transparency = 0.8
             stroke.Thickness = 1
             
-            -- Icon (Optional)
+            -- Icon (28x28 instead of 36x36)
             iconFrame.Name = "IconFrame"
             iconFrame.Parent = StatusBox
             iconFrame.BackgroundColor3 = statusColor
             iconFrame.BackgroundTransparency = 0.8
-            iconFrame.Position = UDim2.new(0,8,0,12)
-            iconFrame.Size = UDim2.new(0,36,0,36)
+            iconFrame.Position = UDim2.new(0,8,0,9)
+            iconFrame.Size = UDim2.new(0,28,0,28)
             local iconCorner = Instance.new("UICorner", iconFrame)
-            iconCorner.CornerRadius = UDim.new(0,6)
+            iconCorner.CornerRadius = UDim.new(0,4)
             
             iconImg.Name = "Icon"
             iconImg.Parent = iconFrame
             iconImg.BackgroundTransparency = 1
             iconImg.Position = UDim2.new(0.5,0,0.5,0)
             iconImg.AnchorPoint = Vector2.new(0.5,0.5)
-            iconImg.Size = UDim2.new(0,24,0,24)
+            iconImg.Size = UDim2.new(0,18,0,18)
             iconImg.Image = icon or "rbxassetid://123093571305491"
             iconImg.ImageColor3 = PALETTE.TextPrimary
             
-            -- Title
+            -- Title (smaller)
             titleLbl.Name = "Title"
             titleLbl.Parent = StatusBox
             titleLbl.BackgroundTransparency = 1
-            titleLbl.Position = UDim2.new(0,52,0,8)
-            titleLbl.Size = UDim2.new(0,200,0,20)
+            titleLbl.Position = UDim2.new(0,44,0,6)
+            titleLbl.Size = UDim2.new(0,180,0,16)
             titleLbl.Font = Enum.Font.Jura
             titleLbl.RichText = true
             titleLbl.Text = "<b>"..title.."</b>"
             titleLbl.TextColor3 = PALETTE.TextSecondary
-            titleLbl.TextSize = 14
+            titleLbl.TextSize = 12
             titleLbl.TextXAlignment = Enum.TextXAlignment.Left
             
-            -- Value (Large)
+            -- Value (smaller)
             valueLbl.Name = "Value"
             valueLbl.Parent = StatusBox
             valueLbl.BackgroundTransparency = 1
-            valueLbl.Position = UDim2.new(0,52,0,26)
-            valueLbl.Size = UDim2.new(0,200,0,30)
+            valueLbl.Position = UDim2.new(0,44,0,22)
+            valueLbl.Size = UDim2.new(0,180,0,20)
             valueLbl.Font = Enum.Font.Jura
             valueLbl.RichText = true
             valueLbl.Text = "<b>"..initialValue..unit.."</b>"
             valueLbl.TextColor3 = statusColor
-            valueLbl.TextSize = 24
+            valueLbl.TextSize = 16
             valueLbl.TextXAlignment = Enum.TextXAlignment.Left
             
-            -- Progress Bar Background
+            -- Progress Bar (thinner)
             progressBg.Name = "ProgressBg"
             progressBg.Parent = StatusBox
             progressBg.BackgroundColor3 = PALETTE.Background
             progressBg.BackgroundTransparency = 0.5
             progressBg.BorderSizePixel = 0
-            progressBg.Position = UDim2.new(0,52,0,52)
-            progressBg.Size = UDim2.new(0,276,0,4)
+            progressBg.Position = UDim2.new(0,44,0,40)
+            progressBg.Size = UDim2.new(0,284,0,2)
             local progressCorner = Instance.new("UICorner", progressBg)
-            progressCorner.CornerRadius = UDim.new(0,2)
+            progressCorner.CornerRadius = UDim.new(0,1)
             progressBg.Visible = showProgress
             
-            -- Progress Bar Fill
             progressBar.Name = "ProgressBar"
             progressBar.Parent = progressBg
             progressBar.BackgroundColor3 = statusColor
             progressBar.BorderSizePixel = 0
             progressBar.Size = UDim2.new(tonumber(initialValue)/maxValue,0,1,0)
             local fillCorner = Instance.new("UICorner", progressBar)
-            fillCorner.CornerRadius = UDim.new(0,2)
-            
-            -- Shine effect for animation
-            shine.Name = "Shine"
-            shine.Parent = StatusBox
-            shine.BackgroundColor3 = PALETTE.Accent
-            shine.BackgroundTransparency = 0.9
-            shine.BorderSizePixel = 0
-            shine.Position = UDim2.new(-1,0,0,0)
-            shine.Size = UDim2.new(0.3,0,1,0)
-            shine.ZIndex = 2
+            fillCorner.CornerRadius = UDim.new(0,1)
             
             local function pulseAnimation()
                 task.spawn(function()
@@ -578,20 +566,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             end
             pulseAnimation()
             
-            -- Shine sweep animation
-            local function shineSweep()
-                task.spawn(function()
-                    while StatusBox and StatusBox.Parent do
-                        shine.Position = UDim2.new(-0.3,0,0,0)
-                        TweenService:Create(shine, TweenInfo.new(2,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),
-                            {Position = UDim2.new(1.3,0,0,0)}):Play()
-                        wait(4)
-                    end
-                end)
-            end
-            shineSweep()
-            
-            -- Return control object
             local boxObj = {
                 SetValue = function(self, newVal, totalMax)
                     totalMax = totalMax or maxValue
@@ -600,7 +574,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     TweenService:Create(progressBar, TweenInfo.new(0.3), 
                         {Size = UDim2.new(percentage, 0, 1, 0)}):Play()
                     
-                    -- Color grading based on percentage
                     if percentage < 0.25 then
                         self:SetColor(PALETTE.Danger)
                     elseif percentage < 0.5 then
@@ -623,12 +596,8 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 end,
                 
                 UpdateVisual = function(self, configUpdate)
-                    if configUpdate.Color then
-                        self:SetColor(configUpdate.Color)
-                    end
-                    if configUpdate.Icon then
-                        iconImg.Image = configUpdate.Icon
-                    end
+                    if configUpdate.Color then self:SetColor(configUpdate.Color) end
+                    if configUpdate.Icon then iconImg.Image = configUpdate.Icon end
                     if configUpdate.Unit then
                         unit = configUpdate.Unit
                         local currentVal = valueLbl.Text:gsub("<b>", ""):gsub("</b>", ""):gsub(unit, "")
@@ -652,12 +621,12 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             return boxObj
         end
 
-        -- // LABEL BOX - Styled container for static text with optional icon
+        -- // LABEL BOX - Compact 32px height
         function Elements:CreateLabelBox(config)
             config = config or {}
             local text = config.Text or "Label"
-            local icon = config.Icon -- optional rbxassetid
-            local height = config.Height or 40
+            local icon = config.Icon
+            local height = config.Height or 32
             
             local LabelBox = Instance.new("Frame")
             local corner = Instance.new("UICorner")
@@ -666,7 +635,6 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             local iconImg = Instance.new("ImageLabel")
             local LabelTitle = Instance.new("TextLabel")
             
-            -- Main Container
             LabelBox.Name = "LabelBox"
             LabelBox.Parent = Items
             LabelBox.BackgroundColor3 = PALETTE.Surface
@@ -675,50 +643,47 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             LabelBox.Size = UDim2.new(0,336,0,height)
             LabelBox.ClipsDescendants = true
             
-            corner.CornerRadius = UDim.new(0,8)
+            corner.CornerRadius = UDim.new(0,6)
             corner.Parent = LabelBox
             
-            -- Subtle border
             stroke.Parent = LabelBox
             stroke.Color = PALETTE.Accent
             stroke.Transparency = 0.9
             stroke.Thickness = 1
             
-            -- Icon (Optional)
-            local textOffset = 16
+            local textOffset = 12
             if icon then
                 iconFrame.Name = "IconFrame"
                 iconFrame.Parent = LabelBox
                 iconFrame.BackgroundColor3 = PALETTE.Elevated
                 iconFrame.BackgroundTransparency = 0.5
-                iconFrame.Position = UDim2.new(0,10,0.5,0)
+                iconFrame.Position = UDim2.new(0,8,0.5,0)
                 iconFrame.AnchorPoint = Vector2.new(0,0.5)
-                iconFrame.Size = UDim2.new(0,24,0,24)
+                iconFrame.Size = UDim2.new(0,18,0,18)
                 local iconCorner = Instance.new("UICorner", iconFrame)
-                iconCorner.CornerRadius = UDim.new(0,6)
+                iconCorner.CornerRadius = UDim.new(0,4)
                 
                 iconImg.Name = "Icon"
                 iconImg.Parent = iconFrame
                 iconImg.BackgroundTransparency = 1
                 iconImg.Position = UDim2.new(0.5,0,0.5,0)
                 iconImg.AnchorPoint = Vector2.new(0.5,0.5)
-                iconImg.Size = UDim2.new(0,16,0,16)
+                iconImg.Size = UDim2.new(0,12,0,12)
                 iconImg.Image = icon
                 iconImg.ImageColor3 = PALETTE.TextPrimary
-                textOffset = 44
+                textOffset = 34
             end
             
-            -- Title
             LabelTitle.Name = "LabelTitle"
             LabelTitle.Parent = LabelBox
             LabelTitle.BackgroundTransparency = 1
             LabelTitle.Position = UDim2.new(0,textOffset,0,0)
-            LabelTitle.Size = UDim2.new(1,-(textOffset+10),1,0)
+            LabelTitle.Size = UDim2.new(1,-(textOffset+8),1,0)
             LabelTitle.Font = Enum.Font.Jura
             LabelTitle.RichText = true
             LabelTitle.Text = "<b>"..text.."</b>"
             LabelTitle.TextColor3 = PALETTE.TextPrimary
-            LabelTitle.TextSize = 14
+            LabelTitle.TextSize = 13
             LabelTitle.TextXAlignment = Enum.TextXAlignment.Left
             LabelTitle.TextWrapped = true
             
@@ -729,9 +694,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     labelContent = newText
                     LabelTitle.Text = "<b>"..newText.."</b>"
                 end,
-                GetText = function(self)
-                    return labelContent
-                end,
+                GetText = function(self) return labelContent end,
                 Append = function(self, text)
                     labelContent = labelContent .. text
                     LabelTitle.Text = "<b>"..labelContent.."</b>"
@@ -740,24 +703,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     labelContent = text .. labelContent
                     LabelTitle.Text = "<b>"..labelContent.."</b>"
                 end,
-                SetColor = function(self, color)
-                    LabelTitle.TextColor3 = color
-                end,
-                SetSize = function(self, size)
-                    LabelTitle.TextSize = size
-                end,
-                SetIcon = function(self, newIcon)
-                    if iconImg then
-                        iconImg.Image = newIcon
-                    end
-                end,
-                Destroy = function(self)
-                    LabelBox:Destroy()
-                end
+                SetColor = function(self, color) LabelTitle.TextColor3 = color end,
+                SetSize = function(self, size) LabelTitle.TextSize = size end,
+                SetIcon = function(self, newIcon) if iconImg then iconImg.Image = newIcon end end,
+                Destroy = function(self) LabelBox:Destroy() end
             }
         end
 
-        -- // TEXT BOX (LIVE LABEL) - Dynamic data display with box styling
+        -- // TEXT BOX (LIVE LABEL) - Compact 32px height
         function Elements:CreateTextBox(config)
             config = config or {}
             local title = config.Title or "Stat"
@@ -777,9 +730,9 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             TextBox.BackgroundColor3 = PALETTE.Surface
             TextBox.BackgroundTransparency = 0.3
             TextBox.BorderSizePixel = 0
-            TextBox.Size = UDim2.new(0,336,0,40)
+            TextBox.Size = UDim2.new(0,336,0,32)
             
-            corner.CornerRadius = UDim.new(0,8)
+            corner.CornerRadius = UDim.new(0,6)
             corner.Parent = TextBox
             
             stroke.Parent = TextBox
@@ -790,29 +743,29 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             LabelTitle.Name = "LabelTitle"
             LabelTitle.Parent = TextBox
             LabelTitle.BackgroundTransparency = 1
-            LabelTitle.Position = UDim2.new(0,12,0,0)
-            LabelTitle.Size = UDim2.new(0.5,-12,1,0)
+            LabelTitle.Position = UDim2.new(0,10,0,0)
+            LabelTitle.Size = UDim2.new(0.5,-10,1,0)
             LabelTitle.Font = Enum.Font.Jura
             LabelTitle.RichText = true
             LabelTitle.Text = "<b>"..title.."</b>"
             LabelTitle.TextColor3 = PALETTE.TextSecondary
-            LabelTitle.TextSize = 14
+            LabelTitle.TextSize = 12
             LabelTitle.TextXAlignment = Enum.TextXAlignment.Left
             
             ValueLabel.Name = "ValueLabel"
             ValueLabel.Parent = TextBox
             ValueLabel.BackgroundTransparency = 1
             ValueLabel.Position = UDim2.new(0.5,0,0,0)
-            ValueLabel.Size = UDim2.new(0.5,-12,1,0)
+            ValueLabel.Size = UDim2.new(0.5,-10,1,0)
             ValueLabel.Font = Enum.Font.Jura
             ValueLabel.RichText = true
             ValueLabel.Text = "<b>--"..unit.."</b>"
             ValueLabel.TextColor3 = PALETTE.Accent
-            ValueLabel.TextSize = 14
+            ValueLabel.TextSize = 12
             ValueLabel.TextXAlignment = Enum.TextXAlignment.Right
             
             valuePad.Parent = ValueLabel
-            valuePad.PaddingRight = UDim.new(0,12)
+            valuePad.PaddingRight = UDim.new(0,10)
             
             local connection
             local lastUpdate = 0
@@ -829,38 +782,22 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             end
             
             if interval <= 0.05 then
-                connection = runService.RenderStepped:Connect(function()
-                    updateValue()
-                end)
+                connection = runService.RenderStepped:Connect(function() updateValue() end)
             else
                 connection = runService.Heartbeat:Connect(function(dt)
                     lastUpdate = lastUpdate + dt
-                    if lastUpdate >= interval then
-                        lastUpdate = 0
-                        updateValue()
-                    end
+                    if lastUpdate >= interval then lastUpdate = 0; updateValue() end
                 end)
             end
             
             table.insert(liveConnections, connection)
             
             return {
-                SetTitle = function(self, newText)
-                    LabelTitle.Text = "<b>"..newText.."</b>"
-                end,
-                SetValue = function(self, newText)
-                    ValueLabel.Text = "<b>"..tostring(newText)..unit.."</b>"
-                end,
-                SetUnit = function(self, newUnit)
-                    unit = newUnit
-                    updateValue()
-                end,
-                Pause = function(self)
-                    isActive = false
-                end,
-                Resume = function(self)
-                    isActive = true
-                end,
+                SetTitle = function(self, newText) LabelTitle.Text = "<b>"..newText.."</b>" end,
+                SetValue = function(self, newText) ValueLabel.Text = "<b>"..tostring(newText)..unit.."</b>" end,
+                SetUnit = function(self, newUnit) unit = newUnit; updateValue() end,
+                Pause = function(self) isActive = false end,
+                Resume = function(self) isActive = true end,
                 Destroy = function(self)
                     isActive = false
                     if connection then
@@ -873,12 +810,12 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             }
         end
 
-        -- // LEGACY LABEL (Simple text, no box) - Kept for backwards compatibility
+        -- // LEGACY LABEL
         function Elements:CreateLabel(Title)
             return Elements:CreateLabelBox({Text = Title, Height = 28})
         end
 
-        -- // LEGACY LIVE LABEL - Redirects to TextBox
+        -- // LEGACY LIVE LABEL
         function Elements:CreateLiveLabel(Title, ValueFunction, UpdateInterval)
             return Elements:CreateTextBox({
                 Title = Title,
@@ -895,29 +832,26 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Section.Parent = Items
             Section.BackgroundTransparency = 1
             Section.BorderSizePixel = 0
-            Section.Size = UDim2.new(0,336,0,28)
+            Section.Size = UDim2.new(0,336,0,24)
             
             SectionTitle.Parent = Section
             SectionTitle.BackgroundTransparency = 1
-            SectionTitle.Size = UDim2.new(0,336,0,28)
+            SectionTitle.Size = UDim2.new(0,336,0,24)
             SectionTitle.Font = Enum.Font.Jura
             SectionTitle.RichText = true
             SectionTitle.Text = "<b>"..Title.."</b>"
             SectionTitle.TextColor3 = PALETTE.TextSecondary
-            SectionTitle.TextSize = 14
+            SectionTitle.TextSize = 12
             SectionTitle.TextXAlignment = Enum.TextXAlignment.Left
             Instance.new("UIPadding", SectionTitle).PaddingLeft = UDim.new(0,2)
             
             return {
-                SetText = function(self, newText)
-                    SectionTitle.Text = "<b>"..newText.."</b>"
-                end,
-                SetColor = function(self, color)
-                    SectionTitle.TextColor3 = color
-                end
+                SetText = function(self, newText) SectionTitle.Text = "<b>"..newText.."</b>" end,
+                SetColor = function(self, color) SectionTitle.TextColor3 = color end
             }
         end
 
+        -- // BUTTON - Compact 34px
         function Elements:CreateButton(Title, Callback)
             local Button = Instance.new("Frame")
             local corner = Instance.new("UICorner")
@@ -929,8 +863,8 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Button.BackgroundColor3 = PALETTE.Surface
             Button.BackgroundTransparency = .3
             Button.BorderSizePixel = 0
-            Button.Size = UDim2.new(0,336,0,40)
-            corner.CornerRadius = UDim.new(0,8)
+            Button.Size = UDim2.new(0,336,0,34)
+            corner.CornerRadius = UDim.new(0,6)
             corner.Parent = Button
             
             stroke.Parent = Button
@@ -945,9 +879,9 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Btn.RichText = true
             Btn.Text = "<b>"..Title.."</b>"
             Btn.TextColor3 = PALETTE.TextSecondary
-            Btn.TextSize = 14
+            Btn.TextSize = 13
             Btn.TextXAlignment = Enum.TextXAlignment.Left
-            Instance.new("UIPadding", Btn).PaddingLeft = UDim.new(0,16)
+            Instance.new("UIPadding", Btn).PaddingLeft = UDim.new(0,12)
 
             Btn.MouseButton1Click:Connect(function()
                 if _G.SafeLock then
@@ -971,18 +905,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     buttonText = newText
                     Btn.Text = "<b>"..newText.."</b>"
                 end,
-                GetText = function(self)
-                    return buttonText
-                end,
-                SetCallback = function(self, newCallback)
-                    Callback = newCallback
-                end,
-                Click = function(self)
-                    Callback()
-                end
+                GetText = function(self) return buttonText end,
+                SetCallback = function(self, newCallback) Callback = newCallback end,
+                Click = function(self) Callback() end
             }
         end
 
+        -- // TOGGLE - Compact 34px
         function Elements:CreateToggle(Title, Callback)
             Callback = Callback or function() end
             local toggled = false
@@ -1000,8 +929,8 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Toggle.BackgroundColor3 = PALETTE.Surface
             Toggle.BackgroundTransparency = .3
             Toggle.BorderSizePixel = 0
-            Toggle.Size = UDim2.new(0,336,0,40)
-            corner.CornerRadius = UDim.new(0,8)
+            Toggle.Size = UDim2.new(0,336,0,34)
+            corner.CornerRadius = UDim.new(0,6)
             corner.Parent = Toggle
 
             stroke.Parent = Toggle
@@ -1012,14 +941,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             ToggleTitle.Name = "ToggleTitle"
             ToggleTitle.Parent = Toggle
             ToggleTitle.BackgroundTransparency = 1
-            ToggleTitle.Size = UDim2.new(0,240,0,40)
+            ToggleTitle.Size = UDim2.new(0,260,0,34)
             ToggleTitle.Font = Enum.Font.Jura
             ToggleTitle.RichText = true
             ToggleTitle.Text = "<b>"..Title.."</b>"
             ToggleTitle.TextColor3 = PALETTE.TextSecondary
-            ToggleTitle.TextSize = 14
+            ToggleTitle.TextSize = 13
             ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
-            Instance.new("UIPadding", ToggleTitle).PaddingLeft = UDim.new(0,16)
+            Instance.new("UIPadding", ToggleTitle).PaddingLeft = UDim.new(0,12)
 
             TogglerHolder.Name = "TogglerHolder"
             TogglerHolder.Parent = Toggle
@@ -1027,15 +956,15 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             TogglerHolder.BackgroundColor3 = PALETTE.Background
             TogglerHolder.BackgroundTransparency = .25
             TogglerHolder.BorderSizePixel = 0
-            TogglerHolder.Position = UDim2.new(0,300,.5,0)
-            TogglerHolder.Size = UDim2.new(0,22,0,22)
-            Instance.new("UICorner", TogglerHolder).CornerRadius = UDim.new(0,6)
+            TogglerHolder.Position = UDim2.new(0,306,.5,0)
+            TogglerHolder.Size = UDim2.new(0,20,0,20)
+            Instance.new("UICorner", TogglerHolder).CornerRadius = UDim.new(0,4)
 
             Toggler.Name = "Toggler"
             Toggler.Parent = TogglerHolder
             Toggler.Active = true
             Toggler.BackgroundTransparency = 1
-            Toggler.Size = UDim2.new(0,22,0,22)
+            Toggler.Size = UDim2.new(0,20,0,20)
             Toggler.Font = Enum.Font.SourceSans
             Toggler.Text = ""
             Toggler.TextSize = 14
@@ -1087,20 +1016,17 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     toggleText = newText
                     ToggleTitle.Text = "<b>"..newText.."</b>"
                 end,
-                GetText = function(self)
-                    return toggleText
-                end,
+                GetText = function(self) return toggleText end,
                 Set = function(self, state)
                     toggled = state
                     updateToggleVisual(state)
                     pcall(Callback, toggled)
                 end,
-                Get = function(self)
-                    return toggled
-                end
+                Get = function(self) return toggled end
             }
         end
 
+        -- // INPUT BOX - Compact 34px
         function Elements:CreateBox(Title, Callback)
             Callback = Callback or function() end
             local Box = Instance.new("Frame")
@@ -1115,8 +1041,8 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Box.BackgroundColor3 = PALETTE.Surface
             Box.BackgroundTransparency = .3
             Box.BorderSizePixel = 0
-            Box.Size = UDim2.new(0,336,0,40)
-            corner.CornerRadius = UDim.new(0,8)
+            Box.Size = UDim2.new(0,336,0,34)
+            corner.CornerRadius = UDim.new(0,6)
             corner.Parent = Box
 
             stroke.Parent = Box
@@ -1127,14 +1053,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             BoxTitle.Name = "BoxTitle"
             BoxTitle.Parent = Box
             BoxTitle.BackgroundTransparency = 1
-            BoxTitle.Size = UDim2.new(0,220,0,40)
+            BoxTitle.Size = UDim2.new(0,210,0,34)
             BoxTitle.Font = Enum.Font.Jura
             BoxTitle.RichText = true
             BoxTitle.Text = "<b>"..Title.."</b>"
             BoxTitle.TextColor3 = PALETTE.TextSecondary
-            BoxTitle.TextSize = 14
+            BoxTitle.TextSize = 13
             BoxTitle.TextXAlignment = Enum.TextXAlignment.Left
-            Instance.new("UIPadding", BoxTitle).PaddingLeft = UDim.new(0,16)
+            Instance.new("UIPadding", BoxTitle).PaddingLeft = UDim.new(0,12)
 
             TextBoxHolder.Name = "TextBoxHolder"
             TextBoxHolder.Parent = Box
@@ -1142,14 +1068,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             TextBoxHolder.BackgroundColor3 = PALETTE.Background
             TextBoxHolder.BackgroundTransparency = .25
             TextBoxHolder.BorderSizePixel = 0
-            TextBoxHolder.Position = UDim2.new(0,240,.5,0)
-            TextBoxHolder.Size = UDim2.new(0,90,0,26)
-            Instance.new("UICorner", TextBoxHolder).CornerRadius = UDim.new(0,6)
+            TextBoxHolder.Position = UDim2.new(0,234,.5,0)
+            TextBoxHolder.Size = UDim2.new(0,92,0,22)
+            Instance.new("UICorner", TextBoxHolder).CornerRadius = UDim.new(0,4)
 
             TextBox.Parent = TextBoxHolder
             TextBox.Active = true
             TextBox.BackgroundTransparency = 1
-            TextBox.Size = UDim2.new(0,90,0,26)
+            TextBox.Size = UDim2.new(0,92,0,22)
             TextBox.ClipsDescendants = true
             TextBox.Font = Enum.Font.Jura
             TextBox.PlaceholderColor3 = PALETTE.TextDisabled
@@ -1158,12 +1084,12 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             TextBox.TextEditable = true
             TextBox.ClearTextOnFocus = false
             TextBox.TextColor3 = PALETTE.TextPrimary
-            TextBox.TextSize = 14
+            TextBox.TextSize = 13
             TextBox.TextTruncate = Enum.TextTruncate.AtEnd
             TextBox.TextXAlignment = Enum.TextXAlignment.Right
             local pad = Instance.new("UIPadding", TextBox)
-            pad.PaddingLeft = UDim.new(0,8)
-            pad.PaddingRight = UDim.new(0,8)
+            pad.PaddingLeft = UDim.new(0,6)
+            pad.PaddingRight = UDim.new(0,6)
 
             TextBox.Focused:Connect(function()
                 if _G.SafeLock then
@@ -1189,24 +1115,15 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     boxTitle = newText
                     BoxTitle.Text = "<b>"..newText.."</b>"
                 end,
-                GetTitle = function(self)
-                    return boxTitle
-                end,
-                SetText = function(self, text)
-                    TextBox.Text = text
-                end,
-                GetText = function(self)
-                    return TextBox.Text
-                end,
-                Focus = function(self)
-                    TextBox:CaptureFocus()
-                end,
-                Clear = function(self)
-                    TextBox.Text = ""
-                end
+                GetTitle = function(self) return boxTitle end,
+                SetText = function(self, text) TextBox.Text = text end,
+                GetText = function(self) return TextBox.Text end,
+                Focus = function(self) TextBox:CaptureFocus() end,
+                Clear = function(self) TextBox.Text = "" end
             }
         end
 
+        -- // DROPDOWN - Compact 34px base
         function Elements:CreateDropdown(Title, Options, Callback)
             Callback = Callback or function() end
             local Dropdown = Instance.new("Frame")
@@ -1225,8 +1142,8 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Dropdown.BackgroundColor3 = PALETTE.Surface
             Dropdown.BackgroundTransparency = .3
             Dropdown.BorderSizePixel = 0
-            Dropdown.Size = UDim2.new(0,336,0,40)
-            corner.CornerRadius = UDim.new(0,8)
+            Dropdown.Size = UDim2.new(0,336,0,34)
+            corner.CornerRadius = UDim.new(0,6)
             corner.Parent = Dropdown
 
             stroke.Parent = Dropdown
@@ -1238,7 +1155,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             A_Dropdown.Parent = Dropdown
             A_Dropdown.AutomaticSize = Enum.AutomaticSize.Y
             A_Dropdown.BackgroundTransparency = 1
-            A_Dropdown.Size = UDim2.new(0,336,0,40)
+            A_Dropdown.Size = UDim2.new(0,336,0,34)
 
             DropdownBarHolder.Name = "DropdownBarHolder"
             DropdownBarHolder.Parent = A_Dropdown
@@ -1246,46 +1163,46 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             DropdownBarHolder.BackgroundColor3 = PALETTE.Background
             DropdownBarHolder.BackgroundTransparency = .25
             DropdownBarHolder.BorderSizePixel = 0
-            DropdownBarHolder.Position = UDim2.new(0,180,.5,0)
-            DropdownBarHolder.Size = UDim2.new(0,150,0,26)
-            Instance.new("UICorner", DropdownBarHolder).CornerRadius = UDim.new(0,6)
+            DropdownBarHolder.Position = UDim2.new(0,190,.5,0)
+            DropdownBarHolder.Size = UDim2.new(0,140,0,22)
+            Instance.new("UICorner", DropdownBarHolder).CornerRadius = UDim.new(0,4)
 
             SelectedText.Name = "SelectedText"
             SelectedText.Parent = DropdownBarHolder
             SelectedText.BackgroundTransparency = 1
-            SelectedText.Size = UDim2.new(0,120,0,26)
+            SelectedText.Size = UDim2.new(0,110,0,22)
             SelectedText.ClipsDescendants = true
             SelectedText.Font = Enum.Font.Jura
             SelectedText.RichText = true
             SelectedText.Text = "None"
             SelectedText.TextColor3 = PALETTE.TextPrimary
-            SelectedText.TextSize = 14
+            SelectedText.TextSize = 13
             SelectedText.TextTruncate = Enum.TextTruncate.AtEnd
             SelectedText.TextXAlignment = Enum.TextXAlignment.Right
-            Instance.new("UIPadding", SelectedText).PaddingRight = UDim.new(0,8)
+            Instance.new("UIPadding", SelectedText).PaddingRight = UDim.new(0,6)
 
             DropdownToggler.Name = "DropdownToggler"
             DropdownToggler.Parent = DropdownBarHolder
             DropdownToggler.Active = true
             DropdownToggler.AnchorPoint = Vector2.new(0,.5)
             DropdownToggler.BackgroundTransparency = 1
-            DropdownToggler.Position = UDim2.new(0,128,0.5,0)
+            DropdownToggler.Position = UDim2.new(0,120,0.5,0)
             DropdownToggler.Rotation = 180
-            DropdownToggler.Size = UDim2.new(0,12,0,12)
+            DropdownToggler.Size = UDim2.new(0,10,0,10)
             DropdownToggler.Image = "rbxassetid://128993416980283"
             DropdownToggler.ImageColor3 = PALETTE.TextPrimary
 
             DropdownTitle.Name = "DropdownTitle"
             DropdownTitle.Parent = A_Dropdown
             DropdownTitle.BackgroundTransparency = 1
-            DropdownTitle.Size = UDim2.new(0,170,0,40)
+            DropdownTitle.Size = UDim2.new(0,180,0,34)
             DropdownTitle.Font = Enum.Font.Jura
             DropdownTitle.RichText = true
             DropdownTitle.Text = "<b>"..Title.."</b>"
             DropdownTitle.TextColor3 = PALETTE.TextSecondary
-            DropdownTitle.TextSize = 14
+            DropdownTitle.TextSize = 13
             DropdownTitle.TextXAlignment = Enum.TextXAlignment.Left
-            Instance.new("UIPadding", DropdownTitle).PaddingLeft = UDim.new(0,16)
+            Instance.new("UIPadding", DropdownTitle).PaddingLeft = UDim.new(0,12)
 
             B_Dropdown.Name = "B_Dropdown"
             B_Dropdown.Parent = Dropdown
@@ -1294,11 +1211,11 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             B_Dropdown.Size = UDim2.new(0,336,0,0)
             B_Dropdown.Visible = false
 
-            Instance.new("UIListLayout", B_Dropdown).Padding = UDim.new(0,6)
+            Instance.new("UIListLayout", B_Dropdown).Padding = UDim.new(0,4)
             local pad = Instance.new("UIPadding", B_Dropdown)
-            pad.PaddingBottom = UDim.new(0,8)
-            pad.PaddingLeft = UDim.new(0,13)
-            pad.PaddingTop = UDim.new(0,4)
+            pad.PaddingBottom = UDim.new(0,6)
+            pad.PaddingLeft = UDim.new(0,10)
+            pad.PaddingTop = UDim.new(0,2)
 
             local isOpen = false
             local currentOptions = Options or {}
@@ -1340,19 +1257,19 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     optFrm.BackgroundColor3 = PALETTE.Background
                     optFrm.BackgroundTransparency = .25
                     optFrm.BorderSizePixel = 0
-                    optFrm.Size = UDim2.new(0,310,0,28)
-                    optCorner.CornerRadius = UDim.new(0,6)
+                    optFrm.Size = UDim2.new(0,316,0,24)
+                    optCorner.CornerRadius = UDim.new(0,4)
                     optCorner.Parent = optFrm
                     optBtn.Parent = optFrm
                     optBtn.BackgroundTransparency = 1
-                    optBtn.Size = UDim2.new(0,310,0,28)
+                    optBtn.Size = UDim2.new(0,316,0,24)
                     optBtn.Font = Enum.Font.Jura
                     optBtn.RichText = true
                     optBtn.Text = "<b>"..opt.."</b>"
                     optBtn.TextColor3 = PALETTE.TextSecondary
-                    optBtn.TextSize = 14
+                    optBtn.TextSize = 12
                     optBtn.TextXAlignment = Enum.TextXAlignment.Right
-                    Instance.new("UIPadding", optBtn).PaddingRight = UDim.new(0,14)
+                    Instance.new("UIPadding", optBtn).PaddingRight = UDim.new(0,10)
 
                     optBtn.MouseButton1Click:Connect(function()
                         if _G.SafeLock then
@@ -1377,28 +1294,16 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     dropdownTitle = newText
                     DropdownTitle.Text = "<b>"..newText.."</b>"
                 end,
-                GetTitle = function(self)
-                    return dropdownTitle
-                end,
-                SetOptions = function(self, newOptions)
-                    refreshOptions(newOptions)
-                end,
-                GetOptions = function(self)
-                    return currentOptions
-                end,
+                GetTitle = function(self) return dropdownTitle end,
+                SetOptions = function(self, newOptions) refreshOptions(newOptions) end,
+                GetOptions = function(self) return currentOptions end,
                 SetSelected = function(self, text)
                     SelectedText.Text = text
                     Callback(text)
                 end,
-                GetSelected = function(self)
-                    return SelectedText.Text
-                end,
-                Open = function(self)
-                    if not isOpen then Toggle() end
-                end,
-                Close = function(self)
-                    if isOpen then Toggle() end
-                end
+                GetSelected = function(self) return SelectedText.Text end,
+                Open = function(self) if not isOpen then Toggle() end end,
+                Close = function(self) if isOpen then Toggle() end end
             }
         end
 
