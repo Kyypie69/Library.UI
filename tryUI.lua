@@ -20,6 +20,7 @@ local Library = Instance.new("ScreenGui")
 Library.Name = "Library"
 Library.Parent = game.CoreGui
 Library.Enabled = true
+Library.ResetOnSpawn = false
 
 local activeNotifications = {}
 local notificationSpacing = 10
@@ -65,7 +66,7 @@ function KyyfiiiLibrary:createNotification(desc)
     bg.Parent = Notification
     bg.BackgroundTransparency = 1
     bg.Size = UDim2.new(1,0,1,0)
-    bg.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491 "
+    bg.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     bg.ImageTransparency = .5
     bg.ImageColor3 = PALETTE.Accent
 
@@ -158,7 +159,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     Background.Parent = Main
     Background.BackgroundTransparency = 1
     Background.Size = UDim2.new(1,0,1,0)
-    Background.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491  "
+    Background.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     Background.ImageTransparency = .55
     Background.ImageColor3 = PALETTE.Accent
     cornerB.Parent = Background
@@ -228,7 +229,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     UserIcon.BackgroundTransparency = 1
     UserIcon.Position = UDim2.new(0,8,.5,0)
     UserIcon.Size = UDim2.new(0,18,0,18)
-    UserIcon.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491 "
+    UserIcon.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     UserIcon.ImageColor3 = PALETTE.TextPrimary
 
     UserText.Name = "UserText"
@@ -304,7 +305,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     toggleBtn.BackgroundTransparency = 1
     toggleBtn.Size = UDim2.new(0,36,0,36)
     toggleBtn.ZIndex = 2
-    toggleBtn.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491 "
+    toggleBtn.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     toggleBtn.ImageTransparency = .45
     toggleBtn.ImageColor3 = PALETTE.Accent
 
@@ -315,7 +316,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
     toggleLogo.Position = UDim2.new(.5,0,.5,0)
     toggleLogo.Size = UDim2.new(0,30,0,30)
     toggleLogo.ZIndex = 2
-    toggleLogo.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491 "
+    toggleLogo.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=123093571305491"
     toggleLogo.ImageColor3 = PALETTE.TextPrimary
 
     toggleBtn.MouseButton1Click:Connect(function()
@@ -651,131 +652,77 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             return boxObj
         end
 
-        -- // LIVE LABEL
-        function Elements:CreateLiveLabel(Title, ValueFunction, UpdateInterval)
-            UpdateInterval = UpdateInterval or 0.1
+        -- // LABEL BOX - Styled container for static text with optional icon
+        function Elements:CreateLabelBox(config)
+            config = config or {}
+            local text = config.Text or "Label"
+            local icon = config.Icon -- optional rbxassetid
+            local height = config.Height or 40
             
-            local Label = Instance.new("Frame")
+            local LabelBox = Instance.new("Frame")
             local corner = Instance.new("UICorner")
+            local stroke = Instance.new("UIStroke")
+            local iconFrame = Instance.new("Frame")
+            local iconImg = Instance.new("ImageLabel")
             local LabelTitle = Instance.new("TextLabel")
-            local ValueLabel = Instance.new("TextLabel")
             
-            Label.Name = "LiveLabel"
-            Label.Parent = Items
-            Label.BackgroundColor3 = PALETTE.Surface
-            Label.BackgroundTransparency = .8
-            Label.BorderSizePixel = 0
-            Label.Size = UDim2.new(0,336,0,34)
-            corner.CornerRadius = UDim.new(0,6)
-            corner.Parent = Label
+            -- Main Container
+            LabelBox.Name = "LabelBox"
+            LabelBox.Parent = Items
+            LabelBox.BackgroundColor3 = PALETTE.Surface
+            LabelBox.BackgroundTransparency = 0.3
+            LabelBox.BorderSizePixel = 0
+            LabelBox.Size = UDim2.new(0,336,0,height)
+            LabelBox.ClipsDescendants = true
             
+            corner.CornerRadius = UDim.new(0,8)
+            corner.Parent = LabelBox
+            
+            -- Subtle border
+            stroke.Parent = LabelBox
+            stroke.Color = PALETTE.Accent
+            stroke.Transparency = 0.9
+            stroke.Thickness = 1
+            
+            -- Icon (Optional)
+            local textOffset = 16
+            if icon then
+                iconFrame.Name = "IconFrame"
+                iconFrame.Parent = LabelBox
+                iconFrame.BackgroundColor3 = PALETTE.Elevated
+                iconFrame.BackgroundTransparency = 0.5
+                iconFrame.Position = UDim2.new(0,10,0.5,0)
+                iconFrame.AnchorPoint = Vector2.new(0,0.5)
+                iconFrame.Size = UDim2.new(0,24,0,24)
+                local iconCorner = Instance.new("UICorner", iconFrame)
+                iconCorner.CornerRadius = UDim.new(0,6)
+                
+                iconImg.Name = "Icon"
+                iconImg.Parent = iconFrame
+                iconImg.BackgroundTransparency = 1
+                iconImg.Position = UDim2.new(0.5,0,0.5,0)
+                iconImg.AnchorPoint = Vector2.new(0.5,0.5)
+                iconImg.Size = UDim2.new(0,16,0,16)
+                iconImg.Image = icon
+                iconImg.ImageColor3 = PALETTE.TextPrimary
+                textOffset = 44
+            end
+            
+            -- Title
             LabelTitle.Name = "LabelTitle"
-            LabelTitle.Parent = Label
+            LabelTitle.Parent = LabelBox
             LabelTitle.BackgroundTransparency = 1
-            LabelTitle.Size = UDim2.new(0,160,0,34)
+            LabelTitle.Position = UDim2.new(0,textOffset,0,0)
+            LabelTitle.Size = UDim2.new(1,-(textOffset+10),1,0)
             LabelTitle.Font = Enum.Font.Jura
             LabelTitle.RichText = true
-            LabelTitle.Text = "<b>"..Title.."</b>"
+            LabelTitle.Text = "<b>"..text.."</b>"
             LabelTitle.TextColor3 = PALETTE.TextPrimary
             LabelTitle.TextSize = 14
             LabelTitle.TextXAlignment = Enum.TextXAlignment.Left
-            local titlePad = Instance.new("UIPadding", LabelTitle)
-            titlePad.PaddingLeft = UDim.new(0,16)
+            LabelTitle.TextWrapped = true
             
-            ValueLabel.Name = "ValueLabel"
-            ValueLabel.Parent = Label
-            ValueLabel.BackgroundTransparency = 1
-            ValueLabel.Position = UDim2.new(0.476,0,0,0)
-            ValueLabel.Size = UDim2.new(0,160,0,34)
-            ValueLabel.Font = Enum.Font.Jura
-            ValueLabel.RichText = true
-            ValueLabel.Text = "<b>...</b>"
-            ValueLabel.TextColor3 = PALETTE.Accent
-            ValueLabel.TextSize = 14
-            ValueLabel.TextXAlignment = Enum.TextXAlignment.Right
-            local valuePad = Instance.new("UIPadding", ValueLabel)
-            valuePad.PaddingRight = UDim.new(0,16)
-            
-            local connection
-            local lastUpdate = 0
-            local isActive = true
-            
-            local function updateValue()
-                if not isActive then return end
-                local success, result = pcall(ValueFunction)
-                if success then
-                    ValueLabel.Text = "<b>"..tostring(result).."</b>"
-                else
-                    ValueLabel.Text = "<b>Error</b>"
-                end
-            end
-            
-            if UpdateInterval <= 0.05 then
-                connection = runService.RenderStepped:Connect(function()
-                    updateValue()
-                end)
-            else
-                connection = runService.Heartbeat:Connect(function(dt)
-                    lastUpdate = lastUpdate + dt
-                    if lastUpdate >= UpdateInterval then
-                        lastUpdate = 0
-                        updateValue()
-                    end
-                end)
-            end
-            
-            table.insert(liveConnections, connection)
-            
-            return {
-                SetTitle = function(self, newText)
-                    LabelTitle.Text = "<b>"..newText.."</b>"
-                end,
-                SetValue = function(self, newText)
-                    ValueLabel.Text = "<b>"..tostring(newText).."</b>"
-                end,
-                Pause = function(self)
-                    isActive = false
-                end,
-                Resume = function(self)
-                    isActive = true
-                end,
-                Destroy = function(self)
-                    isActive = false
-                    if connection then
-                        connection:Disconnect()
-                        local idx = table.find(liveConnections, connection)
-                        if idx then table.remove(liveConnections, idx) end
-                    end
-                    Label:Destroy()
-                end
-            }
-        end
-
-        -- // DYNAMIC LABEL
-        function Elements:CreateLabel(Title)
-            local Label = Instance.new("Frame")
-            local corner = Instance.new("UICorner")
-            local LabelTitle = Instance.new("TextLabel")
-            
-            Label.Name = "Label"
-            Label.Parent = Items
-            Label.BackgroundColor3 = PALETTE.Surface
-            Label.BackgroundTransparency = .8
-            Label.BorderSizePixel = 0
-            Label.Size = UDim2.new(0,336,0,28)
-            corner.CornerRadius = UDim.new(0,6)
-            corner.Parent = Label
-            
-            LabelTitle.Parent = Label
-            LabelTitle.BackgroundTransparency = 1
-            LabelTitle.Size = UDim2.new(0,336,0,28)
-            LabelTitle.Font = Enum.Font.Jura
-            LabelTitle.RichText = true
-            LabelTitle.Text = "<b>"..Title.."</b>"
-            LabelTitle.TextColor3 = PALETTE.TextPrimary
-            LabelTitle.TextSize = 14
-            
-            local labelContent = Title
+            local labelContent = text
             
             return {
                 SetText = function(self, newText)
@@ -798,8 +745,146 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 end,
                 SetSize = function(self, size)
                     LabelTitle.TextSize = size
+                end,
+                SetIcon = function(self, newIcon)
+                    if iconImg then
+                        iconImg.Image = newIcon
+                    end
+                end,
+                Destroy = function(self)
+                    LabelBox:Destroy()
                 end
             }
+        end
+
+        -- // TEXT BOX (LIVE LABEL) - Dynamic data display with box styling
+        function Elements:CreateTextBox(config)
+            config = config or {}
+            local title = config.Title or "Stat"
+            local valueFunc = config.ValueFunction or function() return "..." end
+            local interval = config.Interval or 0.1
+            local unit = config.Unit or ""
+            
+            local TextBox = Instance.new("Frame")
+            local corner = Instance.new("UICorner")
+            local stroke = Instance.new("UIStroke")
+            local LabelTitle = Instance.new("TextLabel")
+            local ValueLabel = Instance.new("TextLabel")
+            local valuePad = Instance.new("UIPadding")
+            
+            TextBox.Name = "TextBox"
+            TextBox.Parent = Items
+            TextBox.BackgroundColor3 = PALETTE.Surface
+            TextBox.BackgroundTransparency = 0.3
+            TextBox.BorderSizePixel = 0
+            TextBox.Size = UDim2.new(0,336,0,40)
+            
+            corner.CornerRadius = UDim.new(0,8)
+            corner.Parent = TextBox
+            
+            stroke.Parent = TextBox
+            stroke.Color = PALETTE.Accent
+            stroke.Transparency = 0.9
+            stroke.Thickness = 1
+            
+            LabelTitle.Name = "LabelTitle"
+            LabelTitle.Parent = TextBox
+            LabelTitle.BackgroundTransparency = 1
+            LabelTitle.Position = UDim2.new(0,12,0,0)
+            LabelTitle.Size = UDim2.new(0.5,-12,1,0)
+            LabelTitle.Font = Enum.Font.Jura
+            LabelTitle.RichText = true
+            LabelTitle.Text = "<b>"..title.."</b>"
+            LabelTitle.TextColor3 = PALETTE.TextSecondary
+            LabelTitle.TextSize = 14
+            LabelTitle.TextXAlignment = Enum.TextXAlignment.Left
+            
+            ValueLabel.Name = "ValueLabel"
+            ValueLabel.Parent = TextBox
+            ValueLabel.BackgroundTransparency = 1
+            ValueLabel.Position = UDim2.new(0.5,0,0,0)
+            ValueLabel.Size = UDim2.new(0.5,-12,1,0)
+            ValueLabel.Font = Enum.Font.Jura
+            ValueLabel.RichText = true
+            ValueLabel.Text = "<b>--"..unit.."</b>"
+            ValueLabel.TextColor3 = PALETTE.Accent
+            ValueLabel.TextSize = 14
+            ValueLabel.TextXAlignment = Enum.TextXAlignment.Right
+            
+            valuePad.Parent = ValueLabel
+            valuePad.PaddingRight = UDim.new(0,12)
+            
+            local connection
+            local lastUpdate = 0
+            local isActive = true
+            
+            local function updateValue()
+                if not isActive then return end
+                local success, result = pcall(valueFunc)
+                if success then
+                    ValueLabel.Text = "<b>"..tostring(result)..unit.."</b>"
+                else
+                    ValueLabel.Text = "<b>Error</b>"
+                end
+            end
+            
+            if interval <= 0.05 then
+                connection = runService.RenderStepped:Connect(function()
+                    updateValue()
+                end)
+            else
+                connection = runService.Heartbeat:Connect(function(dt)
+                    lastUpdate = lastUpdate + dt
+                    if lastUpdate >= interval then
+                        lastUpdate = 0
+                        updateValue()
+                    end
+                end)
+            end
+            
+            table.insert(liveConnections, connection)
+            
+            return {
+                SetTitle = function(self, newText)
+                    LabelTitle.Text = "<b>"..newText.."</b>"
+                end,
+                SetValue = function(self, newText)
+                    ValueLabel.Text = "<b>"..tostring(newText)..unit.."</b>"
+                end,
+                SetUnit = function(self, newUnit)
+                    unit = newUnit
+                    updateValue()
+                end,
+                Pause = function(self)
+                    isActive = false
+                end,
+                Resume = function(self)
+                    isActive = true
+                end,
+                Destroy = function(self)
+                    isActive = false
+                    if connection then
+                        connection:Disconnect()
+                        local idx = table.find(liveConnections, connection)
+                        if idx then table.remove(liveConnections, idx) end
+                    end
+                    TextBox:Destroy()
+                end
+            }
+        end
+
+        -- // LEGACY LABEL (Simple text, no box) - Kept for backwards compatibility
+        function Elements:CreateLabel(Title)
+            return Elements:CreateLabelBox({Text = Title, Height = 28})
+        end
+
+        -- // LEGACY LIVE LABEL - Redirects to TextBox
+        function Elements:CreateLiveLabel(Title, ValueFunction, UpdateInterval)
+            return Elements:CreateTextBox({
+                Title = Title,
+                ValueFunction = ValueFunction,
+                Interval = UpdateInterval or 0.1
+            })
         end
 
         function Elements:CreateSection(Title)
@@ -836,20 +921,26 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
         function Elements:CreateButton(Title, Callback)
             local Button = Instance.new("Frame")
             local corner = Instance.new("UICorner")
+            local stroke = Instance.new("UIStroke")
             local Btn = Instance.new("TextButton")
             
             Button.Name = "Button"
             Button.Parent = Items
             Button.BackgroundColor3 = PALETTE.Surface
-            Button.BackgroundTransparency = .8
+            Button.BackgroundTransparency = .3
             Button.BorderSizePixel = 0
-            Button.Size = UDim2.new(0,336,0,34)
-            corner.CornerRadius = UDim.new(0,6)
+            Button.Size = UDim2.new(0,336,0,40)
+            corner.CornerRadius = UDim.new(0,8)
             corner.Parent = Button
+            
+            stroke.Parent = Button
+            stroke.Color = PALETTE.Accent
+            stroke.Transparency = 0.9
+            stroke.Thickness = 1
             
             Btn.Parent = Button
             Btn.BackgroundTransparency = 1
-            Btn.Size = UDim2.new(0,336,0,34)
+            Btn.Size = UDim2.new(1,0,1,0)
             Btn.Font = Enum.Font.Jura
             Btn.RichText = true
             Btn.Text = "<b>"..Title.."</b>"
@@ -864,9 +955,11 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                     return
                 end
                 local t1 = TweenService:Create(Btn, TweenInfo.new(.1), {TextColor3 = PALETTE.TextPrimary})
-                t1:Play()
+                local t2 = TweenService:Create(stroke, TweenInfo.new(.1), {Transparency = 0.5, Color = PALETTE.Accent})
+                t1:Play(); t2:Play()
                 t1.Completed:Connect(function()
                     TweenService:Create(Btn, TweenInfo.new(.2), {TextColor3 = PALETTE.TextSecondary}):Play()
+                    TweenService:Create(stroke, TweenInfo.new(.2), {Transparency = 0.9, Color = PALETTE.Accent}):Play()
                 end)
                 Callback()
             end)
@@ -897,6 +990,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
 
             local Toggle = Instance.new("Frame")
             local corner = Instance.new("UICorner")
+            local stroke = Instance.new("UIStroke")
             local ToggleTitle = Instance.new("TextLabel")
             local TogglerHolder = Instance.new("Frame")
             local Toggler = Instance.new("TextButton")
@@ -904,16 +998,21 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Toggle.Name = "Toggle"
             Toggle.Parent = Items
             Toggle.BackgroundColor3 = PALETTE.Surface
-            Toggle.BackgroundTransparency = .8
+            Toggle.BackgroundTransparency = .3
             Toggle.BorderSizePixel = 0
-            Toggle.Size = UDim2.new(0,336,0,34)
-            corner.CornerRadius = UDim.new(0,6)
+            Toggle.Size = UDim2.new(0,336,0,40)
+            corner.CornerRadius = UDim.new(0,8)
             corner.Parent = Toggle
+
+            stroke.Parent = Toggle
+            stroke.Color = PALETTE.Accent
+            stroke.Transparency = 0.9
+            stroke.Thickness = 1
 
             ToggleTitle.Name = "ToggleTitle"
             ToggleTitle.Parent = Toggle
             ToggleTitle.BackgroundTransparency = 1
-            ToggleTitle.Size = UDim2.new(0,240,0,34)
+            ToggleTitle.Size = UDim2.new(0,240,0,40)
             ToggleTitle.Font = Enum.Font.Jura
             ToggleTitle.RichText = true
             ToggleTitle.Text = "<b>"..Title.."</b>"
@@ -946,9 +1045,11 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 if state then
                     TweenService:Create(TogglerHolder, ti, {BackgroundColor3 = PALETTE.Accent}):Play()
                     TweenService:Create(ToggleTitle, ti, {TextColor3 = PALETTE.TextPrimary}):Play()
+                    TweenService:Create(stroke, ti, {Color = PALETTE.Accent, Transparency = 0.6}):Play()
                 else
                     TweenService:Create(TogglerHolder, ti, {BackgroundColor3 = PALETTE.Background}):Play()
                     TweenService:Create(ToggleTitle, ti, {TextColor3 = PALETTE.TextSecondary}):Play()
+                    TweenService:Create(stroke, ti, {Color = PALETTE.Accent, Transparency = 0.9}):Play()
                 end
             end
 
@@ -1004,6 +1105,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Callback = Callback or function() end
             local Box = Instance.new("Frame")
             local corner = Instance.new("UICorner")
+            local stroke = Instance.new("UIStroke")
             local BoxTitle = Instance.new("TextLabel")
             local TextBoxHolder = Instance.new("Frame")
             local TextBox = Instance.new("TextBox")
@@ -1011,16 +1113,21 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Box.Name = "Box"
             Box.Parent = Items
             Box.BackgroundColor3 = PALETTE.Surface
-            Box.BackgroundTransparency = .8
+            Box.BackgroundTransparency = .3
             Box.BorderSizePixel = 0
-            Box.Size = UDim2.new(0,336,0,34)
-            corner.CornerRadius = UDim.new(0,6)
+            Box.Size = UDim2.new(0,336,0,40)
+            corner.CornerRadius = UDim.new(0,8)
             corner.Parent = Box
+
+            stroke.Parent = Box
+            stroke.Color = PALETTE.Accent
+            stroke.Transparency = 0.9
+            stroke.Thickness = 1
 
             BoxTitle.Name = "BoxTitle"
             BoxTitle.Parent = Box
             BoxTitle.BackgroundTransparency = 1
-            BoxTitle.Size = UDim2.new(0,240,0,34)
+            BoxTitle.Size = UDim2.new(0,220,0,40)
             BoxTitle.Font = Enum.Font.Jura
             BoxTitle.RichText = true
             BoxTitle.Text = "<b>"..Title.."</b>"
@@ -1035,14 +1142,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             TextBoxHolder.BackgroundColor3 = PALETTE.Background
             TextBoxHolder.BackgroundTransparency = .25
             TextBoxHolder.BorderSizePixel = 0
-            TextBoxHolder.Position = UDim2.new(-0.178571433,300,.5,0)
-            TextBoxHolder.Size = UDim2.new(0,82,0,22)
+            TextBoxHolder.Position = UDim2.new(0,240,.5,0)
+            TextBoxHolder.Size = UDim2.new(0,90,0,26)
             Instance.new("UICorner", TextBoxHolder).CornerRadius = UDim.new(0,6)
 
             TextBox.Parent = TextBoxHolder
             TextBox.Active = true
             TextBox.BackgroundTransparency = 1
-            TextBox.Size = UDim2.new(0,82,0,22)
+            TextBox.Size = UDim2.new(0,90,0,26)
             TextBox.ClipsDescendants = true
             TextBox.Font = Enum.Font.Jura
             TextBox.PlaceholderColor3 = PALETTE.TextDisabled
@@ -1066,11 +1173,13 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 end
                 TextBox.TextEditable = true
                 TweenService:Create(BoxTitle, TweenInfo.new(.1), {TextColor3 = PALETTE.TextPrimary}):Play()
+                TweenService:Create(TextBoxHolder, TweenInfo.new(.1), {BackgroundColor3 = PALETTE.Elevated}):Play()
             end)
             TextBox.FocusLost:Connect(function(enterPressed)
                 if _G.SafeLock then return end
                 Callback(TextBox.Text, enterPressed)
                 TweenService:Create(BoxTitle, TweenInfo.new(.2), {TextColor3 = PALETTE.TextSecondary}):Play()
+                TweenService:Create(TextBoxHolder, TweenInfo.new(.2), {BackgroundColor3 = PALETTE.Background}):Play()
             end)
             
             local boxTitle = Title
@@ -1102,6 +1211,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Callback = Callback or function() end
             local Dropdown = Instance.new("Frame")
             local corner = Instance.new("UICorner")
+            local stroke = Instance.new("UIStroke")
             local A_Dropdown = Instance.new("Frame")
             local DropdownBarHolder = Instance.new("Frame")
             local SelectedText = Instance.new("TextLabel")
@@ -1113,17 +1223,22 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             Dropdown.Parent = Items
             Dropdown.AutomaticSize = Enum.AutomaticSize.Y
             Dropdown.BackgroundColor3 = PALETTE.Surface
-            Dropdown.BackgroundTransparency = .8
+            Dropdown.BackgroundTransparency = .3
             Dropdown.BorderSizePixel = 0
-            Dropdown.Size = UDim2.new(0,336,0,34)
-            corner.CornerRadius = UDim.new(0,6)
+            Dropdown.Size = UDim2.new(0,336,0,40)
+            corner.CornerRadius = UDim.new(0,8)
             corner.Parent = Dropdown
+
+            stroke.Parent = Dropdown
+            stroke.Color = PALETTE.Accent
+            stroke.Transparency = 0.9
+            stroke.Thickness = 1
 
             A_Dropdown.Name = "A_Dropdown"
             A_Dropdown.Parent = Dropdown
             A_Dropdown.AutomaticSize = Enum.AutomaticSize.Y
             A_Dropdown.BackgroundTransparency = 1
-            A_Dropdown.Size = UDim2.new(0,336,0,34)
+            A_Dropdown.Size = UDim2.new(0,336,0,40)
 
             DropdownBarHolder.Name = "DropdownBarHolder"
             DropdownBarHolder.Parent = A_Dropdown
@@ -1131,14 +1246,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             DropdownBarHolder.BackgroundColor3 = PALETTE.Background
             DropdownBarHolder.BackgroundTransparency = .25
             DropdownBarHolder.BorderSizePixel = 0
-            DropdownBarHolder.Position = UDim2.new(-0.327380955,300,.5,0)
-            DropdownBarHolder.Size = UDim2.new(0,132,0,22)
+            DropdownBarHolder.Position = UDim2.new(0,180,.5,0)
+            DropdownBarHolder.Size = UDim2.new(0,150,0,26)
             Instance.new("UICorner", DropdownBarHolder).CornerRadius = UDim.new(0,6)
 
             SelectedText.Name = "SelectedText"
             SelectedText.Parent = DropdownBarHolder
             SelectedText.BackgroundTransparency = 1
-            SelectedText.Size = UDim2.new(0,100,0,22)
+            SelectedText.Size = UDim2.new(0,120,0,26)
             SelectedText.ClipsDescendants = true
             SelectedText.Font = Enum.Font.Jura
             SelectedText.RichText = true
@@ -1147,14 +1262,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             SelectedText.TextSize = 14
             SelectedText.TextTruncate = Enum.TextTruncate.AtEnd
             SelectedText.TextXAlignment = Enum.TextXAlignment.Right
-            Instance.new("UIPadding", SelectedText).PaddingRight = UDim.new(0,2)
+            Instance.new("UIPadding", SelectedText).PaddingRight = UDim.new(0,8)
 
             DropdownToggler.Name = "DropdownToggler"
             DropdownToggler.Parent = DropdownBarHolder
             DropdownToggler.Active = true
             DropdownToggler.AnchorPoint = Vector2.new(0,.5)
             DropdownToggler.BackgroundTransparency = 1
-            DropdownToggler.Position = UDim2.new(0.819999993,0,.5,0)
+            DropdownToggler.Position = UDim2.new(0,128,0.5,0)
             DropdownToggler.Rotation = 180
             DropdownToggler.Size = UDim2.new(0,12,0,12)
             DropdownToggler.Image = "rbxassetid://128993416980283"
@@ -1163,7 +1278,7 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             DropdownTitle.Name = "DropdownTitle"
             DropdownTitle.Parent = A_Dropdown
             DropdownTitle.BackgroundTransparency = 1
-            DropdownTitle.Size = UDim2.new(0,190,0,34)
+            DropdownTitle.Size = UDim2.new(0,170,0,40)
             DropdownTitle.Font = Enum.Font.Jura
             DropdownTitle.RichText = true
             DropdownTitle.Text = "<b>"..Title.."</b>"
@@ -1176,14 +1291,14 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
             B_Dropdown.Parent = Dropdown
             B_Dropdown.AutomaticSize = Enum.AutomaticSize.Y
             B_Dropdown.BackgroundTransparency = 1
-            B_Dropdown.Size = UDim2.new(0,336,0,34)
+            B_Dropdown.Size = UDim2.new(0,336,0,0)
             B_Dropdown.Visible = false
 
             Instance.new("UIListLayout", B_Dropdown).Padding = UDim.new(0,6)
             local pad = Instance.new("UIPadding", B_Dropdown)
             pad.PaddingBottom = UDim.new(0,8)
             pad.PaddingLeft = UDim.new(0,13)
-            pad.PaddingTop = UDim.new(0,2)
+            pad.PaddingTop = UDim.new(0,4)
 
             local isOpen = false
             local currentOptions = Options or {}
@@ -1201,6 +1316,11 @@ function KyyfiiiLibrary:CreateWindow(Title, Description)
                 B_Dropdown.Visible = isOpen
                 local tc = isOpen and PALETTE.TextPrimary or PALETTE.TextSecondary
                 TweenService:Create(DropdownTitle, TweenInfo.new(isOpen and .1 or .2), {TextColor3 = tc}):Play()
+                if isOpen then
+                    TweenService:Create(stroke, TweenInfo.new(.2), {Transparency = 0.6}):Play()
+                else
+                    TweenService:Create(stroke, TweenInfo.new(.2), {Transparency = 0.9}):Play()
+                end
             end
             DropdownToggler.MouseButton1Click:Connect(Toggle)
 
